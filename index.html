@@ -1,0 +1,1138 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>中華民國競技飛鏢總會 | 視覺設計三方案比較</title>
+  <style>
+    :root {
+      --font-sans: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", system-ui, sans-serif;
+      --font-condensed: "Arial Narrow", "Roboto Condensed", "Noto Sans TC", sans-serif;
+      --shadow: 0 18px 44px rgba(12, 24, 44, .16);
+      --line: rgba(255, 255, 255, .18);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      color: #172033;
+      background: #f4f6f9;
+      letter-spacing: 0;
+    }
+
+    button, a { font: inherit; }
+
+    .compare-shell {
+      min-height: 100vh;
+      background: #eef2f7;
+    }
+
+    .compare-bar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px clamp(16px, 3vw, 34px);
+      border-bottom: 1px solid #d8dee8;
+      background: rgba(247, 249, 252, .94);
+      backdrop-filter: blur(14px);
+    }
+
+    .compare-title {
+      min-width: 230px;
+      font-weight: 800;
+      color: #111827;
+      line-height: 1.25;
+    }
+
+    .compare-title span {
+      display: block;
+      margin-top: 2px;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .switcher {
+      display: flex;
+      gap: 6px;
+      padding: 4px;
+      border: 1px solid #d8dee8;
+      border-radius: 999px;
+      background: #fff;
+    }
+
+    .switcher button {
+      min-height: 38px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 999px;
+      color: #334155;
+      background: transparent;
+      cursor: pointer;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .switcher button[aria-selected="true"] {
+      color: #fff;
+      background: #14213d;
+      box-shadow: 0 8px 18px rgba(20, 33, 61, .22);
+    }
+
+    .view {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .view.active { display: block; }
+
+    .top-nav {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px clamp(18px, 4vw, 56px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      font-weight: 900;
+    }
+
+    .mark {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      flex: 0 0 auto;
+      font-family: var(--font-condensed);
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .brand-text {
+      display: grid;
+      gap: 2px;
+      min-width: 0;
+      line-height: 1.15;
+    }
+
+    .brand-text small {
+      font-family: var(--font-condensed);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .nav-links a {
+      color: inherit;
+      text-decoration: none;
+      opacity: .82;
+    }
+
+    .nav-action {
+      min-height: 42px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 6px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .hero-kicker::before {
+      content: "";
+      display: inline-block;
+      width: 34px;
+      height: 2px;
+      background: currentColor;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 820px;
+      margin-bottom: 18px;
+      font-size: clamp(40px, 7vw, 86px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      max-width: 660px;
+      margin-bottom: 26px;
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.75;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .icon {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid currentColor;
+      border-left: 0;
+      border-bottom: 0;
+      transform: rotate(45deg);
+    }
+
+    .section {
+      padding: clamp(42px, 7vw, 86px) clamp(18px, 4vw, 56px);
+    }
+
+    .section-inner {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 22px;
+      margin-bottom: 24px;
+    }
+
+    .section-head h2 {
+      margin-bottom: 0;
+      font-size: clamp(25px, 3vw, 38px);
+      line-height: 1.15;
+    }
+
+    .section-head p {
+      max-width: 520px;
+      margin-bottom: 0;
+      color: inherit;
+      line-height: 1.7;
+      opacity: .72;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(320px, .88fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .event, .news-row, .rank-row, .info-panel {
+      border-radius: 8px;
+    }
+
+    .event {
+      min-height: 176px;
+      padding: 20px;
+    }
+
+    .event time, .tag, .rank-meta {
+      font-family: var(--font-condensed);
+      font-weight: 900;
+    }
+
+    .event h3 {
+      margin: 12px 0 10px;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    .event p {
+      margin-bottom: 0;
+      line-height: 1.55;
+    }
+
+    .news-list, .ranking-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .news-row {
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      min-height: 74px;
+      padding: 14px 18px;
+    }
+
+    .news-row time {
+      font-family: var(--font-condensed);
+      font-weight: 900;
+    }
+
+    .news-row strong {
+      line-height: 1.45;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .ranking-list {
+      padding: 14px;
+    }
+
+    .rank-row {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr) 78px;
+      gap: 10px;
+      align-items: center;
+      min-height: 58px;
+      padding: 10px 12px;
+    }
+
+    .rank-no {
+      font-family: var(--font-condensed);
+      font-size: 24px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .rank-name {
+      display: grid;
+      gap: 3px;
+      min-width: 0;
+      font-weight: 900;
+    }
+
+    .rank-name span {
+      overflow: hidden;
+      color: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      opacity: .65;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .rank-score {
+      text-align: right;
+      font-family: var(--font-condensed);
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .visual {
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .dartboard {
+      width: min(42vw, 520px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, #d72638 0 6%, #f6f3e9 6.5% 10.5%, #167042 11% 16%, #15161b 16.5% 27%, #f6f3e9 27.5% 38%, #d72638 38.5% 42%, #15161b 42.5% 58%, #f6f3e9 58.5% 72%, #167042 72.5% 76%, #15161b 76.5% 100%);
+      box-shadow: inset 0 0 0 10px rgba(255,255,255,.08), 0 28px 80px rgba(0,0,0,.28);
+    }
+
+    .dartboard::before,
+    .dartboard::after {
+      content: "";
+      position: absolute;
+      inset: 50% auto auto 50%;
+      width: 100%;
+      height: 2px;
+      background: rgba(255,255,255,.35);
+      transform-origin: 0 0;
+    }
+
+    .dartboard::after { transform: rotate(90deg); }
+
+    .dart {
+      width: 260px;
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent 0 7%, #f8fafc 7% 18%, #cbd5e1 18% 26%, #d72638 26% 34%, #1f2937 34% 100%);
+      box-shadow: 0 16px 32px rgba(0,0,0,.22);
+    }
+
+    .dart::after {
+      content: "";
+      position: absolute;
+      right: -28px;
+      top: -14px;
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #d72638 0 48%, transparent 49%), linear-gradient(45deg, #0ea5e9 0 48%, transparent 49%);
+      transform: rotate(45deg);
+    }
+
+    .concept-summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .summary-item {
+      min-height: 104px;
+      padding: 16px;
+      border-radius: 8px;
+    }
+
+    .summary-item b {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .summary-item span {
+      display: block;
+      color: inherit;
+      font-size: 13px;
+      line-height: 1.55;
+      opacity: .72;
+    }
+
+    /* Concept A */
+    .concept-a {
+      color: #f8fafc;
+      background: #071326;
+    }
+
+    .concept-a .top-nav {
+      color: #fff;
+      background: linear-gradient(180deg, rgba(7,19,38,.92), rgba(7,19,38,0));
+    }
+
+    .concept-a .mark {
+      color: #fff;
+      background: radial-gradient(circle at 50% 50%, #d72638 0 22%, #fff 23% 34%, #113b73 35% 100%);
+      box-shadow: 0 0 0 3px rgba(255,255,255,.14);
+    }
+
+    .concept-a .brand-text small { color: #9fb5d4; }
+
+    .concept-a .nav-action {
+      color: #fff;
+      background: #d72638;
+    }
+
+    .concept-a .hero {
+      min-height: 710px;
+      padding: 90px 0 58px;
+      background:
+        linear-gradient(110deg, rgba(7,19,38,.98) 0 45%, rgba(7,19,38,.76) 56%, rgba(7,19,38,.34) 100%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 88px),
+        linear-gradient(135deg, #071326, #12315d 54%, #d72638 130%);
+    }
+
+    .concept-a .hero-kicker { color: #f0c04a; }
+
+    .concept-a h1 strong { color: #f0c04a; }
+
+    .concept-a .hero p { color: #cbd8ea; }
+
+    .concept-a .btn.primary {
+      color: #fff;
+      background: #d72638;
+      box-shadow: 0 16px 30px rgba(215,38,56,.3);
+    }
+
+    .concept-a .btn.secondary {
+      color: #f8fafc;
+      border-color: rgba(255,255,255,.28);
+      background: rgba(255,255,255,.08);
+    }
+
+    .concept-a .dartboard {
+      right: clamp(-150px, -8vw, -42px);
+      top: 96px;
+      opacity: .82;
+      transform: rotate(-12deg);
+    }
+
+    .concept-a .dart {
+      right: 14vw;
+      top: 310px;
+      transform: rotate(-28deg);
+    }
+
+    .concept-a .section {
+      color: #f8fafc;
+      background: #0b1f3a;
+    }
+
+    .concept-a .section.alt {
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    .concept-a .event {
+      border: 1px solid rgba(255,255,255,.12);
+      background: linear-gradient(145deg, rgba(255,255,255,.11), rgba(255,255,255,.04));
+    }
+
+    .concept-a .event time { color: #f0c04a; }
+
+    .concept-a .news-row {
+      border: 1px solid #dfe6f0;
+      background: #fff;
+      box-shadow: 0 10px 26px rgba(20,33,61,.06);
+    }
+
+    .concept-a .news-row time { color: #d72638; }
+
+    .concept-a .tag {
+      color: #0b1f3a;
+      background: #e9eef7;
+    }
+
+    .concept-a .ranking-list {
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .concept-a .rank-row { background: #f8fafc; }
+
+    .concept-a .rank-no { color: #d72638; }
+
+    .concept-a .summary-item {
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.08);
+    }
+
+    /* Concept B */
+    .concept-b {
+      color: #ecfeff;
+      background: #080b12;
+    }
+
+    .concept-b .top-nav {
+      color: #ecfeff;
+      border-bottom: 1px solid rgba(34,211,238,.18);
+      background: rgba(8,11,18,.86);
+    }
+
+    .concept-b .mark {
+      color: #071016;
+      background: conic-gradient(from 45deg, #22d3ee, #e11d48, #22d3ee);
+      box-shadow: 0 0 24px rgba(34,211,238,.36);
+    }
+
+    .concept-b .brand-text small { color: #22d3ee; }
+
+    .concept-b .nav-action {
+      color: #061018;
+      background: #22d3ee;
+    }
+
+    .concept-b .hero {
+      min-height: 710px;
+      padding: 96px 0 58px;
+      background:
+        linear-gradient(100deg, rgba(8,11,18,.98) 0 42%, rgba(8,11,18,.74) 57%, rgba(8,11,18,.32) 100%),
+        linear-gradient(rgba(34,211,238,.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34,211,238,.08) 1px, transparent 1px),
+        #080b12;
+      background-size: auto, 42px 42px, 42px 42px, auto;
+    }
+
+    .concept-b .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(125deg, transparent 0 46%, rgba(34,211,238,.18) 46.2% 46.8%, transparent 47%),
+        linear-gradient(153deg, transparent 0 56%, rgba(225,29,72,.22) 56.2% 56.8%, transparent 57%);
+    }
+
+    .concept-b .hero-kicker { color: #22d3ee; }
+
+    .concept-b h1 {
+      max-width: 900px;
+      font-family: var(--font-condensed);
+      text-transform: uppercase;
+    }
+
+    .concept-b h1 strong { color: #22d3ee; }
+
+    .concept-b .hero p { color: #a7f3ff; }
+
+    .concept-b .btn.primary {
+      color: #061018;
+      background: #22d3ee;
+      box-shadow: 0 0 30px rgba(34,211,238,.3);
+    }
+
+    .concept-b .btn.secondary {
+      color: #ecfeff;
+      border-color: rgba(225,29,72,.5);
+      background: rgba(225,29,72,.1);
+    }
+
+    .concept-b .dartboard {
+      right: clamp(-130px, -7vw, -34px);
+      top: 106px;
+      filter: saturate(1.3) contrast(1.08);
+      opacity: .72;
+      transform: rotate(9deg);
+    }
+
+    .concept-b .dart {
+      right: 12vw;
+      top: 330px;
+      background: linear-gradient(90deg, transparent 0 7%, #22d3ee 7% 18%, #ecfeff 18% 26%, #e11d48 26% 34%, #0f172a 34% 100%);
+      transform: rotate(-18deg);
+    }
+
+    .concept-b .section {
+      color: #ecfeff;
+      background: #0b111d;
+    }
+
+    .concept-b .section.alt {
+      background: #101621;
+    }
+
+    .concept-b .event {
+      border: 1px solid rgba(34,211,238,.22);
+      background: linear-gradient(145deg, rgba(34,211,238,.13), rgba(225,29,72,.08));
+      box-shadow: inset 0 0 30px rgba(34,211,238,.04);
+    }
+
+    .concept-b .event time { color: #22d3ee; }
+
+    .concept-b .news-row {
+      border: 1px solid rgba(34,211,238,.16);
+      background: rgba(255,255,255,.045);
+    }
+
+    .concept-b .news-row time { color: #22d3ee; }
+
+    .concept-b .tag {
+      color: #071016;
+      background: #22d3ee;
+    }
+
+    .concept-b .ranking-list {
+      border: 1px solid rgba(34,211,238,.18);
+      background: rgba(255,255,255,.04);
+    }
+
+    .concept-b .rank-row {
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.045);
+    }
+
+    .concept-b .rank-no { color: #e11d48; }
+
+    .concept-b .summary-item {
+      border: 1px solid rgba(34,211,238,.16);
+      background: rgba(34,211,238,.06);
+    }
+
+    /* Concept C */
+    .concept-c {
+      color: #182235;
+      background: #ffffff;
+    }
+
+    .concept-c .top-nav {
+      color: #182235;
+      border-bottom: 1px solid #e4e8ef;
+      background: #fff;
+    }
+
+    .concept-c .mark {
+      color: #fff;
+      background: #174a8b;
+      box-shadow: inset 0 -8px 0 #c9252d;
+    }
+
+    .concept-c .brand-text small { color: #64748b; }
+
+    .concept-c .nav-action {
+      color: #fff;
+      background: #174a8b;
+    }
+
+    .concept-c .hero {
+      min-height: 650px;
+      padding: 84px 0 46px;
+      border-bottom: 1px solid #e4e8ef;
+      background:
+        linear-gradient(105deg, rgba(255,255,255,.98) 0 48%, rgba(255,255,255,.78) 62%, rgba(255,255,255,.48) 100%),
+        linear-gradient(135deg, #fff 0, #eef4fb 62%, #f7f9fc 100%);
+    }
+
+    .concept-c .hero-kicker { color: #c9252d; }
+
+    .concept-c h1 {
+      max-width: 780px;
+      color: #10213b;
+    }
+
+    .concept-c h1 strong { color: #174a8b; }
+
+    .concept-c .hero p { color: #475569; }
+
+    .concept-c .btn.primary {
+      color: #fff;
+      background: #174a8b;
+      box-shadow: 0 14px 28px rgba(23,74,139,.18);
+    }
+
+    .concept-c .btn.secondary {
+      color: #174a8b;
+      border-color: #c6d3e4;
+      background: #fff;
+    }
+
+    .concept-c .dartboard {
+      right: clamp(-120px, -6vw, -30px);
+      top: 90px;
+      opacity: .28;
+      transform: rotate(-8deg);
+    }
+
+    .concept-c .dart {
+      right: 13vw;
+      top: 312px;
+      opacity: .58;
+      transform: rotate(-24deg);
+    }
+
+    .concept-c .section {
+      color: #182235;
+      background: #fff;
+    }
+
+    .concept-c .section.alt {
+      background: #f5f7fb;
+    }
+
+    .concept-c .event {
+      border: 1px solid #dde5ef;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(23,34,53,.05);
+    }
+
+    .concept-c .event time { color: #c9252d; }
+
+    .concept-c .news-row {
+      border: 1px solid #dde5ef;
+      background: #fff;
+    }
+
+    .concept-c .news-row time { color: #174a8b; }
+
+    .concept-c .tag {
+      color: #174a8b;
+      background: #e8f0fa;
+    }
+
+    .concept-c .ranking-list {
+      border: 1px solid #dde5ef;
+      background: #fff;
+    }
+
+    .concept-c .rank-row {
+      border-bottom: 1px solid #edf1f6;
+      border-radius: 0;
+      background: #fff;
+    }
+
+    .concept-c .rank-row:last-child { border-bottom: 0; }
+
+    .concept-c .rank-no { color: #c9252d; }
+
+    .concept-c .summary-item {
+      border: 1px solid #dde5ef;
+      background: #fff;
+    }
+
+    @media (max-width: 900px) {
+      .compare-bar {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .switcher {
+        overflow-x: auto;
+        justify-content: flex-start;
+      }
+
+      .top-nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      .hero {
+        min-height: auto !important;
+        padding-bottom: 70px !important;
+      }
+
+      .dartboard {
+        width: 360px;
+        right: -190px !important;
+        top: 160px !important;
+      }
+
+      .dart {
+        display: none;
+      }
+
+      .grid-3,
+      .grid-2,
+      .concept-summary {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .news-row {
+        grid-template-columns: 88px minmax(0, 1fr);
+      }
+
+      .news-row .tag {
+        grid-column: 2;
+        justify-self: start;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .compare-title { min-width: 0; }
+      .switcher button { padding: 0 12px; }
+      .brand { width: 100%; }
+      .brand-text strong { font-size: 15px; }
+      .nav-links { gap: 14px; font-size: 13px; }
+      h1 { font-size: clamp(34px, 12vw, 52px); }
+      .hero p { font-size: 16px; }
+      .btn { width: 100%; }
+      .news-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .news-row .tag { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="compare-shell">
+    <header class="compare-bar">
+      <div class="compare-title">
+        視覺設計三方案比較
+        <span>同一套內容，切換不同品牌氣質與版型語言</span>
+      </div>
+      <div class="switcher" role="tablist" aria-label="設計方案切換">
+        <button type="button" role="tab" aria-selected="true" data-target="concept-a">A 國家隊專業風</button>
+        <button type="button" role="tab" aria-selected="false" data-target="concept-b">B 現代競技科技風</button>
+        <button type="button" role="tab" aria-selected="false" data-target="concept-c">C 正式協會資訊風</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="view concept-a active" id="concept-a" aria-label="國家隊專業風">
+        <nav class="top-nav">
+          <div class="brand">
+            <div class="mark">CTDF</div>
+            <div class="brand-text">
+              <strong>中華民國競技飛鏢總會</strong>
+              <small>CHINESE TAIPEI DARTS FEDERATION</small>
+            </div>
+          </div>
+          <div class="nav-links">
+            <a href="#">最新公告</a>
+            <a href="#">賽事資訊</a>
+            <a href="#">排名成績</a>
+            <a href="#">選手資料庫</a>
+            <button class="nav-action">會員登入</button>
+          </div>
+        </nav>
+        <header class="hero">
+          <div class="visual dartboard"></div>
+          <div class="visual dart"></div>
+          <div class="hero-inner">
+            <div class="hero-kicker">OFFICIAL FEDERATION</div>
+            <h1>中華民國競技飛鏢總會 <strong>官方賽事平台</strong></h1>
+            <p>整合公告、賽事報名、選手積分與國際交流資訊，建立台灣競技飛鏢清楚可信的官方入口。</p>
+            <div class="cta-row">
+              <a class="btn primary" href="#"><span class="icon"></span>查看近期賽事</a>
+              <a class="btn secondary" href="#">最新公告</a>
+            </div>
+            <div class="concept-summary">
+              <div class="summary-item"><b>風格調性</b><span>正式、厚重、具國家代表隊形象，適合作為長期官方主視覺。</span></div>
+              <div class="summary-item"><b>配色方向</b><span>深海軍藍、競技紅、金色點綴，建立榮譽感與專業感。</span></div>
+              <div class="summary-item"><b>字體排版</b><span>大標題強勢，數字與賽事資訊使用窄版運動感字體。</span></div>
+              <div class="summary-item"><b>版型結構</b><span>首頁先給品牌與賽事入口，再接公告、賽程與排名。</span></div>
+            </div>
+          </div>
+        </header>
+        <section class="section">
+          <div class="section-inner">
+            <div class="section-head">
+              <h2>近期賽事</h2>
+              <p>以清楚狀態標籤與日期讓選手快速判斷是否報名、是否截止。</p>
+            </div>
+            <div class="grid-3">
+              <article class="event"><time>2026.06.14</time><h3>全國排名積分賽 台北站</h3><p>報名中｜台北市｜公開組、女子組、青少年組</p></article>
+              <article class="event"><time>2026.07.05</time><h3>代表隊選拔賽</h3><p>即將開放｜國家訓練中心｜依公告資格審核</p></article>
+              <article class="event"><time>2026.08.22</time><h3>城市巡迴賽 高雄站</h3><p>籌備中｜高雄市｜地方協會協辦</p></article>
+            </div>
+          </div>
+        </section>
+        <section class="section alt">
+          <div class="section-inner grid-2">
+            <div>
+              <div class="section-head"><h2>最新公告</h2></div>
+              <div class="news-list">
+                <div class="news-row"><time>05.20</time><strong>2026 年度裁判講習與認證時程公告</strong><span class="tag">訓練認證</span></div>
+                <div class="news-row"><time>05.16</time><strong>全國排名積分賽台北站報名辦法</strong><span class="tag">賽事公告</span></div>
+                <div class="news-row"><time>05.08</time><strong>國際賽事代表隊選手遴選原則</strong><span class="tag">代表隊</span></div>
+              </div>
+            </div>
+            <aside>
+              <div class="section-head"><h2>積分榜</h2></div>
+              <div class="ranking-list">
+                <div class="rank-row"><div class="rank-no">01</div><div class="rank-name">林冠廷<span>男子公開組｜台北市</span></div><div class="rank-score">1280</div></div>
+                <div class="rank-row"><div class="rank-no">02</div><div class="rank-name">陳宇翔<span>男子公開組｜新北市</span></div><div class="rank-score">1215</div></div>
+                <div class="rank-row"><div class="rank-no">03</div><div class="rank-name">張雅涵<span>女子公開組｜台中市</span></div><div class="rank-score">1188</div></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </section>
+
+      <section class="view concept-b" id="concept-b" aria-label="現代競技科技風">
+        <nav class="top-nav">
+          <div class="brand">
+            <div class="mark">180</div>
+            <div class="brand-text">
+              <strong>中華民國競技飛鏢總會</strong>
+              <small>PERFORMANCE DATA HUB</small>
+            </div>
+          </div>
+          <div class="nav-links">
+            <a href="#">Live</a>
+            <a href="#">Matches</a>
+            <a href="#">Ranking</a>
+            <a href="#">Players</a>
+            <button class="nav-action">登入後台</button>
+          </div>
+        </nav>
+        <header class="hero">
+          <div class="visual dartboard"></div>
+          <div class="visual dart"></div>
+          <div class="hero-inner">
+            <div class="hero-kicker">MATCH READY</div>
+            <h1>台灣競技飛鏢 <strong>即時賽事與積分中心</strong></h1>
+            <p>用更有速度感的介面呈現賽程、排名與選手資料，適合導入直播、即時比分與數據視覺化。</p>
+            <div class="cta-row">
+              <a class="btn primary" href="#"><span class="icon"></span>進入賽事中心</a>
+              <a class="btn secondary" href="#">查看積分榜</a>
+            </div>
+            <div class="concept-summary">
+              <div class="summary-item"><b>風格調性</b><span>年輕、銳利、速度感強，偏向競技平台與賽事數據產品。</span></div>
+              <div class="summary-item"><b>配色方向</b><span>黑底、電光藍、亮紅，用高對比建立即時戰況感。</span></div>
+              <div class="summary-item"><b>字體排版</b><span>標題更窄、更像運動數據看板，適合比分與排名。</span></div>
+              <div class="summary-item"><b>版型結構</b><span>強調資訊儀表板，公告也變得像賽事動態流。</span></div>
+            </div>
+          </div>
+        </header>
+        <section class="section">
+          <div class="section-inner">
+            <div class="section-head">
+              <h2>Upcoming Matches</h2>
+              <p>把賽事包裝成戰況入口，適合未來串接即時比分、直播或選手戰績。</p>
+            </div>
+            <div class="grid-3">
+              <article class="event"><time>JUN 14</time><h3>Ranking Series Taipei</h3><p>REG OPEN｜Taipei｜Open, Women, Youth</p></article>
+              <article class="event"><time>JUL 05</time><h3>National Team Trials</h3><p>QUALIFYING｜Training Center｜Selection Pool</p></article>
+              <article class="event"><time>AUG 22</time><h3>City Tour Kaohsiung</h3><p>PREP｜Kaohsiung｜Regional Circuit</p></article>
+            </div>
+          </div>
+        </section>
+        <section class="section alt">
+          <div class="section-inner grid-2">
+            <div>
+              <div class="section-head"><h2>News Feed</h2></div>
+              <div class="news-list">
+                <div class="news-row"><time>05.20</time><strong>裁判講習與認證時程更新</strong><span class="tag">CERT</span></div>
+                <div class="news-row"><time>05.16</time><strong>台北站報名辦法與參賽限制</strong><span class="tag">OPEN</span></div>
+                <div class="news-row"><time>05.08</time><strong>代表隊遴選原則發布</strong><span class="tag">TEAM</span></div>
+              </div>
+            </div>
+            <aside>
+              <div class="section-head"><h2>Top Ranking</h2></div>
+              <div class="ranking-list">
+                <div class="rank-row"><div class="rank-no">01</div><div class="rank-name">LIN K.T.<span>Open｜Taipei</span></div><div class="rank-score">1280</div></div>
+                <div class="rank-row"><div class="rank-no">02</div><div class="rank-name">CHEN Y.S.<span>Open｜New Taipei</span></div><div class="rank-score">1215</div></div>
+                <div class="rank-row"><div class="rank-no">03</div><div class="rank-name">CHANG Y.H.<span>Women｜Taichung</span></div><div class="rank-score">1188</div></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </section>
+
+      <section class="view concept-c" id="concept-c" aria-label="正式協會資訊風">
+        <nav class="top-nav">
+          <div class="brand">
+            <div class="mark">會</div>
+            <div class="brand-text">
+              <strong>中華民國競技飛鏢總會</strong>
+              <small>OFFICIAL INFORMATION PORTAL</small>
+            </div>
+          </div>
+          <div class="nav-links">
+            <a href="#">關於總會</a>
+            <a href="#">公告訊息</a>
+            <a href="#">賽事資訊</a>
+            <a href="#">文件下載</a>
+            <button class="nav-action">聯絡我們</button>
+          </div>
+        </nav>
+        <header class="hero">
+          <div class="visual dartboard"></div>
+          <div class="visual dart"></div>
+          <div class="hero-inner">
+            <div class="hero-kicker">官方資訊入口</div>
+            <h1>中華民國競技飛鏢總會 <strong>資訊服務平台</strong></h1>
+            <p>以正式、清楚、易維護的版面呈現總會公告、組織資訊、賽事辦法與下載文件，適合強化制度與公信力。</p>
+            <div class="cta-row">
+              <a class="btn primary" href="#"><span class="icon"></span>瀏覽公告</a>
+              <a class="btn secondary" href="#">文件下載</a>
+            </div>
+            <div class="concept-summary">
+              <div class="summary-item"><b>風格調性</b><span>穩重、親近行政機關與協會網站，易讓合作單位理解。</span></div>
+              <div class="summary-item"><b>配色方向</b><span>白底、官方藍、紅色輔助，整體乾淨保守。</span></div>
+              <div class="summary-item"><b>字體排版</b><span>中文可讀性優先，資訊層級比視覺衝擊更重要。</span></div>
+              <div class="summary-item"><b>版型結構</b><span>公告與文件放前面，排名和賽事作為次級資訊區塊。</span></div>
+            </div>
+          </div>
+        </header>
+        <section class="section">
+          <div class="section-inner">
+            <div class="section-head">
+              <h2>賽事資訊</h2>
+              <p>以正式公告語氣呈現賽事清單，適合報名辦法、競賽規程與附件下載。</p>
+            </div>
+            <div class="grid-3">
+              <article class="event"><time>2026 年 6 月 14 日</time><h3>全國排名積分賽台北站</h3><p>狀態：報名中｜地點：台北市｜組別：公開組、女子組、青少年組</p></article>
+              <article class="event"><time>2026 年 7 月 5 日</time><h3>代表隊選拔賽</h3><p>狀態：即將開放｜地點：國家訓練中心｜依公告資格審核</p></article>
+              <article class="event"><time>2026 年 8 月 22 日</time><h3>城市巡迴賽高雄站</h3><p>狀態：籌備中｜地點：高雄市｜地方協會協辦</p></article>
+            </div>
+          </div>
+        </section>
+        <section class="section alt">
+          <div class="section-inner grid-2">
+            <div>
+              <div class="section-head"><h2>公告訊息</h2></div>
+              <div class="news-list">
+                <div class="news-row"><time>2026.05.20</time><strong>公告 2026 年度裁判講習與認證時程</strong><span class="tag">訓練認證</span></div>
+                <div class="news-row"><time>2026.05.16</time><strong>公告全國排名積分賽台北站報名辦法</strong><span class="tag">賽事公告</span></div>
+                <div class="news-row"><time>2026.05.08</time><strong>公告國際賽事代表隊選手遴選原則</strong><span class="tag">代表隊</span></div>
+              </div>
+            </div>
+            <aside>
+              <div class="section-head"><h2>排名摘要</h2></div>
+              <div class="ranking-list">
+                <div class="rank-row"><div class="rank-no">1</div><div class="rank-name">林冠廷<span>男子公開組｜台北市</span></div><div class="rank-score">1280</div></div>
+                <div class="rank-row"><div class="rank-no">2</div><div class="rank-name">陳宇翔<span>男子公開組｜新北市</span></div><div class="rank-score">1215</div></div>
+                <div class="rank-row"><div class="rank-no">3</div><div class="rank-name">張雅涵<span>女子公開組｜台中市</span></div><div class="rank-score">1188</div></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll(".switcher button");
+    const views = document.querySelectorAll(".view");
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = button.dataset.target;
+        buttons.forEach((item) => item.setAttribute("aria-selected", String(item === button)));
+        views.forEach((view) => view.classList.toggle("active", view.id === target));
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+  </script>
+</body>
+</html>
