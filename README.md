@@ -125,27 +125,47 @@ B 案若採 Vercel，DNS 需由網域管理者設定：
 /news                     新聞公告
 /events                   賽事資訊
 /events/calendar          賽事行事曆
+/events/list              賽事列表
 /events/results           成績公告
 /rankings                 排名成績
+/rankings/main            選手積分排名
+/rankings/youth           青少年排名
+/rankings/history         歷史成績查詢（第二階段）
+/rankings/region          分區排名（第二階段）
 /players                  選手資料庫
 /about                    關於總會
 /about/organization       組織架構
 /about/rules              章程規則
 /about/contact            聯絡我們
 /about/privacy            隱私權政策
+/about/citizens-sports-games 全民運推動專區（第二階段）
+/about/development        推廣成果頁（第二階段）
 /downloads                文件下載
+/downloads/forms          申請表格下載
+/downloads/rules          競賽規程下載
+/downloads/annual         年報 / 大會手冊（第二階段）
+/downloads/reports        成果報告下載（第二階段）
 /fairplay                 反禁藥 / 公平競技
+/media/photos             活動相簿（第二階段）
+/media/videos             影片專區（第二階段）
+/media/press              媒體報導（第二階段）
 /member/login             會員登入 / 註冊
 /member/profile           會員資料
+/member/fee               會費繳納狀態（第二階段）
 /admin                    後台首頁
 /admin/news               新聞公告管理
+/admin/pages              靜態頁面管理
 /admin/events             賽事管理
 /admin/rankings           排名管理
 /admin/players            選手管理
 /admin/members            會員管理
 /admin/downloads          文件管理
+/admin/media              媒體管理（第二階段）
+/admin/citizens-sports-games 全民運推動資料管理（第二階段）
 /admin/settings/features  功能啟用設定
 /admin/settings/roles     角色權限設定
+/admin/settings/admins    管理員帳號管理
+/admin/settings/site      網站基本設定
 /admin/logs               操作紀錄
 ```
 
