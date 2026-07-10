@@ -1,0 +1,51 @@
+CTDF Demo route list
+
+/
+/news/ 新聞公告
+/news/demo-announcement/ 新聞詳細頁示意
+/events/ 賽事資訊
+/events/calendar/ 賽事行事曆
+/events/list/ 賽事列表
+/events/results/ 成績公告
+/events/demo-event/ 賽事詳細頁示意
+/rankings/ 排名成績
+/rankings/main/ 選手積分排名
+/rankings/youth/ 青少年排名
+/rankings/history/ 歷史成績查詢
+/rankings/region/ 分區排名
+/players/ 選手資料庫
+/players/demo-player/ 選手個人頁示意
+/about/ 關於總會
+/about/organization/ 組織架構
+/about/rules/ 章程規則
+/about/contact/ 聯絡我們
+/about/privacy/ 隱私權政策
+/about/citizens-sports-games/ 全民運推動專區
+/about/development/ 推廣成果頁
+/downloads/ 文件下載
+/downloads/forms/ 申請表格下載
+/downloads/rules/ 競賽規程下載
+/downloads/annual/ 年報 / 大會手冊
+/downloads/reports/ 成果報告下載
+/fairplay/ 反禁藥 / 公平競技
+/media/photos/ 活動相簿
+/media/videos/ 影片專區
+/media/press/ 媒體報導
+/member/login/ 會員登入 / 註冊
+/member/profile/ 會員資料
+/member/fee/ 會費繳納狀態
+/admin/ 後台首頁
+/admin/news/ 新聞公告管理
+/admin/pages/ 靜態頁面管理
+/admin/events/ 賽事管理
+/admin/rankings/ 排名管理
+/admin/players/ 選手管理
+/admin/members/ 會員管理
+/admin/downloads/ 文件管理
+/admin/media/ 媒體管理
+/admin/citizens-sports-games/ 全民運推動資料管理
+/admin/settings/features/ 功能啟用設定
+/admin/settings/roles/ 角色權限設定
+/admin/settings/admins/ 管理員帳號管理
+/admin/settings/site/ 網站基本設定
+/admin/logs/ 操作紀錄

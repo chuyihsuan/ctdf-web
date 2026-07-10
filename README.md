@@ -19,6 +19,8 @@
 
 正式開發時，建議轉為 Next.js 專案，並依計畫書採用 Vercel + Supabase 作為低維運優先方案。
 
+第一階段已建立靜態首頁 Demo：`index.html`，並依 Sitemap 建立各路由資料夾與 demo 頁。交付內容、驗收對照與 Vercel / GitHub Pages 部署步驟請見 `docs/PHASE_1_DEMO.md`。
+
 ## 功能範圍
 
 ### MVP 建議啟用

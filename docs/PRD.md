@@ -1,278 +1,278 @@
-# Product Requirements Document (PRD)
+# 產品需求文件（PRD）
 
-Project: 中華民國競技飛鏢總會官方網站  
-Version: 1.0  
-Source plan: 競技飛鏢總會_網站建置計畫書_v11_AB代管方案比較版  
-Target launch: 2026 年 10 月中
+專案：中華民國競技飛鏢總會官方網站  
+版本：1.0  
+依據計畫書：競技飛鏢總會_網站建置計畫書_v11_AB代管方案比較版  
+目標上線時間：2026 年 10 月中
 
-## 1. Product Vision
+## 1. 產品願景
 
-Build the official digital platform for the Chinese Taipei Dart Federation (CTDF), serving as the authoritative source for announcements, events, rankings, player information, membership services, downloads, and administrative operations.
+建立中華民國競技飛鏢總會（CTDF）的官方數位平台，作為公告、賽事、排名、選手資料、會員服務、文件下載與行政管理的權威資訊來源。
 
-The website should improve public trust, reduce manual administrative work, and create a maintainable foundation for future international, school, youth, and Citizens Sports Games related development.
+網站應提升總會對外公信力，減少行政人工作業，並為未來國際交流、校園推廣、青少年發展與全民運推動建立可維護的數位基礎。
 
-## 2. Product Goals
+## 2. 產品目標
 
-| Goal | Description | Success Indicator |
+| 目標 | 說明 | 成功指標 |
 |---|---|---|
-| Official identity | Present CTDF as the official national federation for hard and electronic darts. | Website clearly communicates CTDF name, role, contact, rules, and official domain. |
-| Member service | Provide self-service information and member account foundation. | Members can login and maintain basic profile in MVP. |
-| Event transparency | Publish events, rules, results, and downloads in a consistent place. | Event pages replace scattered LINE/email/manual announcements. |
-| Ranking credibility | Publish ranking data in a searchable, filterable way. | Rankings are accessible by type/group and maintained through backend. |
-| Admin efficiency | Let authorized admins maintain content without code changes. | Secretarial/admin users can update routine content in backend. |
-| Low-maintenance launch | Use managed platforms where possible. | B plan can launch with Vercel + Supabase and limited infrastructure work. |
+| 官方識別 | 呈現 CTDF 作為硬式與電子飛鏢全國總會的正式形象。 | 網站清楚呈現總會名稱、角色、聯絡方式、章程規則與正式網域。 |
+| 會員服務 | 建立會員登入與基本自助服務基礎。 | MVP 階段會員可登入並維護基本個人資料。 |
+| 賽事透明 | 統一發布賽事、規程、成績與下載文件。 | 賽事頁可取代分散於 LINE、Email 或人工傳遞的公告方式。 |
+| 排名可信 | 以可查詢、可篩選的方式公布排名資料。 | 排名可依項目與組別查詢，並由後台維護。 |
+| 行政效率 | 授權管理者可自行維護網站內容。 | 秘書處或管理者可在後台完成日常內容更新。 |
+| 低維運上線 | 優先採用代管服務降低維護負擔。 | B 案可用 Vercel + Supabase 快速上線，減少基礎設施維運。 |
 
-## 3. Target Users
+## 3. 目標使用者
 
-### 3.1 Public Visitors
+### 3.1 一般訪客
 
-People who need official CTDF information:
+需要查詢總會官方資訊的人：
 
-- Players
-- Parents
-- Schools
-- Media
-- Government or local sports offices
-- International organizations
+- 選手
+- 家長
+- 學校
+- 媒體
+- 政府或地方體育單位
+- 國際組織或合作單位
 
-Top needs:
+主要需求：
 
-- See latest announcements
-- Find events and rules
-- Download forms
-- Check rankings and results
-- Contact CTDF
+- 查看最新公告
+- 查詢賽事與規程
+- 下載表格或文件
+- 查詢排名與成績
+- 聯絡總會
 
-### 3.2 Members and Players
+### 3.2 會員與選手
 
-Registered members and players who need:
+已註冊會員與選手需要：
 
-- Account login
-- Profile maintenance
-- Visibility control for public profile fields
-- Event/result/ranking lookup
+- 帳號登入
+- 個人資料維護
+- 公開個人資料欄位控制
+- 賽事、成績與排名查詢
 
-### 3.3 CTDF Admin Users
+### 3.3 總會管理者
 
-Internal users who need:
+內部使用者需要：
 
-- News and page editing
-- Event/result/ranking updates
-- Member review
-- File upload
-- Permission control
-- Audit trail
+- 新聞與靜態頁面編輯
+- 賽事、成績與排名更新
+- 會員審核
+- 檔案上傳
+- 權限控制
+- 操作紀錄追蹤
 
-## 4. Product Scope by Phase
+## 4. 產品範圍與階段對應
 
-The v11 project plan defines four calendar stages from July to mid-October 2026. This PRD organizes the same scope into five product delivery phases so the demo, frontend, database, admin, and launch-readiness work can be reviewed independently.
+v11 計畫書以 2026 年 7 月至 10 月中規劃四個時程階段。本 PRD 將相同範圍整理為五個產品交付階段，讓展示網站、前台、資料庫、後台與上線準備可分開審閱。
 
-| PRD phase | Related v11 calendar stage |
+| PRD 階段 | 對應 v11 計畫書時程 |
 |---|---|
-| Phase 1: Development Environment and Demo | Stage 1: July decision and foundation preparation |
-| Phase 2: Frontend MVP | Stage 1-2: July foundation and August core frontend/backend development |
-| Phase 3: Supabase Database | Stage 1-3: July schema, August core data, September content/data preparation |
-| Phase 4: Admin Management | Stage 1-2: July backend foundation and August core admin workflows |
-| Phase 5: Production Readiness | Stage 4: October validation, training, DNS, and official launch |
+| 階段一：開發環境與展示網站 | 第一階段：7 月決策與基礎準備 |
+| 階段二：前台 MVP | 第一至第二階段：7 月基礎建置、8 月核心前後台開發 |
+| 階段三：Supabase 資料庫 | 第一至第三階段：7 月 Schema、8 月核心資料、9 月內容與資料整備 |
+| 階段四：後台管理 | 第一至第二階段：7 月後台基礎、8 月核心管理流程 |
+| 階段五：正式上線準備 | 第四階段：10 月驗收、訓練、DNS 與正式上線 |
 
-## Phase 1: Development Environment and Demo
+## 階段一：開發環境與展示網站
 
-### Objective
+### 目標
 
-Create a working demo path so stakeholders can review design and information architecture before full development.
+建立可展示的網站雛形，讓會長與總會審閱視覺方向、資訊架構與首頁內容排序，再進入完整開發。
 
-### User Value
+### 使用者價值
 
-- President and CTDF reviewers can open a URL on mobile.
-- Design direction can be reviewed without local files or ZIP downloads.
-- Development workflow becomes repeatable.
+- 審閱者可直接用手機開啟網址。
+- 設計方向可透過瀏覽器審閱，不需傳 ZIP 或本機檔案。
+- 開發流程可被重複使用，後續可接 Vercel 或 GitHub Pages。
 
-### Product Requirements
+### 產品需求
 
-| ID | Requirement | Priority |
+| ID | 需求 | 優先級 |
 |---|---|---|
-| PRD-1.1 | Provide a public demo URL using Vercel Free or GitHub Pages. | Must |
-| PRD-1.2 | Demo must not contain real personal data. | Must |
-| PRD-1.3 | README must explain project purpose, architecture, deployment options, and security notes. | Must |
-| PRD-1.4 | Demo should be reviewable on mobile without horizontal scrolling. | Must |
+| PRD-1.1 | 提供 Vercel Free 或 GitHub Pages 的公開展示網址。 | 必要 |
+| PRD-1.2 | Demo 不得包含真實個資。 | 必要 |
+| PRD-1.3 | README 需說明專案目的、架構、部署方式與安全注意事項。 | 必要 |
+| PRD-1.4 | Demo 需可在手機瀏覽，且不得出現水平捲動。 | 必要 |
 
-### Phase Success Metrics
+### 成功指標
 
-- Demo URL is shared and opens successfully.
-- Reviewers can identify design direction and major site sections.
-- Feedback is collected before full MVP build.
+- 展示網址可成功開啟。
+- 審閱者可辨識網站設計方向與主要區塊。
+- 完整 MVP 開發前可先收斂回饋。
 
-## Phase 2: Frontend MVP
+## 階段二：前台 MVP
 
-### Objective
+### 目標
 
-Build a complete public-facing MVP that visitors can browse without login.
+建立不需登入即可瀏覽的官方網站前台 MVP。
 
-### User Value
+### 使用者價值
 
-- Public visitors can find CTDF official information.
-- Members and players can check announcements, events, rankings, and downloads.
-- CTDF can review site structure before data-driven backend is completed.
+- 一般訪客可查詢總會官方資訊。
+- 會員與選手可查詢公告、賽事、排名與文件。
+- 總會可在資料庫與後台完全完成前，先確認網站資訊架構。
 
-### Product Requirements
+### 產品需求
 
-| ID | Feature | Requirement | Priority |
+| ID | 功能 | 需求 | 優先級 |
 |---|---|---|---|
-| PRD-2.1 | Home | Show key information in first screen: announcement, events, news, quick actions. | Must |
-| PRD-2.2 | News | Provide list and detail views. | Must |
-| PRD-2.3 | Events | Provide event list, details, rules/downloads, and result links. | Must |
-| PRD-2.4 | Rankings | Provide overall and youth ranking views. | Must |
-| PRD-2.5 | Players | Provide player list, search, and profile views. | Must |
-| PRD-2.6 | About | Provide intro, organization, rules, contact, privacy policy. | Must |
-| PRD-2.7 | Downloads | Provide application forms and competition rules. | Must |
-| PRD-2.8 | Fair Play | Provide anti-doping and fair competition resources. | Must |
-| PRD-2.9 | Mobile UX | All MVP pages must be mobile-first and usable on target widths. | Must |
+| PRD-2.1 | 首頁 | 首屏需呈現公告、賽事、新聞與快速入口。 | 必要 |
+| PRD-2.2 | 新聞公告 | 提供列表與詳細頁。 | 必要 |
+| PRD-2.3 | 賽事資訊 | 提供賽事列表、詳細頁、規程下載與成績連結。 | 必要 |
+| PRD-2.4 | 排名成績 | 提供總排名與青少年排名。 | 必要 |
+| PRD-2.5 | 選手資料庫 | 提供選手列表、搜尋與個人頁。 | 必要 |
+| PRD-2.6 | 關於總會 | 提供簡介、組織、章程、聯絡與隱私權政策。 | 必要 |
+| PRD-2.7 | 文件下載 | 提供申請表格與競賽規程。 | 必要 |
+| PRD-2.8 | 反禁藥 / 公平競技 | 提供反禁藥與公平競技資源。 | 必要 |
+| PRD-2.9 | 行動裝置體驗 | 所有 MVP 頁面需 Mobile First，並可於目標尺寸正常使用。 | 必要 |
 
-### MVP Content Priorities
+### MVP 內容優先順序
 
-1. Latest announcement
-2. Upcoming event
-3. Event rules/downloads
-4. Ranking summary
-5. Contact and association identity
-6. Member login entry point
+1. 最新置頂公告
+2. 近期賽事
+3. 賽事規程與下載
+4. 排名摘要
+5. 聯絡方式與總會識別
+6. 會員登入入口
 
-### Phase Success Metrics
+### 成功指標
 
-- MVP pages are browsable.
-- Navigation works on desktop and mobile.
-- Reviewers can validate information structure.
+- MVP 頁面可完整瀏覽。
+- 桌機與手機導覽皆可使用。
+- 審閱者可確認資訊架構符合總會需求。
 
-## Phase 3: Supabase Database
+## 階段三：Supabase 資料庫
 
-### Objective
+### 目標
 
-Make website content data-driven using Supabase, while preserving security and future admin workflows.
+讓網站內容逐步資料化，並保留後台維護、權限控管與正式營運安全需求。
 
-### User Value
+### 使用者價值
 
-- Admins can eventually update content without developer help.
-- Data can be reused across pages.
-- Rankings/events/players become structured and searchable.
+- 管理者未來可不透過工程師更新內容。
+- 同一份資料可在多個頁面重複使用。
+- 賽事、排名與選手資料可被結構化查詢。
 
-### Product Requirements
+### 產品需求
 
-| ID | Requirement | Priority |
+| ID | 需求 | 優先級 |
 |---|---|---|
-| PRD-3.1 | Define production-ready schema for core modules. | Must |
-| PRD-3.2 | Seed test data for news, events, rankings, players, downloads. | Must |
-| PRD-3.3 | Connect frontend pages to Supabase test data. | Must |
-| PRD-3.4 | Use `type` or equivalent field for hard/electronic darts. | Must |
-| PRD-3.5 | Prepare RLS model before production member data. | Must |
-| PRD-3.6 | Support future Pro upgrade without schema rewrite. | Should |
+| PRD-3.1 | 定義核心模組可用於正式營運的資料表 schema。 | 必要 |
+| PRD-3.2 | 建立新聞、賽事、排名、選手與文件的測試資料。 | 必要 |
+| PRD-3.3 | 前台頁面可讀取 Supabase 測試資料。 | 必要 |
+| PRD-3.4 | 使用 `type` 或等效欄位區分硬式 / 電子飛鏢。 | 必要 |
+| PRD-3.5 | 正式會員資料上線前需完成 RLS 權限模型。 | 必要 |
+| PRD-3.6 | 資料模型需支援未來從 Free 升級 Pro，不需重寫 schema。 | 建議 |
 
-### Data Principles
+### 資料原則
 
-- Use structured data instead of embedding text in pages.
-- Keep sensitive member data private by default.
-- Public player fields must be explicitly approved.
-- Files and images need rights/verification status.
-- Admin actions should be auditable.
+- 優先使用結構化資料，不把重要資料寫死在頁面。
+- 會員敏感資料預設不公開。
+- 選手公開欄位需經總會確認。
+- 檔案與圖片需有來源、授權或審核狀態。
+- 後台操作需可稽核。
 
-### Phase Success Metrics
+### 成功指標
 
-- Frontend reads test data from Supabase.
-- Database schema covers MVP modules.
-- No real personal data is required for development testing.
+- 前台可讀取 Supabase 測試資料。
+- 資料庫 schema 涵蓋 MVP 模組。
+- 開發測試不需要使用真實會員個資。
 
-## Phase 4: Admin Management
+## 階段四：後台管理
 
-### Objective
+### 目標
 
-Build the backend workflows required for CTDF staff and authorized admins to maintain the website.
+建立總會秘書處與授權管理者可維護網站的後台流程。
 
-### User Value
+### 使用者價值
 
-- CTDF can publish updates quickly.
-- Secretarial and event users can manage their own modules.
-- Role-based permissions reduce operational and privacy risk.
+- 總會可快速發布更新。
+- 秘書處、賽事與內容窗口可各自維護授權模組。
+- 角色權限可降低作業與個資風險。
 
-### Product Requirements
+### 產品需求
 
-| ID | Module | Requirement | Priority |
+| ID | 模組 | 需求 | 優先級 |
 |---|---|---|---|
-| PRD-4.1 | Admin login | Admin users can login through Supabase Auth. | Must |
-| PRD-4.2 | Roles | Admin permissions map to CTDF role types. | Must |
-| PRD-4.3 | Dashboard | Show tasks, recent events, member applications, reminders. | Must |
-| PRD-4.4 | News CMS | Draft, review, publish, pin, archive news. | Must |
-| PRD-4.5 | Event admin | Maintain events, rules, links, results. | Must |
-| PRD-4.6 | Ranking admin | Import or update ranking records. | Must |
-| PRD-4.7 | Player admin | Maintain public player profile fields. | Must |
-| PRD-4.8 | Member admin | Review and manage member accounts. | Must |
-| PRD-4.9 | Downloads admin | Upload, categorize, publish, archive files. | Must |
-| PRD-4.10 | Audit logs | Record critical create/update/delete/publish actions. | Must |
+| PRD-4.1 | 後台登入 | 管理者可透過 Supabase Auth 登入。 | 必要 |
+| PRD-4.2 | 角色權限 | 管理權限需對應總會不同角色。 | 必要 |
+| PRD-4.3 | 儀表板 | 顯示待辦事項、近期賽事、會員申請與提醒。 | 必要 |
+| PRD-4.4 | 新聞 CMS | 支援草稿、審核、發布、置頂與封存。 | 必要 |
+| PRD-4.5 | 賽事管理 | 維護賽事、規程、報名連結與成績。 | 必要 |
+| PRD-4.6 | 排名管理 | 匯入或更新排名紀錄。 | 必要 |
+| PRD-4.7 | 選手管理 | 維護選手公開資料欄位。 | 必要 |
+| PRD-4.8 | 會員管理 | 審核與管理會員帳號。 | 必要 |
+| PRD-4.9 | 文件管理 | 上傳、分類、發布與封存文件。 | 必要 |
+| PRD-4.10 | 操作紀錄 | 記錄重要新增、修改、刪除、發布與匯出行為。 | 必要 |
 
-### Admin UX Principles
+### 後台使用體驗原則
 
-- Prefer simple forms and tables over complex dashboards.
-- Every publishable item should have status.
-- Destructive actions should require confirmation.
-- Sensitive export actions should be permission controlled.
-- Admin screens should be dense, clear, and operational.
+- 優先使用清楚的表單與表格，不做過度複雜的儀表板。
+- 可發布內容皆需有狀態。
+- 刪除或重大變更需二次確認。
+- 敏感匯出功能需權限控管。
+- 後台畫面需適合日常行政操作，資訊密度清楚。
 
-### Phase Success Metrics
+### 成功指標
 
-- Admin users can maintain core MVP content.
-- Permissions prevent unauthorized edits.
-- Audit logs record important actions.
+- 管理者可維護核心 MVP 內容。
+- 權限可阻擋未授權編輯。
+- 操作紀錄可記錄重要行為。
 
-## Phase 5: Production Readiness
+## 階段五：正式上線準備
 
-### Objective
+### 目標
 
-Prepare the website for official launch on `ctdf.org.tw`.
+準備網站正式綁定 `ctdf.org.tw` 並對外上線。
 
-### User Value
+### 使用者價值
 
-- Public users can access the official website reliably.
-- CTDF can operate the website with stable ownership, backup, and security practices.
-- Personal data handling is safer before production use.
+- 一般民眾可穩定使用官方網站。
+- 總會可用明確帳號、備份與權限制度維運網站。
+- 正式收集或保存個資前，先完成必要安全檢查。
 
-### Product Requirements
+### 產品需求
 
-| ID | Requirement | Priority |
+| ID | 需求 | 優先級 |
 |---|---|---|
-| PRD-5.1 | Confirm hosting plan: A plan or B plan. | Must |
-| PRD-5.2 | Confirm Vercel Pro and Supabase Pro timing if B plan is selected. | Must |
-| PRD-5.3 | Configure official domain and SSL. | Must |
-| PRD-5.4 | Verify DNS manager and backup admin email. | Must |
-| PRD-5.5 | Complete privacy policy and personal data notices. | Must |
-| PRD-5.6 | Complete RLS and permission testing. | Must |
-| PRD-5.7 | Complete backup/export/restore process. | Must |
-| PRD-5.8 | Complete responsive QA. | Must |
-| PRD-5.9 | Complete admin training. | Must |
-| PRD-5.10 | Prepare post-launch monitoring and issue handling. | Should |
+| PRD-5.1 | 確認正式代管方案：A 案或 B 案。 | 必要 |
+| PRD-5.2 | 若採 B 案，確認 Vercel Pro 與 Supabase Pro 的升級時間。 | 必要 |
+| PRD-5.3 | 設定正式網域與 SSL。 | 必要 |
+| PRD-5.4 | 確認 DNS 管理者與備援管理 Email。 | 必要 |
+| PRD-5.5 | 完成隱私權政策與個資告知。 | 必要 |
+| PRD-5.6 | 完成 RLS 與權限測試。 | 必要 |
+| PRD-5.7 | 完成備份、匯出與還原流程。 | 必要 |
+| PRD-5.8 | 完成響應式 QA。 | 必要 |
+| PRD-5.9 | 完成後台教育訓練。 | 必要 |
+| PRD-5.10 | 建立上線後監控與問題處理方式。 | 建議 |
 
-### Phase Success Metrics
+### 成功指標
 
-- `ctdf.org.tw` and `www.ctdf.org.tw` open successfully.
-- Admins are trained.
-- No critical security or layout issues remain.
-- Launch checklist is signed off.
+- `ctdf.org.tw` 與 `www.ctdf.org.tw` 可成功開啟。
+- 後台管理者完成教育訓練。
+- 無重大資安或版面問題。
+- 上線檢查表完成確認。
 
-## 5. Product Decisions Needed
+## 5. 產品決策事項
 
-| Decision | Owner | Target Timing |
+| 決策 | 負責單位 / 角色 | 目標時間 |
 |---|---|---|
-| Final hosting plan A/B | CTDF decision maker + technical lead | Before production setup |
-| Vercel account ownership | CTDF / technical lead | Before official domain binding |
-| Supabase account ownership | CTDF / technical lead | Before production data entry |
-| DNS manager and backup email | CTDF / domain manager | Before Vercel domain setup |
-| Ranking rules and import format | Event/ranking admins | Before ranking module production |
-| Member public profile fields | CTDF / legal or admin | Before member launch |
-| Photo and media usage rights | CTDF / media owner | Before public media use |
+| 最終代管方案 A/B | 總會決策者 + 技術窗口 | 正式環境建置前 |
+| Vercel 帳號歸屬 | 總會 / 技術窗口 | 正式網域綁定前 |
+| Supabase 帳號歸屬 | 總會 / 技術窗口 | 正式資料匯入前 |
+| DNS 管理者與備援 Email | 總會 / 網域管理者 | Vercel 網域設定前 |
+| 排名規則與匯入格式 | 賽事 / 排名管理者 | 排名模組正式使用前 |
+| 會員公開欄位 | 總會 / 法務或行政窗口 | 會員功能上線前 |
+| 照片與媒體使用權 | 總會 / 媒體素材管理者 | 媒體內容公開前 |
 
-## 6. Launch Recommendation
+## 6. 上線建議
 
-For fastest and lowest-maintenance launch, use B plan:
+若以最快、最低維運負擔為主要目標，建議採 B 案：
 
-- Vercel Pro for production hosting
-- Supabase Free during development/testing
-- Supabase Pro before storing official member personal data
+- Vercel Pro 作為正式網站代管
+- 開發與測試期間可先使用 Supabase Free
+- 正式保存會員個資前升級 Supabase Pro
 
-If CTDF requires Taiwan Fixed Network infrastructure as a strict condition, use A plan and reserve more budget and maintenance capacity.
+若總會將「台灣固網機房」列為硬性條件，則採 A 案，並預留較高年度維運預算與技術維護人力。

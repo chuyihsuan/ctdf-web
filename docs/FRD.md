@@ -1,209 +1,211 @@
-# Functional Requirements Document (FRD)
+# 功能需求文件（FRD）
 
-Project: 中華民國競技飛鏢總會官方網站  
-Version: 1.0  
-Source plan: 競技飛鏢總會_網站建置計畫書_v11_AB代管方案比較版  
-Target launch: 2026 年 10 月中
+專案：中華民國競技飛鏢總會官方網站  
+版本：1.0  
+依據計畫書：競技飛鏢總會_網站建置計畫書_v11_AB代管方案比較版  
+目標上線時間：2026 年 10 月中
 
-## 1. Purpose
+## 1. 文件目的
 
-This document defines the functional requirements for the CTDF official website across five development workstreams:
+本文件定義中華民國競技飛鏢總會（CTDF）官方網站的功能需求，供後續開發、驗收、任務拆解與總會審閱使用。
 
-1. Development environment and demo
-2. Frontend MVP
-3. Supabase database
-4. Admin management
-5. Production readiness
+本網站需以單一平台支援硬式飛鏢與電子飛鏢，並涵蓋公告、賽事、排名、選手資料、會員服務、文件下載與後台管理。
 
-The website must support hard darts and electronic darts through one unified platform.
+本 FRD 以五個開發工作流整理需求：
 
-These five workstreams map to the four calendar stages in the v11 project plan. The plan uses four time-based stages; this FRD uses five workstreams so implementation, verification, and ownership can be tracked more clearly.
+1. 開發環境與展示網站
+2. 前台 MVP
+3. Supabase 資料庫
+4. 後台管理
+5. 正式上線準備
 
-| FRD workstream | Related v11 calendar stage |
+上述五個工作流對應 v11 計畫書的四階段時程。計畫書以月份與里程碑做時程管理，本 FRD 則以功能交付面向做開發與驗收管理。
+
+| FRD 工作流 | 對應 v11 計畫書時程 |
 |---|---|
-| Development environment and demo | Stage 1: July decision and foundation preparation |
-| Frontend MVP | Stage 1-2: July foundation and August core frontend/backend development |
-| Supabase database | Stage 1-3: July schema, August core data, September content/data preparation |
-| Admin management | Stage 1-2: July backend foundation and August core admin workflows |
-| Production readiness | Stage 4: October validation, training, DNS, and official launch |
+| 開發環境與展示網站 | 第一階段：7 月決策與基礎準備 |
+| 前台 MVP | 第一至第二階段：7 月基礎建置、8 月核心前後台開發 |
+| Supabase 資料庫 | 第一至第三階段：7 月 Schema、8 月核心資料、9 月內容與資料整備 |
+| 後台管理 | 第一至第二階段：7 月後台基礎、8 月核心管理流程 |
+| 正式上線準備 | 第四階段：10 月驗收、訓練、DNS 與正式上線 |
 
-## 2. User Roles
+## 2. 使用者角色
 
-| Role | Description | Key Needs |
+| 角色 | 說明 | 主要需求 |
 |---|---|---|
-| Public visitor | General public, parents, schools, media, partner organizations | Read announcements, events, rankings, downloads, contact information |
-| Member | Registered CTDF member or player | Login, update profile, view relevant records |
-| Player | Public player profile subject | Show profile, points, results, event history where approved |
-| Secretary admin | CTDF administrative user | Manage members, pages, files, notices |
-| Event admin | Competition operations user | Manage events, results, rankings, players |
-| Content editor | News and content maintainer | Draft, publish, schedule, and archive content |
-| Ranking admin | Ranking and score maintainer | Import/update rankings, points, youth rankings |
-| Super admin | Full system owner | Manage roles, feature flags, settings, audit logs |
-| Read-only admin | Internal reviewer | View backend data without editing |
+| 一般訪客 | 一般民眾、家長、學校、媒體、合作單位 | 查詢公告、賽事、排名、文件下載與聯絡資訊 |
+| 會員 | 已註冊之總會會員或選手 | 登入、更新個人資料、查詢相關紀錄 |
+| 選手 | 需要被公開呈現之選手資料主體 | 顯示公開個人頁、積分、成績與核准公開之資料 |
+| 秘書處管理員 | 總會行政使用者 | 維護會員、頁面、文件、公告與聯絡資訊 |
+| 賽事管理員 | 賽務或競賽營運使用者 | 維護賽事、成績、排名與選手資料 |
+| 內容編輯 | 新聞公告與內容維護者 | 建立草稿、發布、排程、下架與封存內容 |
+| 排名管理員 | 積分、成績與排名維護者 | 匯入或更新排名、積分與青少年排名 |
+| 超級管理員 | 系統最高管理者 | 管理角色、權限、功能開關、網站設定與操作紀錄 |
+| 只讀帳號 | 內部審閱或稽核使用者 | 查看後台資料，但不可新增、修改或刪除 |
 
-## 3. Phase 1: Development Environment and Demo
+## 3. 工作流一：開發環境與展示網站
 
-### 3.1 Functional Requirements
+### 3.1 功能需求
 
-| ID | Requirement | Priority | Acceptance Criteria |
+| ID | 功能需求 | 優先級 | 驗收條件 |
 |---|---|---|---|
-| FRD-1.1 | Create a GitHub repository for the website project. | Must | Repository contains README, source files, and basic docs. |
-| FRD-1.2 | Deploy a demo website to Vercel Free. | Must | A `*.vercel.app` URL is available for review. |
-| FRD-1.3 | Provide a static homepage demo using non-sensitive placeholder data. | Must | Demo can be opened on desktop and mobile. |
-| FRD-1.4 | Keep demo independent of official member data. | Must | No real member personal data appears in demo. |
-| FRD-1.5 | Document deployment and review workflow. | Should | README explains GitHub to Vercel flow. |
+| FRD-1.1 | 建立 GitHub 專案 repository。 | 必要 | Repository 內含 README、網站檔案與基礎文件。 |
+| FRD-1.2 | 可部署展示網站至 Vercel Free 或其他預覽環境。 | 必要 | 可取得公開預覽 URL，供總會內部審閱。 |
+| FRD-1.3 | 提供不含敏感資料的靜態首頁展示。 | 必要 | 桌機與手機皆可開啟展示頁。 |
+| FRD-1.4 | 展示資料不得使用正式會員個資。 | 必要 | Demo 頁不得出現真實會員個資、密碼、API key 或敏感聯絡資料。 |
+| FRD-1.5 | 文件需說明 GitHub、Vercel 與審閱流程。 | 建議 | README 需說明展示、開發與部署方向。 |
 
-### 3.2 Phase Output
+### 3.2 階段產出
 
-- Public demo URL for internal review
-- GitHub project structure
-- README and requirement documents
+- 可供內部審閱的展示網址
+- GitHub 專案結構
+- README 與需求文件
 
-## 4. Phase 2: Frontend MVP
+## 4. 工作流二：前台 MVP
 
-### 4.1 Global Layout
+### 4.1 全站版面
 
-| ID | Requirement | Priority | Acceptance Criteria |
+| ID | 功能需求 | 優先級 | 驗收條件 |
 |---|---|---|---|
-| FRD-2.1 | Provide header, footer, desktop navigation, and mobile navigation. | Must | All MVP pages are reachable from navigation. |
-| FRD-2.2 | Support Mobile First responsive layout. | Must | Layout works at 360, 390, 430, 768, 1024, 1280, and 1440px widths. |
-| FRD-2.3 | Provide clear CTDF branding area. | Must | Logo/name area is visible in first viewport. |
-| FRD-2.4 | Provide bilingual-ready structure. | Should | Routes and content model do not block future English content. |
+| FRD-2.1 | 提供頁首、頁尾、桌機導覽與手機導覽。 | 必要 | MVP 頁面皆可由導覽或合理路徑進入。 |
+| FRD-2.2 | 採 Mobile First 響應式設計。 | 必要 | 360、390、430、768、1024、1280、1440px 寬度皆可正常瀏覽。 |
+| FRD-2.3 | 首屏需清楚呈現 CTDF 品牌識別。 | 必要 | Logo 或總會名稱在首頁第一視窗可見。 |
+| FRD-2.4 | 路由與內容結構需保留未來雙語擴充彈性。 | 建議 | 未來新增英文內容時不需重構主要資料模型。 |
 
-### 4.2 Public Pages
+### 4.2 前台頁面
 
-| ID | Page / Feature | Requirement | Priority |
+| ID | 頁面 / 功能 | 需求說明 | 優先級 |
 |---|---|---|---|
-| FRD-2.5 | Home | Show pinned announcement, latest news, upcoming events, ranking summary, quick links. | Must |
-| FRD-2.6 | News list | Show news list with category, date, pagination/filtering. | Must |
-| FRD-2.7 | News detail | Show title, date, category, image, content, share metadata. | Must |
-| FRD-2.8 | Events list | Show event name, date, location, type, registration status. | Must |
-| FRD-2.9 | Event detail | Show event info, venue, rules/downloads, registration link, results link. | Must |
-| FRD-2.10 | Results | Show result announcements and top placements. | Must |
-| FRD-2.11 | Rankings | Show overall ranking and youth ranking with filters. | Must |
-| FRD-2.12 | Players | Show player list, profile page, and search/filter by name, region, type, group. | Must |
-| FRD-2.13 | About | Show association intro, organization, rules, contact, privacy policy. | Must |
-| FRD-2.14 | Downloads | Show application forms and competition rules by category/year. | Must |
-| FRD-2.15 | Fair Play | Show anti-doping and fair competition policy/resource links. | Must |
-| FRD-2.16 | Media Center | Photos, videos, media reports. | Later |
-| FRD-2.17 | Citizens Sports Games section | Support promotion/advocacy content and evidence downloads. | Later |
+| FRD-2.5 | 首頁 | 顯示置頂公告、最新消息、近期賽事、排名摘要與快速連結。 | 必要 |
+| FRD-2.6 | 新聞公告列表 | 顯示分類、日期、分頁或篩選。 | 必要 |
+| FRD-2.7 | 新聞公告詳細頁 | 顯示標題、日期、分類、圖片、內文與分享用 metadata。 | 必要 |
+| FRD-2.8 | 賽事列表 | 顯示賽事名稱、日期、地點、項目、組別與報名狀態。 | 必要 |
+| FRD-2.9 | 賽事詳細頁 | 顯示賽事資訊、場地、規程下載、報名連結與成績連結。 | 必要 |
+| FRD-2.10 | 成績公告 | 顯示賽事結果公告與主要名次。 | 必要 |
+| FRD-2.11 | 排名成績 | 顯示選手積分排名與青少年排名，並支援篩選。 | 必要 |
+| FRD-2.12 | 選手資料庫 | 顯示選手列表、個人頁，支援姓名、縣市、項目與組別查詢。 | 必要 |
+| FRD-2.13 | 關於總會 | 顯示總會簡介、組織架構、章程規則、聯絡我們與隱私權政策。 | 必要 |
+| FRD-2.14 | 文件下載 | 顯示申請表格、競賽規程，並可依分類或年度整理。 | 必要 |
+| FRD-2.15 | 反禁藥 / 公平競技 | 顯示政策聲明與外部教育資源連結。 | 必要 |
+| FRD-2.16 | 媒體中心 | 活動相簿、影片專區與媒體報導。 | 第二階段 |
+| FRD-2.17 | 全民運推動專區 | 支援推動說明、成果資料與佐證文件下載。 | 第二階段 |
 
-### 4.3 Phase Output
+### 4.3 階段產出
 
-- Browsable frontend MVP
-- Placeholder content for review
-- Mobile navigation and responsive layouts
+- 可瀏覽之前台 MVP
+- 可供審閱的示意內容
+- 手機導覽與響應式版面
 
-## 5. Phase 3: Supabase Database
+## 5. 工作流三：Supabase 資料庫
 
-### 5.1 Data Requirements
+### 5.1 資料需求
 
-| ID | Entity | Requirement | Priority |
+| ID | 資料實體 | 需求說明 | 優先級 |
 |---|---|---|---|
-| FRD-3.1 | `news` | Store announcement/news title, slug, category, body, status, publish date, pinned flag. | Must |
-| FRD-3.2 | `events` | Store event name, date, venue, type, group, status, registration URL, attachments. | Must |
-| FRD-3.3 | `event_results` | Store event result records and result attachment references. | Must |
-| FRD-3.4 | `rankings` | Store ranking type, group, player, points, date, hard/electronic type. | Must |
-| FRD-3.5 | `players` | Store public player profile, region, type, group, photo, visibility. | Must |
-| FRD-3.6 | `members` / `profiles` | Store member profile and account metadata. | Must |
-| FRD-3.7 | `documents` | Store downloadable file metadata and storage path. | Must |
-| FRD-3.8 | `media_items` | Store photo/video/media report metadata and source URL. | Later |
-| FRD-3.9 | `feature_flags` | Control enabled/disabled frontend modules. | Must |
-| FRD-3.10 | `admin_roles` / `admin_permissions` | Store role and permission matrix. | Must |
-| FRD-3.11 | `audit_logs` | Store admin create/update/delete/publish actions. | Must |
+| FRD-3.1 | `news` | 儲存公告標題、slug、分類、內文、狀態、發布日期與置頂設定。 | 必要 |
+| FRD-3.2 | `events` | 儲存賽事名稱、日期、場地、項目、組別、狀態、報名網址與附件。 | 必要 |
+| FRD-3.3 | `event_results` | 儲存賽事成績紀錄與成績附件。 | 必要 |
+| FRD-3.4 | `rankings` | 儲存排名類型、組別、選手、積分、日期與硬式 / 電子飛鏢類型。 | 必要 |
+| FRD-3.5 | `players` | 儲存公開選手資料、縣市、項目、組別、照片與公開狀態。 | 必要 |
+| FRD-3.6 | `members` / `profiles` | 儲存會員資料與帳號相關 metadata。 | 必要 |
+| FRD-3.7 | `documents` | 儲存下載文件 metadata 與檔案路徑。 | 必要 |
+| FRD-3.8 | `media_items` | 儲存照片、影片與媒體報導 metadata。 | 第二階段 |
+| FRD-3.9 | `feature_flags` | 控制前台功能是否啟用。 | 必要 |
+| FRD-3.10 | `admin_roles` / `admin_permissions` | 儲存角色與權限矩陣。 | 必要 |
+| FRD-3.11 | `audit_logs` | 記錄管理員新增、修改、刪除與發布操作。 | 必要 |
 
-### 5.2 Storage Requirements
+### 5.2 檔案儲存需求
 
-| ID | Requirement | Priority | Acceptance Criteria |
+| ID | 需求說明 | 優先級 | 驗收條件 |
 |---|---|---|---|
-| FRD-3.12 | Store PDF/Word/Excel downloads in Supabase Storage. | Must | Download metadata maps to storage files. |
-| FRD-3.13 | Store public images only after rights confirmation. | Must | Image records include rights/status field. |
-| FRD-3.14 | Use YouTube links for video instead of storing large videos. | Should | Media model supports embedded video URL. |
+| FRD-3.12 | PDF、Word、Excel 等下載文件需儲存在 Supabase Storage 或等效儲存服務。 | 必要 | 文件 metadata 可對應實際儲存檔案。 |
+| FRD-3.13 | 公開圖片需確認授權後才可上架。 | 必要 | 圖片資料需含授權或可用狀態欄位。 |
+| FRD-3.14 | 大型影片建議使用 YouTube 嵌入，不直接存放於 Supabase。 | 建議 | 媒體模型支援影片網址或嵌入連結。 |
 
-### 5.3 Phase Output
+### 5.3 階段產出
 
 - Supabase schema
-- Test seed data
-- Frontend pages connected to Supabase test data
+- 測試種子資料
+- 前台頁面可串接 Supabase 測試資料
 
-## 6. Phase 4: Admin Management
+## 6. 工作流四：後台管理
 
-### 6.1 Authentication and Roles
+### 6.1 登入與權限
 
-| ID | Requirement | Priority | Acceptance Criteria |
+| ID | 功能需求 | 優先級 | 驗收條件 |
 |---|---|---|---|
-| FRD-4.1 | Admin login via Supabase Auth. | Must | Unauthorized users cannot access `/admin`. |
-| FRD-4.2 | Role-based permissions. | Must | Roles can view/edit only allowed modules. |
-| FRD-4.3 | Super admin can manage feature flags and roles. | Must | Super admin can update settings. |
-| FRD-4.4 | Read-only users cannot mutate data. | Must | Write actions are blocked. |
+| FRD-4.1 | 後台管理員透過 Supabase Auth 或等效機制登入。 | 必要 | 未授權使用者不可進入 `/admin`。 |
+| FRD-4.2 | 支援角色權限控管。 | 必要 | 不同角色僅能查看或編輯授權模組。 |
+| FRD-4.3 | 超級管理員可管理功能開關與角色權限。 | 必要 | 超級管理員可調整系統設定。 |
+| FRD-4.4 | 只讀帳號不得新增、修改或刪除資料。 | 必要 | 寫入操作會被阻擋。 |
 
-### 6.2 Admin Modules
+### 6.2 後台模組
 
-| ID | Module | Requirement | Priority |
+| ID | 模組 | 需求說明 | 優先級 |
 |---|---|---|---|
-| FRD-4.5 | Dashboard | Show pending member applications, recent events, draft content, system reminders. | Must |
-| FRD-4.6 | News admin | Create, edit, publish, pin, schedule, unpublish news. | Must |
-| FRD-4.7 | Pages admin | Edit static pages: about, rules, privacy, contact. | Must |
-| FRD-4.8 | Events admin | Create/edit events, upload rules, manage registration and result links. | Must |
-| FRD-4.9 | Rankings admin | Import or update ranking records. | Must |
-| FRD-4.10 | Players admin | Manage player profile visibility, photos, group/type fields. | Must |
-| FRD-4.11 | Members admin | Review, suspend, restore, export member list. | Must |
-| FRD-4.12 | Downloads admin | Upload, categorize, publish, archive files. | Must |
-| FRD-4.13 | Media admin | Manage photo albums, videos, media reports. | Later |
-| FRD-4.14 | Settings | Manage logo, site name, contact, social links, SEO metadata. | Must |
-| FRD-4.15 | Audit logs | Record admin actions. | Must |
+| FRD-4.5 | 儀表板 | 顯示待審會員、近期賽事、草稿內容與系統提醒。 | 必要 |
+| FRD-4.6 | 新聞公告管理 | 建立、編輯、發布、置頂、排程、下架新聞。 | 必要 |
+| FRD-4.7 | 靜態頁面管理 | 編輯關於總會、章程規則、隱私權、聯絡資訊等頁面。 | 必要 |
+| FRD-4.8 | 賽事管理 | 建立與編輯賽事，上傳規程，管理報名與成績連結。 | 必要 |
+| FRD-4.9 | 排名管理 | 匯入或更新排名紀錄。 | 必要 |
+| FRD-4.10 | 選手管理 | 管理選手公開狀態、照片、組別與項目欄位。 | 必要 |
+| FRD-4.11 | 會員管理 | 審核、停權、恢復與匯出會員名單。 | 必要 |
+| FRD-4.12 | 文件管理 | 上傳、分類、發布與封存文件。 | 必要 |
+| FRD-4.13 | 媒體管理 | 管理活動相簿、影片與媒體報導。 | 第二階段 |
+| FRD-4.14 | 網站設定 | 管理 Logo、網站名稱、聯絡資訊、社群連結與 SEO 基本資料。 | 必要 |
+| FRD-4.15 | 操作紀錄 | 記錄後台重要操作。 | 必要 |
 
-### 6.3 Content Status Workflow
+### 6.3 內容狀態流程
 
-All managed content should support these statuses where applicable:
+可管理內容應視情境支援下列狀態：
 
-- Draft
-- Pending review
-- Published
-- Scheduled
-- Unpublished
-- Archived
+- 草稿
+- 待審核
+- 已發布
+- 已排程
+- 已下架
+- 已封存
 
-### 6.4 Phase Output
+### 6.4 階段產出
 
-- Usable admin backend
-- Role and permission controls
-- Audit logs for major admin actions
+- 可使用的後台管理介面
+- 角色與權限控制
+- 重要操作紀錄
 
-## 7. Phase 5: Production Readiness
+## 7. 工作流五：正式上線準備
 
-### 7.1 Launch Requirements
+### 7.1 上線需求
 
-| ID | Requirement | Priority | Acceptance Criteria |
+| ID | 功能需求 | 優先級 | 驗收條件 |
 |---|---|---|---|
-| FRD-5.1 | Bind official domain `ctdf.org.tw`. | Must | Root and `www` open the production website. |
-| FRD-5.2 | Configure HTTPS/SSL. | Must | Browser shows secure connection. |
-| FRD-5.3 | Confirm Supabase RLS rules. | Must | Unauthorized reads/writes are blocked. |
-| FRD-5.4 | Confirm backup/export process. | Must | Database and files can be backed up/restored/exported. |
-| FRD-5.5 | Complete privacy and personal data notices. | Must | Registration/contact pages show required notices. |
-| FRD-5.6 | Complete SEO metadata and sitemap. | Should | Search engine metadata is available. |
-| FRD-5.7 | Complete cross-device QA. | Must | No critical layout break at target widths. |
-| FRD-5.8 | Train admin users. | Must | Admin users can perform routine updates. |
+| FRD-5.1 | 綁定正式網域 `ctdf.org.tw`。 | 必要 | 根網域與 `www` 均可開啟正式網站。 |
+| FRD-5.2 | 完成 HTTPS / SSL 設定。 | 必要 | 瀏覽器顯示安全連線。 |
+| FRD-5.3 | 確認 Supabase RLS 權限規則。 | 必要 | 未授權讀寫會被阻擋。 |
+| FRD-5.4 | 確認備份、匯出與還原流程。 | 必要 | 資料庫與檔案可備份、匯出與還原。 |
+| FRD-5.5 | 完成隱私權與個資告知文字。 | 必要 | 註冊、聯絡或資料蒐集頁面顯示必要告知。 |
+| FRD-5.6 | 完成 SEO metadata 與 sitemap。 | 建議 | 搜尋引擎可讀取基本頁面資訊。 |
+| FRD-5.7 | 完成跨裝置 QA。 | 必要 | 目標寬度下無重大版面錯誤。 |
+| FRD-5.8 | 完成後台使用者教育訓練。 | 必要 | 管理者可完成日常內容更新。 |
 
-### 7.2 Phase Output
+### 7.2 階段產出
 
-- Production website
-- Admin training completed
-- DNS/SSL/backup/security checklist completed
+- 正式網站
+- 後台教育訓練完成
+- DNS、SSL、備份、資安檢查完成
 
-## 8. Out of Scope for MVP
+## 8. MVP 不納入範圍
 
-- Real-time scoring
-- Online payment for membership fees
-- Automated Facebook synchronization
-- Full bilingual site
-- Advanced statistics dashboards
-- Native mobile app
+- 即時比分系統
+- 線上會費金流付款
+- Facebook 自動同步
+- 完整雙語網站
+- 進階統計儀表板
+- 原生手機 App
 
-## 9. Open Decisions
+## 9. 待決策事項
 
-- Whether official production hosting uses A plan or B plan.
-- Whether Supabase Pro starts at production launch or during trial operation.
-- Who owns DNS and payment authority.
-- Which media assets are legally cleared for public use.
-- Final ranking rules and import format.
+- 正式代管採 A 案或 B 案。
+- 若採 B 案，Supabase Pro 於試營運或正式上線時升級。
+- DNS 管理權、付款權責與備援管理者。
+- 媒體素材是否已取得公開使用授權。
+- 排名規則與資料匯入格式。
