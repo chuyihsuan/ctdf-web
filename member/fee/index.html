@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>會費繳納狀態 | CTDF Demo</title>
+  <title>會費繳納 | CTDF Demo</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="stylesheet" href="/assets/demo.css">
 </head>
 <body>
   <header class="site-header">
     <nav class="nav" aria-label="主要導覽">
-      <a class="brand" href="/"><span class="brand-mark">CTDF</span><span><b>中華民國競技飛鏢總會</b><small>Demo Site Map</small></span></a>
-      <div class="nav-links"><a href="/">首頁</a><a href="/news/">新聞</a><a href="/events/">賽事</a><a href="/rankings/">排名</a><a href="/players/">選手</a><a href="/downloads/">文件</a><a href="/admin/">後台</a></div>
+      <a class="brand" href="/"><span class="brand-mark">CTDF</span><span><b>中華民國競技飛鏢總會</b><small>Demo Website</small></span></a>
+      <div class="nav-links"><a href="/">首頁</a><a href="/news/">公告</a><a href="/events/">賽事</a><a href="/rankings/">排名</a><a href="/players/">選手</a><a href="/downloads/">下載</a><a href="/about/">關於</a><a href="/admin/">後台</a></div>
     </nav>
   </header>
 
@@ -19,11 +19,11 @@
     <section class="page-hero">
       <div class="page-hero-inner">
         <p class="eyebrow">第二階段 / Later</p>
-        <h1>會費繳納狀態</h1>
-        <p>會員會費狀態與繳費紀錄示意，第二階段候選功能。</p>
+        <h1>會費繳納</h1>
+        <p>預留會費狀態與繳費紀錄，正式版再評估金流串接。</p>
         <div class="actions">
           <a class="button" href="/">回首頁</a>
-          <a class="button secondary" href="/member/fee/">目前路由：/member/fee/</a>
+          <a class="button secondary" href="/member/fee/">目前路徑：/member/fee/</a>
         </div>
       </div>
     </section>
@@ -31,17 +31,17 @@
     <section class="section">
       <div class="section-inner two-col">
         <article class="panel">
-          <h2>Demo 頁面內容</h2>
-          <p>此頁為第一階段資訊架構 Demo，用於確認網站階層、導覽連結與未來功能位置。部分內容採公開資料整理，正式上架前仍需總會確認。</p>
-          <ul class="check-list"><li>繳費狀態</li><li>年度紀錄</li><li>提醒</li></ul>
+          <h2>Demo 功能範圍</h2>
+          <p>此頁用來示範正式網站完成後的內容承載方式。資料以公開來源與專案文件整理，後續可改由後台與資料庫維護。</p>
+          <ul class="check-list"><li>繳費狀態</li><li>年度紀錄</li><li>收據</li></ul>
         </article>
         <aside class="panel">
-          <h2>後續開發提示</h2>
-          <p>MVP 階段會依需求文件改為真實資料、列表、詳細頁、搜尋篩選、登入或後台管理流程。</p>
+          <h2>頁面狀態</h2>
+          <p>MVP 代表第一階段建議優先開發；Later 代表可排入第二階段。Demo 內容不含未授權個資與機敏資料。</p>
           <dl class="meta">
             <div><dt>Route</dt><dd>/member/fee/</dd></div>
-            <div><dt>Source</dt><dd>README / FRD / PRD / SRD sitemap</dd></div>
-            <div><dt>Data</dt><dd>Placeholder only</dd></div>
+            <div><dt>Source</dt><dd>README / FRD / PRD / SRD / public web sources</dd></div>
+            <div><dt>Data</dt><dd>Public-source demo data</dd></div>
           </dl>
         </aside>
       </div>
@@ -50,11 +50,16 @@
     <section class="section real-data">
       <div class="section-inner">
         <div class="section-head">
-          <h2>公開資料 Demo</h2>
-          <p>以下內容來自公開資料索引，目的為讓審閱者理解未來官網完成後的呈現方式；正式上架前需以總會確認版本為準。</p>
+          <h2>實際資料 Demo</h2>
+          <p>以下資料用來讓會長更容易想像正式網站樣貌。正式上線前仍建議由總會確認文字、日期、名單與附件版本。</p>
         </div>
         <div class="data-grid">
-          <article class="data-card"><p class="data-meta">正式階段需登入與 RLS 保護</p><h3>會員功能 demo 原則</h3><p>Demo 只呈現會員登入、個人資料與會費狀態的未來樣貌，不收集、不顯示真實會員資料。</p><a href="/docs/SRD.md" target="_blank" rel="noopener noreferrer">查看來源或對應文件</a></article>
+          <article class="data-card">
+            <p class="data-meta">SRD / Supabase Auth</p>
+            <h3>會員系統規劃</h3>
+            <p>正式版可使用 Supabase Auth 做會員登入與資料權限控管，Demo 先保留入口與流程示意。</p>
+            <a href="/docs/SRD.md" target="_blank" rel="noopener noreferrer">查看來源或對應文件</a>
+          </article>
         </div>
       </div>
     </section>
@@ -62,18 +67,18 @@
     <section class="section alt">
       <div class="section-inner">
         <div class="section-head">
-          <h2>同層相關頁面</h2>
-          <p>以下連結可用來檢查同一模組下的資料夾階層。</p>
+          <h2>同區頁面</h2>
+          <p>點選可查看同一功能區的其他頁面。</p>
         </div>
         <div class="link-grid">
           <a class="link-card" href="/member/login/"><b>/member/login</b><span>會員登入 / 註冊</span></a>
           <a class="link-card" href="/member/profile/"><b>/member/profile</b><span>會員資料</span></a>
-          <a class="link-card current" href="/member/fee/"><b>/member/fee</b><span>會費繳納狀態</span></a>
+          <a class="link-card current" href="/member/fee/"><b>/member/fee</b><span>會費繳納</span></a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">第一階段靜態 Demo / 無 API key / 無正式會員個資</footer>
+  <footer class="footer">Demo 用途 / 未串接會員登入與資料庫 / 正式上線前需由總會確認公開資料</footer>
 </body>
 </html>
