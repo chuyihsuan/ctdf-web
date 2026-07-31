@@ -215,7 +215,7 @@ function pageHtml(route) {
   const itemList = route.items.map((item) => `<li>${item}</li>`).join("");
   const navLinks = nav.map(([label, href]) => `<a href="${href}">${label}</a>`).join("");
   const realDataCards = realData
-    .map((item) => `<article class="data-card"><p class="data-meta">${item.meta}</p><h3>${item.title}</h3><p>${item.desc}</p><a href="${item.source}">查看來源或對應文件</a></article>`)
+    .map((item) => `<article class="data-card"><p class="data-meta">${item.meta}</p><h3>${item.title}</h3><p>${item.desc}</p><a href="${item.source}" target="_blank" rel="noopener noreferrer">查看來源或對應文件</a></article>`)
     .join("\n          ");
 
   return `<!doctype html>
