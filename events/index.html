@@ -11,88 +11,67 @@
   <header class="site-header">
     <nav class="nav" aria-label="主要導覽">
       <a class="brand" href="/"><img class="brand-logo" src="/assets/ctdf-logo.png" alt="CTDF Logo"><span><b>中華民國競技飛鏢總會</b><small>Demo Website</small></span></a>
-      <div class="nav-links"><a href="/">首頁</a><a href="/news/">公告</a><a href="/events/">賽事</a><a href="/rankings/">排名</a><a href="/players/">選手</a><a href="/downloads/">下載</a><a href="/about/">關於</a><a href="/admin/">後台</a></div>
+      <div class="nav-links"><a href="/">首頁</a><a href="/news/">公告</a><a href="/events/">賽事</a><a href="/rankings/">排名</a><a href="/players/">選手</a><a href="/downloads/">下載</a><a href="/about/">關於</a></div>
     </nav>
   </header>
-
   <main>
     <section class="page-hero">
       <div class="page-hero-inner">
         <p class="eyebrow">公開資訊 / MVP</p>
         <h1>賽事資訊</h1>
-        <p>集中呈現近期與歷年公開賽事、學校賽事、報名資訊與成果整理。</p>
-        <div class="actions">
-          <a class="button" href="/">回首頁</a>
-          <a class="button secondary" href="/events/">目前路徑：/events/</a>
-        </div>
+        <p>以賽程清單呈現賽事日期、地點、報名期限與規程來源。</p>
       </div>
     </section>
-
-    <section class="section">
-      <div class="section-inner two-col">
-        <article class="panel">
-          <h2>Demo 功能範圍</h2>
-          <p>此頁用來示範正式網站完成後的內容承載方式。資料以公開來源與專案文件整理，後續可改由後台與資料庫維護。</p>
-          <ul class="check-list"><li>近期賽事</li><li>報名資訊</li><li>賽果入口</li></ul>
-        </article>
-        <aside class="panel">
-          <h2>頁面狀態</h2>
-          <p>MVP 代表第一階段建議優先開發；Later 代表可排入第二階段。Demo 內容不含未授權個資與機敏資料。</p>
-          <dl class="meta">
-            <div><dt>Route</dt><dd>/events/</dd></div>
-            <div><dt>Source</dt><dd>README / FRD / PRD / SRD / public web sources</dd></div>
-            <div><dt>Data</dt><dd>Public-source demo data</dd></div>
-          </dl>
-        </aside>
-      </div>
-    </section>
-
     <section class="section real-data">
       <div class="section-inner">
         <div class="section-head">
-          <h2>實際資料 Demo</h2>
-          <p>以下資料用來讓會長更容易想像正式網站樣貌。正式上線前仍建議由總會確認文字、日期、名單與附件版本。</p>
+          <h2>賽事資訊 Demo</h2>
+          <p>此區依資料性質採用不同排版。正式上線前，內容仍需由總會確認。</p>
         </div>
-        <div class="data-grid">
-          <article class="data-card">
-            <p class="data-meta">2026-03-14 至 2026-03-15 / 桃園市中壢國中活動中心</p>
-            <h3>114學年師生盃全國各級學校飛鏢錦標賽</h3>
-            <p>報名至 2026-03-02 截止，活動以學校為單位報名。Demo 可呈現報名期限、場地、規程附件與聯絡方式。</p>
-            <a href="https://news.hlc.edu.tw/index.php?id=125506&amp;page=department" target="_blank" rel="noopener noreferrer">查看來源或對應文件</a>
-          </article>
-          <article class="data-card">
-            <p class="data-meta">2025-06-14 至 2025-06-15 / 學生隊際賽</p>
-            <h3>113學年度國民中學暨高級中學飛鏢隊際聯賽</h3>
-            <p>臺中市政府教育局公告列有國中與高中學生聯賽規程、報名表與總會聯絡資訊，適合放在賽事列表與文件下載範例。</p>
-            <a href="https://www.tc.edu.tw/page/6ea0d0a0-c3e7-4485-9925-ac95271ad618/news-content?id=225671" target="_blank" rel="noopener noreferrer">查看來源或對應文件</a>
-          </article>
-          <article class="data-card">
-            <p class="data-meta">2026-03-14 至 2026-03-15 / 臺北市學校公告轉知</p>
-            <h3>114學年師生盃賽事規程摘要</h3>
-            <p>公告內容清楚列出賽事目的、比賽日期、報名日期、比賽地點與參加單位，適合做為賽事詳情頁的 Demo 版型資料。</p>
-            <a href="https://www.bjps.tp.edu.tw/p/406-1000-2613%2Cr16.php" target="_blank" rel="noopener noreferrer">查看來源或對應文件</a>
-          </article>
-        </div>
+        <div class="event-list">
+    <article class="event-item">
+      <div class="event-date">2026-03-14 至 2026-03-15</div>
+      <div class="event-body">
+        <span class="tag">報名截止 2026-03-02</span>
+        <h3>114學年師生盃全國各級學校飛鏢錦標賽</h3>
+        <p><b>地點：</b>桃園市中壢國中活動中心</p>
+        <p>以學校為單位報名，可示範報名期限、場地、規程附件與聯絡方式。</p>
+      </div>
+      <a href="https://news.hlc.edu.tw/index.php?id=125506&amp;page=department" target="_blank" rel="noopener noreferrer">查看來源</a>
+    </article>
+    <article class="event-item">
+      <div class="event-date">2025-06-14 至 2025-06-15</div>
+      <div class="event-body">
+        <span class="tag">歷史賽事</span>
+        <h3>113學年度國民中學暨高級中學飛鏢隊際聯賽</h3>
+        <p><b>地點：</b>學生隊際賽</p>
+        <p>臺中市政府教育局公告列有國中與高中學生聯賽規程、報名表與總會聯絡資訊。</p>
+      </div>
+      <a href="https://www.tc.edu.tw/page/6ea0d0a0-c3e7-4485-9925-ac95271ad618/news-content?id=225671" target="_blank" rel="noopener noreferrer">查看來源</a>
+    </article>
+    <article class="event-item">
+      <div class="event-date">2026-03-14 至 2026-03-15</div>
+      <div class="event-body">
+        <span class="tag">規程摘要</span>
+        <h3>114學年師生盃賽事規程摘要</h3>
+        <p><b>地點：</b>學校公告轉知</p>
+        <p>公告列出賽事目的、日期、報名日期、地點與參加單位，適合做為詳情頁資料。</p>
+      </div>
+      <a href="https://www.bjps.tp.edu.tw/p/406-1000-2613%2Cr16.php" target="_blank" rel="noopener noreferrer">查看來源</a>
+    </article>
+  </div>
       </div>
     </section>
-
     <section class="section alt">
       <div class="section-inner">
         <div class="section-head">
           <h2>同區頁面</h2>
-          <p>點選可查看同一功能區的其他頁面。</p>
+          <p>查看同一功能區的其他頁面。</p>
         </div>
-        <div class="link-grid">
-          <a class="link-card current" href="/events/"><b>/events</b><span>賽事資訊</span></a>
-          <a class="link-card" href="/events/calendar/"><b>/events/calendar</b><span>賽事行事曆</span></a>
-          <a class="link-card" href="/events/list/"><b>/events/list</b><span>賽事列表</span></a>
-          <a class="link-card" href="/events/results/"><b>/events/results</b><span>賽事成績</span></a>
-          <a class="link-card" href="/events/demo-event/"><b>/events/demo-event</b><span>賽事詳情範例</span></a>
-        </div>
+        <div class="link-grid"><a class="link-card current" href="/events/"><b>/events</b><span>賽事資訊</span></a><a class="link-card" href="/events/calendar/"><b>/events/calendar</b><span>賽事行事曆</span></a><a class="link-card" href="/events/list/"><b>/events/list</b><span>賽事列表</span></a><a class="link-card" href="/events/results/"><b>/events/results</b><span>賽事成績</span></a><a class="link-card" href="/events/demo-event/"><b>/events/demo-event</b><span>賽事詳情範例</span></a></div>
       </div>
     </section>
   </main>
-
   <footer class="footer">
     <div class="footer-inner">
       <b>中華民國競技飛鏢總會 CTDF</b>

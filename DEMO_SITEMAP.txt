@@ -15,6 +15,11 @@ CTDF Demo route list
 /rankings/region/ 縣市排名
 /players/ 選手資料庫
 /players/demo-player/ 選手個人頁範例
+/downloads/ 文件下載
+/downloads/forms/ 表單下載
+/downloads/rules/ 規章下載
+/downloads/annual/ 年度計畫 / 報告
+/downloads/reports/ 會務報告下載
 /about/ 關於總會
 /about/organization/ 組織架構
 /about/rules/ 章程與規章
@@ -22,11 +27,6 @@ CTDF Demo route list
 /about/privacy/ 隱私權政策
 /about/citizens-sports-games/ 全民運推動專區
 /about/development/ 發展沿革
-/downloads/ 文件下載
-/downloads/forms/ 表單下載
-/downloads/rules/ 規章下載
-/downloads/annual/ 年度計畫 / 報告
-/downloads/reports/ 會務報告下載
 /fairplay/ 公平競賽 / 反禁藥
 /media/photos/ 照片花絮
 /media/videos/ 影音專區
@@ -42,10 +42,4 @@ CTDF Demo route list
 /admin/players/ 選手管理
 /admin/members/ 會員管理
 /admin/downloads/ 文件管理
-/admin/media/ 媒體管理
-/admin/citizens-sports-games/ 全民運推動管理
-/admin/settings/features/ 功能開關設定
-/admin/settings/roles/ 角色權限設定
-/admin/settings/admins/ 管理員帳號設定
 /admin/settings/site/ 網站基本設定
-/admin/logs/ 操作紀錄
