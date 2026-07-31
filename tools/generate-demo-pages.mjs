@@ -52,6 +52,149 @@ const routes = [
   { path: "admin/logs", title: "操作紀錄", group: "後台", status: "MVP", summary: "記錄新增、修改、刪除、發布、匯出與權限變更等重要操作。", items: ["操作人", "操作項目", "時間"] }
 ];
 
+const realDataByRoot = {
+  news: [
+    {
+      title: "中華民國競技飛鏢總會成功加入 WDF，台灣飛鏢走向國際",
+      meta: "2018-09-26 / Yahoo、三立新聞公開報導",
+      desc: "公開報導提及 CTDF 於 WDF 第 24 屆大會通過加入，可作為國際交流頁面素材；正式官網發布前仍需總會補充 WDF 證書或官方文件。",
+      source: "https://tw.sports.yahoo.com/news/飛鏢-中華民國競技飛鏢總會成功加入wdf-台灣飛鏢走向國際第一步-032657955.html"
+    },
+    {
+      title: "台灣首度參加 WDF 世界盃飛鏢錦標賽",
+      meta: "2025-09-22 / 自由體育公開報導",
+      desc: "可作為國際賽事與代表隊里程碑素材；正式上架前需總會確認代表隊名單與成績。",
+      source: "https://sports.ltn.com.tw/news/breakingnews/5187129"
+    },
+    {
+      title: "第 15 屆全國飛鏢公開賽登場，推動飛鏢成為全民運動",
+      meta: "2024-11-09 / 中央社公開報導",
+      desc: "可作為媒體中心、推廣成果與全民運推動專區素材。",
+      source: "https://www.cna.com.tw/news/aspt/202411090100.aspx"
+    }
+  ],
+  events: [
+    {
+      title: "114 學年師生盃全國各級學校飛鏢錦標賽",
+      meta: "公開公告資料：115 年 3 月 14 日至 15 日 / 中壢國中",
+      desc: "多個學校與政府公告提及本賽事，可作為賽事列表與文件下載 demo 內容；正式資訊需以總會原始規程與報名表為準。",
+      source: "https://www.penghu.gov.tw/edu/home.jsp?act=view&dataserno=202602110004&id=94"
+    },
+    {
+      title: "113 學年度國中暨高中飛鏢隊際聯賽",
+      meta: "公開公告資料：114 年 6 月 14 日至 15 日",
+      desc: "可作為隊際聯賽與校園推廣賽事範例，正式上架前需確認總會原始公告。",
+      source: "https://www.penghu.gov.tw/ch/home.jsp?act=view&dataserno=202504250027&id=10088"
+    },
+    {
+      title: "113 學年師生盃全國各級學校飛鏢錦標賽",
+      meta: "公開公告資料：114 年 3 月 15 日至 16 日 / 桃園市立中壢國中",
+      desc: "可作為歷年賽事、升學資格佐證線索與成果資料庫素材。",
+      source: "https://www.cyc.edu.tw/modules/tadnews/index.php?nsn=83975"
+    }
+  ],
+  rankings: [
+    {
+      title: "WDF 世界盃 U18 女雙金牌公開報導",
+      meta: "2025-09 / 自由體育公開報導",
+      desc: "可作為歷史成績與國際成績頁面素材；涉及青少年姓名與成績，正式上架前需總會核對 WDF 成績與公開授權。",
+      source: "https://sports.ltn.com.tw/news/breakingnews/5192343"
+    },
+    {
+      title: "WDF World Masters Qualification Criteria",
+      meta: "2024-04-29 / WDF 文件",
+      desc: "文件中列有 Chinese Taipei 相關會員國資訊，可作為國際頁面輔助佐證；正式對外聲明仍需總會確認。",
+      source: "https://dartswdf.com/storage/uploads/2cf58373-76ad-4659-92e8-0e3b57dcf7b9/2024-04-29_World_Masters_Qualification_Criteria_Seniors.pdf"
+    }
+  ],
+  players: [
+    {
+      title: "選手資料庫 demo 原則",
+      meta: "公開欄位需待總會確認",
+      desc: "正式選手頁可顯示姓名、縣市、組別、項目、積分與近期成績；demo 階段不放未授權個資或照片。",
+      source: "/docs/FRD.md"
+    },
+    {
+      title: "青少年選手資料注意事項",
+      meta: "個資、肖像權與監護人授權",
+      desc: "若引用公開報導中的青少年成績，正式官網仍需確認姓名、照片與成績是否可公開。",
+      source: "/docs/DEMO_REAL_DATA_NOTES.md"
+    }
+  ],
+  about: [
+    {
+      title: "總會英文名稱：Chinese Taipei Dart Federation",
+      meta: "網域申請與計畫書 v11 一致",
+      desc: "Demo 首頁與關於頁使用 Chinese Taipei Dart Federation 作為英文名稱，對應主網域 ctdf.org.tw。",
+      source: "/README.md"
+    },
+    {
+      title: "全民運推動定位",
+      meta: "115 全民運公開資訊 / 飛鏢尚未查得列入正式競賽種類",
+      desc: "官網應以「爭取納入自辦、選辦或示範推廣項目」保守描述，避免寫成已核定項目。",
+      source: "https://sport115.tycg.gov.tw/"
+    }
+  ],
+  downloads: [
+    {
+      title: "113 學年師生盃競賽規程",
+      meta: "2025-01 / 新竹市教育網公開 PDF",
+      desc: "可作為競賽規程下載區範例；正式上架建議由總會提供原始檔與最新版。",
+      source: "https://www.hc.edu.tw/edub/upload/113學年師生盃全國各級學校飛鏢錦標賽競賽規程20250109083023.pdf"
+    },
+    {
+      title: "112 學年師生盃競賽規程",
+      meta: "2024-01 / 新竹市教育網公開 PDF",
+      desc: "可作為歷年規程與文件分類 demo；正式上架前需確認授權與版本。",
+      source: "https://www.hc.edu.tw/edub/upload/112學年師生盃競賽規程20240103083807.pdf"
+    },
+    {
+      title: "111 學年度國中學生聯賽競賽規程",
+      meta: "2023-03-10 / 新竹市教育網公開 PDF",
+      desc: "可作為歷年賽事文件範例，正式使用需由總會確認是否可重新上架。",
+      source: "https://www.hc.edu.tw/edub/upload/111學年度國中學生聯賽競賽規程FINAL20230325165733.pdf"
+    }
+  ],
+  fairplay: [
+    {
+      title: "反禁藥與公平競技資源頁",
+      meta: "MVP 必要頁面",
+      desc: "此頁應連結 WADA、WDF 或國內主管機關反禁藥資訊；正式連結與文字需由總會確認。",
+      source: "/docs/FRD.md"
+    }
+  ],
+  media: [
+    {
+      title: "中央社：第 15 屆全國飛鏢公開賽登場",
+      meta: "2024-11-09 / 媒體報導",
+      desc: "可作為媒體報導清單範例；新聞全文與照片不可直接轉載，應以摘要與外部連結呈現。",
+      source: "https://www.cna.com.tw/news/aspt/202411090100.aspx"
+    },
+    {
+      title: "WOWSight：總會紮根基層培養人口",
+      meta: "2024-11-09 / 媒體報導",
+      desc: "可作為推廣成果與全民運推動內容線索。",
+      source: "https://wowsight.tw/2024/11/09/《飛鏢》中華民國競技飛鏢總會紮根基層培養人口/"
+    }
+  ],
+  member: [
+    {
+      title: "會員功能 demo 原則",
+      meta: "正式階段需登入與 RLS 保護",
+      desc: "Demo 只呈現會員登入、個人資料與會費狀態的未來樣貌，不收集、不顯示真實會員資料。",
+      source: "/docs/SRD.md"
+    }
+  ],
+  admin: [
+    {
+      title: "後台管理 demo 原則",
+      meta: "正式階段需角色權限與操作紀錄",
+      desc: "Demo 呈現新聞、賽事、排名、會員、文件與設定模組的位置；正式資料需登入後才能管理。",
+      source: "/docs/SRD.md"
+    }
+  ]
+};
+
 const nav = [
   ["首頁", "/"],
   ["新聞", "/news/"],
@@ -64,11 +207,16 @@ const nav = [
 
 function pageHtml(route) {
   const siblings = routes.filter((item) => item.path.split("/")[0] === route.path.split("/")[0]);
+  const root = route.path.split("/")[0];
+  const realData = realDataByRoot[root] || [];
   const childLinks = siblings
     .map((item) => `<a class="link-card${item.path === route.path ? " current" : ""}" href="/${item.path}/"><b>/${item.path}</b><span>${item.title}</span></a>`)
     .join("\n          ");
   const itemList = route.items.map((item) => `<li>${item}</li>`).join("");
   const navLinks = nav.map(([label, href]) => `<a href="${href}">${label}</a>`).join("");
+  const realDataCards = realData
+    .map((item) => `<article class="data-card"><p class="data-meta">${item.meta}</p><h3>${item.title}</h3><p>${item.desc}</p><a href="${item.source}">查看來源或對應文件</a></article>`)
+    .join("\n          ");
 
   return `<!doctype html>
 <html lang="zh-Hant">
@@ -104,7 +252,7 @@ function pageHtml(route) {
       <div class="section-inner two-col">
         <article class="panel">
           <h2>Demo 頁面內容</h2>
-          <p>此頁為第一階段資訊架構 Demo，用於確認網站階層、導覽連結與未來功能位置。所有內容皆為示意資料，不含正式會員個資。</p>
+          <p>此頁為第一階段資訊架構 Demo，用於確認網站階層、導覽連結與未來功能位置。部分內容採公開資料整理，正式上架前仍需總會確認。</p>
           <ul class="check-list">${itemList}</ul>
         </article>
         <aside class="panel">
@@ -116,6 +264,18 @@ function pageHtml(route) {
             <div><dt>Data</dt><dd>Placeholder only</dd></div>
           </dl>
         </aside>
+      </div>
+    </section>
+
+    <section class="section real-data">
+      <div class="section-inner">
+        <div class="section-head">
+          <h2>公開資料 Demo</h2>
+          <p>以下內容來自公開資料索引，目的為讓審閱者理解未來官網完成後的呈現方式；正式上架前需以總會確認版本為準。</p>
+        </div>
+        <div class="data-grid">
+          ${realDataCards || `<article class="data-card"><p class="data-meta">Demo 原則</p><h3>本頁暫無公開資料範例</h3><p>後續可由總會提供正式資料、文件或公告內容後補入。</p></article>`}
+        </div>
       </div>
     </section>
 
@@ -138,7 +298,7 @@ function pageHtml(route) {
 `;
 }
 
-const css = `:root{--ink:#142033;--muted:#667085;--line:#d9e1ec;--paper:#fff;--wash:#f4f7fb;--navy:#153a6b;--red:#c92c35;--green:#187a58;font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",system-ui,sans-serif}*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--wash);letter-spacing:0}a{color:inherit;text-decoration:none}.site-header{position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(14px)}.nav{display:flex;align-items:center;justify-content:space-between;gap:18px;width:min(1180px,calc(100% - 32px));min-height:72px;margin:0 auto}.brand{display:flex;align-items:center;gap:12px;min-width:0}.brand-mark{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;color:#fff;background:radial-gradient(circle,var(--red) 0 20%,#fff 21% 30%,var(--green) 31% 42%,#12151b 43% 62%,var(--navy) 63% 100%);font-size:11px;font-weight:900}.brand b,.brand small{display:block}.brand small{color:var(--muted);font-size:12px}.nav-links{display:flex;gap:16px;color:#344054;font-size:14px;font-weight:800}.page-hero{color:#fff;background:linear-gradient(105deg,rgba(10,23,43,.96),rgba(21,58,107,.88)),linear-gradient(135deg,#0a172b,#153a6b 60%,#c92c35 130%)}.page-hero-inner{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:72px 0}.eyebrow{margin:0 0 14px;color:#ffd166;font-weight:900}.page-hero h1{max-width:860px;margin:0 0 18px;font-size:clamp(36px,6vw,72px);line-height:1.06}.page-hero p{max-width:720px;color:#dbe7f6;font-size:18px;line-height:1.75}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 15px;border-radius:8px;background:#c92c35;color:#fff;font-weight:900}.button.secondary{border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1)}.section{padding:54px 0}.section.alt{background:#fff}.section-inner{width:min(1180px,calc(100% - 32px));margin:0 auto}.two-col{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.75fr);gap:18px;align-items:start}.panel,.link-card{border:1px solid var(--line);border-radius:8px;background:#fff;box-shadow:0 10px 28px rgba(20,32,51,.06)}.panel{padding:22px}.panel h2,.section-head h2{margin:0 0 12px;font-size:26px}.panel p,.section-head p{color:var(--muted);line-height:1.7}.check-list{display:grid;gap:10px;margin:18px 0 0;padding-left:22px}.check-list li{line-height:1.55}.meta{display:grid;gap:12px;margin:18px 0 0}.meta div{display:grid;gap:4px}.meta dt{color:var(--muted);font-size:13px;font-weight:800}.meta dd{margin:0;font-weight:800;word-break:break-word}.section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:20px}.link-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.link-card{display:grid;gap:7px;min-height:88px;padding:15px}.link-card.current{border-color:rgba(201,44,53,.45);box-shadow:0 12px 28px rgba(201,44,53,.12)}.link-card b{color:var(--navy);font-size:14px}.link-card span{color:var(--muted);font-size:14px;line-height:1.45}.footer{padding:30px 16px;color:#dbe7f6;background:#0a172b;text-align:center;font-size:14px}@media (max-width:900px){.nav{align-items:flex-start;flex-direction:column;padding:14px 0}.nav-links{width:100%;overflow-x:auto;padding-bottom:4px}.two-col,.link-grid{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column}.page-hero-inner{padding:54px 0}.page-hero h1{font-size:clamp(34px,10vw,52px)}}`;
+const css = `:root{--ink:#142033;--muted:#667085;--line:#d9e1ec;--paper:#fff;--wash:#f4f7fb;--navy:#153a6b;--red:#c92c35;--green:#187a58;font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",system-ui,sans-serif}*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--wash);letter-spacing:0}a{color:inherit;text-decoration:none}.site-header{position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(14px)}.nav{display:flex;align-items:center;justify-content:space-between;gap:18px;width:min(1180px,calc(100% - 32px));min-height:72px;margin:0 auto}.brand{display:flex;align-items:center;gap:12px;min-width:0}.brand-mark{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;color:#fff;background:radial-gradient(circle,var(--red) 0 20%,#fff 21% 30%,var(--green) 31% 42%,#12151b 43% 62%,var(--navy) 63% 100%);font-size:11px;font-weight:900}.brand b,.brand small{display:block}.brand small{color:var(--muted);font-size:12px}.nav-links{display:flex;gap:16px;color:#344054;font-size:14px;font-weight:800}.page-hero{color:#fff;background:linear-gradient(105deg,rgba(10,23,43,.96),rgba(21,58,107,.88)),linear-gradient(135deg,#0a172b,#153a6b 60%,#c92c35 130%)}.page-hero-inner{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:72px 0}.eyebrow{margin:0 0 14px;color:#ffd166;font-weight:900}.page-hero h1{max-width:860px;margin:0 0 18px;font-size:clamp(36px,6vw,72px);line-height:1.06}.page-hero p{max-width:720px;color:#dbe7f6;font-size:18px;line-height:1.75}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 15px;border-radius:8px;background:#c92c35;color:#fff;font-weight:900}.button.secondary{border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1)}.section{padding:54px 0}.section.alt{background:#fff}.section.real-data{background:#eef4fb}.section-inner{width:min(1180px,calc(100% - 32px));margin:0 auto}.two-col{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.75fr);gap:18px;align-items:start}.panel,.link-card,.data-card{border:1px solid var(--line);border-radius:8px;background:#fff;box-shadow:0 10px 28px rgba(20,32,51,.06)}.panel{padding:22px}.panel h2,.section-head h2{margin:0 0 12px;font-size:26px}.panel p,.section-head p{color:var(--muted);line-height:1.7}.check-list{display:grid;gap:10px;margin:18px 0 0;padding-left:22px}.check-list li{line-height:1.55}.meta{display:grid;gap:12px;margin:18px 0 0}.meta div{display:grid;gap:4px}.meta dt{color:var(--muted);font-size:13px;font-weight:800}.meta dd{margin:0;font-weight:800;word-break:break-word}.section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:20px}.data-grid,.link-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.data-card{display:grid;gap:10px;min-height:230px;padding:18px}.data-card h3{margin:0;font-size:20px;line-height:1.35}.data-card p{margin:0;color:var(--muted);line-height:1.62}.data-card a{align-self:end;color:var(--navy);font-weight:900;text-decoration:underline;text-underline-offset:3px}.data-meta{color:var(--red)!important;font-size:13px;font-weight:900}.link-card{display:grid;gap:7px;min-height:88px;padding:15px}.link-card.current{border-color:rgba(201,44,53,.45);box-shadow:0 12px 28px rgba(201,44,53,.12)}.link-card b{color:var(--navy);font-size:14px}.link-card span{color:var(--muted);font-size:14px;line-height:1.45}.footer{padding:30px 16px;color:#dbe7f6;background:#0a172b;text-align:center;font-size:14px}@media (max-width:900px){.nav{align-items:flex-start;flex-direction:column;padding:14px 0}.nav-links{width:100%;overflow-x:auto;padding-bottom:4px}.two-col,.data-grid,.link-grid{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column}.page-hero-inner{padding:54px 0}.page-hero h1{font-size:clamp(34px,10vw,52px)}}`;
 
 mkdirSync("assets", { recursive: true });
 writeFileSync(join("assets", "demo.css"), css, "utf8");

@@ -7,8 +7,8 @@
 | 項目 | 狀態 | 說明 |
 |---|---|---|
 | GitHub project structure | Done | 專案包含 `README.md`、`docs/FRD.md`、`docs/PRD.md`、`docs/SRD.md` 與靜態首頁。 |
-| Static homepage demo | Done | `index.html` 可直接開啟，使用示意公告、示意賽事與示意排名。 |
-| Full static sitemap demo | Done | 已依文件路由建立各資料夾與 demo 頁，首頁 Sitemap 可連至對應頁面。 |
+| Static homepage demo | Done | `index.html` 可直接開啟，已加入公開資料版公告、賽事與國際成果摘要。 |
+| Full static sitemap demo | Done | 已依文件路由建立各資料夾與 demo 頁，首頁 Sitemap 可連至對應頁面，部分頁面含公開資料 Demo 區塊。 |
 | No sensitive data | Done | Demo 不含正式會員個資、真實選手個人資料、API key、密碼或 Service Role key。 |
 | Mobile review | Done | 首頁採 responsive layout，支援手機導覽與主要審閱區塊。 |
 | Vercel static deployment config | Done | `vercel.json` 提供靜態部署與基本安全 header。 |
@@ -38,6 +38,21 @@ npx serve .
 
 第一階段 demo 不需要 Supabase 環境變數。
 
+## 公開資料版 Demo 說明
+
+目前 demo 已加入部分公開資料，讓審閱者更容易理解網站正式完成後的呈現方式。使用原則如下：
+
+- 僅使用公開公告、公開媒體報導或已整理於素材庫的來源線索。
+- 不直接轉載新聞全文或未授權照片。
+- 涉及代表隊、成績、青少年選手或規程附件者，正式上架前仍需總會確認。
+- 所有 demo 內容皆為靜態資料，不會收集會員個資。
+
+資料使用說明請見：
+
+```text
+docs/DEMO_REAL_DATA_NOTES.md
+```
+
 ## GitHub Pages 備用部署流程
 
 1. 將專案推送到 GitHub。
@@ -60,7 +75,7 @@ npx serve .
 |---|---|
 | FRD-1.1 / SRD-1.1 Repository contains README, source files, and docs | Done |
 | FRD-1.2 / PRD-1.1 Public demo can be deployed to Vercel Free or GitHub Pages | Ready |
-| FRD-1.3 Static homepage demo with placeholder data | Done |
+| FRD-1.3 Static homepage demo with placeholder/public-source data | Done |
 | FRD-1.4 / PRD-1.2 No real member personal data | Done |
 | FRD-1.5 Deployment and review workflow documented | Done |
 | PRD-1.4 Mobile review without horizontal scrolling | Ready for QA |
