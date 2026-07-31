@@ -22,6 +22,7 @@
 | 排名成績 | WDF 世界盃首度參賽紀錄 | 中央社 |
 | 排名成績 | 成人組、青少年組、縣市積分排名預留 | 專案文件與總會待提供資料 |
 | 關於總會 | 網站識別、國際參賽、全民運推動觀察 | README、中央社、115年全民運官方網站 |
+| 關於總會 | Logo、封面圖、分類與聯絡資訊 | 中華民國競技飛鏢總會 CTDF Facebook |
 
 ## 主要公開來源
 
@@ -32,6 +33,20 @@
 - 中央社：`https://www.cna.com.tw/news/aspt/202509220180.aspx`
 - 中央社：`https://www.cna.com.tw/news/aspt/202509260296.aspx`
 - 115年全民運官方網站：`https://sport115.tycg.gov.tw/`
+- 中華民國競技飛鏢總會 CTDF Facebook：`https://www.facebook.com/CTDFTW/?locale=zh_TW`
+
+## Facebook About 資訊
+
+- 分類：Nonprofit organization
+- 地址：臺北市南港區松河街384號5樓
+- 電話：+886 2 2732 1422
+- Email：ctdf0306@gmail.com
+
+## DEMO 使用素材
+
+- 導覽列與首頁使用 Logo：`assets/ctdf-logo.png`
+- 首頁視覺區使用封面圖：`assets/ctdf-facebook-cover.png`
+- 素材來源為使用者提供之 CTDF Facebook 截圖，正式上線前建議由總會確認 Logo 原始檔與授權版本。
 
 ## 使用原則
 
@@ -40,6 +55,7 @@
 3. 不引用或混用「中華民國飛鏢總會」網站資料，避免與本案總會混淆。
 4. 對於尚未取得總會正式核定的排名、會員、組織與附件資料，僅以 DEMO 預留區呈現。
 5. 「查看來源或對應文件」連結已設定為開新分頁，不會取代原本 DEMO 頁面。
+6. Logo 與封面圖目前為 DEMO 展示用途；正式版建議改用總會提供的原始檔。
 
 ## 待總會確認
 
