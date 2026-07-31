@@ -65,9 +65,7 @@ const routeGroups = {
     ["about/citizens-sports-games", "全民運推動專區", "第二階段", "Later", "說明全民運動會相關觀察與未來推動策略。"],
     ["about/development", "發展沿革", "第二階段", "Later", "正式版可由總會提供沿革與里程碑。"]
   ],
-  fairplay: [
-    ["fairplay", "公平競賽 / 反禁藥", "公開資訊", "MVP", "整理公平競賽、反禁藥與運動員保護資訊。"]
-  ],
+  fairplay: [["fairplay", "公平競賽 / 反禁藥", "公開資訊", "MVP", "整理公平競賽、反禁藥與運動員保護資訊。"]],
   media: [
     ["media/photos", "照片花絮", "第二階段", "Later", "預留賽事照片與活動花絮。"],
     ["media/videos", "影音專區", "第二階段", "Later", "預留 YouTube、直播回放與宣傳影片入口。"],
@@ -101,53 +99,14 @@ const routes = Object.values(routeGroups).flat().map(([path, title, group, statu
 
 const data = {
   news: [
-    {
-      date: "2026-02-11",
-      category: "賽事公告",
-      title: "114學年師生盃全國各級學校飛鏢錦標賽公告",
-      desc: "澎湖縣政府教育處轉知總會辦理師生盃，賽事地點為桃園市中壢國中活動中心。",
-      source: sources.penghu114
-    },
-    {
-      date: "2025-09-22",
-      category: "國際參賽",
-      title: "台灣競技飛鏢代表隊首度參加 WDF 世界盃",
-      desc: "台灣代表隊首度登上 WDF 世界盃舞台，總會派出 8 名選手參賽。",
-      source: sources.cnaWorldCup
-    },
-    {
-      date: "2025-09-26",
-      category: "國際成績",
-      title: "蔡詠恩、楊奕晴於 WDF 世界盃 U18 女雙摘金",
-      desc: "Demo 可作為青少年培育、國際參賽與成績專區的展示亮點。",
-      source: sources.cnaGold
-    }
+    { date: "2026-02-11", category: "賽事公告", title: "114學年師生盃全國各級學校飛鏢錦標賽公告", desc: "澎湖縣政府教育處轉知總會辦理師生盃，賽事地點為桃園市中壢國中活動中心。", source: sources.penghu114 },
+    { date: "2025-09-22", category: "國際參賽", title: "台灣競技飛鏢代表隊首度參加 WDF 世界盃", desc: "台灣代表隊首度登上 WDF 世界盃舞台，總會派出 8 名選手參賽。", source: sources.cnaWorldCup },
+    { date: "2025-09-26", category: "國際成績", title: "蔡詠恩、楊奕晴於 WDF 世界盃 U18 女雙摘金", desc: "Demo 可作為青少年培育、國際參賽與成績專區的展示亮點。", source: sources.cnaGold }
   ],
   events: [
-    {
-      date: "2026-03-14 至 2026-03-15",
-      status: "報名截止 2026-03-02",
-      title: "114學年師生盃全國各級學校飛鏢錦標賽",
-      place: "桃園市中壢國中活動中心",
-      desc: "以學校為單位報名，可示範報名期限、場地、規程附件與聯絡方式。",
-      source: sources.hualien114
-    },
-    {
-      date: "2025-06-14 至 2025-06-15",
-      status: "歷史賽事",
-      title: "113學年度國民中學暨高級中學飛鏢隊際聯賽",
-      place: "學生隊際賽",
-      desc: "臺中市政府教育局公告列有國中與高中學生聯賽規程、報名表與總會聯絡資訊。",
-      source: sources.taichung113League
-    },
-    {
-      date: "2026-03-14 至 2026-03-15",
-      status: "規程摘要",
-      title: "114學年師生盃賽事規程摘要",
-      place: "學校公告轉知",
-      desc: "公告列出賽事目的、日期、報名日期、地點與參加單位，適合做為詳情頁資料。",
-      source: sources.bjps114
-    }
+    { date: "2026-03-14 至 2026-03-15", status: "報名截止 2026-03-02", title: "114學年師生盃全國各級學校飛鏢錦標賽", place: "桃園市中壢國中活動中心", desc: "以學校為單位報名，可示範報名期限、場地、規程附件與聯絡方式。", source: sources.hualien114 },
+    { date: "2025-06-14 至 2025-06-15", status: "歷史賽事", title: "113學年度國民中學暨高級中學飛鏢隊際聯賽", place: "學生隊際賽", desc: "臺中市政府教育局公告列有國中與高中學生聯賽規程、報名表與總會聯絡資訊。", source: sources.taichung113League },
+    { date: "2026-03-14 至 2026-03-15", status: "規程摘要", title: "114學年師生盃賽事規程摘要", place: "學校公告轉知", desc: "公告列出賽事目的、日期、報名日期、地點與參加單位，適合做為詳情頁資料。", source: sources.bjps114 }
   ],
   rankings: [
     ["U18 女子雙打", "蔡詠恩、楊奕晴", "WDF 世界盃金牌", "2025-09-26", sources.cnaGold],
@@ -155,43 +114,13 @@ const data = {
     ["正式積分排名", "待總會提供", "成人組、青少年組、縣市排名預留", "Demo 註記", sources.notes]
   ],
   players: [
-    {
-      name: "正式選手資料待總會授權",
-      group: "Demo 預留",
-      region: "不揭露未授權個資",
-      status: "建議正式版由後台維護公開欄位",
-      source: sources.frd
-    },
-    {
-      name: "國際賽事成果可建立選手頁",
-      group: "U18 / 代表隊",
-      region: "依總會核定資料",
-      status: "可連結排名成績與賽事成績",
-      source: sources.cnaGold
-    }
+    { name: "正式選手資料待總會授權", group: "Demo 預留", region: "不揭露未授權個資", status: "建議正式版由後台維護公開欄位", source: sources.frd },
+    { name: "國際賽事成果可建立選手頁", group: "U18 / 代表隊", region: "依總會核定資料", status: "可連結排名成績與賽事成績", source: sources.cnaGold }
   ],
   downloads: [
-    {
-      type: "競賽規程",
-      title: "113學年度國中暨高中飛鏢隊際聯賽規程",
-      owner: "臺中市政府教育局公告附件",
-      updated: "2025-04-24",
-      source: sources.taichung113League
-    },
-    {
-      type: "報名資訊",
-      title: "114學年師生盃報名與規程來源",
-      owner: "總會 FB 與各縣市教育單位公告",
-      updated: "2026-02",
-      source: sources.hualien114
-    },
-    {
-      type: "Demo 文件",
-      title: "實際資料使用說明",
-      owner: "專案文件",
-      updated: "Demo",
-      source: sources.notes
-    }
+    { type: "競賽規程", title: "113學年度國中暨高中飛鏢隊際聯賽規程", owner: "臺中市政府教育局公告附件", updated: "2025-04-24", source: sources.taichung113League },
+    { type: "報名資訊", title: "114學年師生盃報名與規程來源", owner: "總會 FB 與各縣市教育單位公告", updated: "2026-02", source: sources.hualien114 },
+    { type: "Demo 文件", title: "實際資料使用說明", owner: "專案文件", updated: "Demo", source: sources.notes }
   ],
   about: [
     ["網站識別", "中華民國競技飛鏢總會 / Chinese Taipei Dart Federation，Demo 使用使用者提供之 CTDF Logo。", sources.facebook],
@@ -229,16 +158,24 @@ function sourceLink(url) {
   return `<a href="${htmlEscape(url)}" target="_blank" rel="noopener noreferrer">查看來源</a>`;
 }
 
-function heroArt(root) {
+function heroVariant(root) {
   const variants = {
-    news: { label: "公告", icon: "M86 70h112v92H86z M106 94h72 M106 118h56 M106 142h64", accent: "#ffd166", x: 92, y: 72 },
-    events: { label: "賽事", icon: "M82 78h120v98H82z M82 104h120 M112 62v34 M172 62v34 M108 126h20 M146 126h20 M108 152h20 M146 152h20", accent: "#4ade80", x: 92, y: 75 },
-    rankings: { label: "排名", icon: "M86 176h32v-54h44v54h32v-82h44v82 M70 176h184", accent: "#fbbf24", x: 92, y: 72 },
-    players: { label: "選手", icon: "M146 78a32 32 0 1 0 0 64a32 32 0 0 0 0-64z M86 188c10-32 34-48 60-48s50 16 60 48", accent: "#93c5fd", x: 88, y: 76 },
-    downloads: { label: "下載", icon: "M104 64h74l34 34v92H104z M178 64v34h34 M156 112v46 M134 138l22 22l22-22", accent: "#fca5a5", x: 94, y: 70 },
-    about: { label: "總會", icon: "M94 178V94l58-32l58 32v84 M118 178v-58h68v58 M78 178h148 M132 100h16 M164 100h16", accent: "#67e8f9", x: 90, y: 72 }
+    news: { icon: "M34 24h68v72H34z M48 44h40 M48 60h32 M48 76h36", accent: "#ffd166" },
+    events: { icon: "M28 30h80v72H28z M28 50h80 M48 20v24 M88 20v24 M46 68h12 M72 68h12 M46 88h12 M72 88h12", accent: "#4ade80" },
+    rankings: { icon: "M28 104h22V68h30v36h22V48h30v56 M20 104h120", accent: "#fbbf24" },
+    players: { icon: "M76 28a24 24 0 1 0 0 48a24 24 0 0 0 0-48z M32 116c8-26 26-40 44-40s36 14 44 40", accent: "#93c5fd" },
+    downloads: { icon: "M40 20h52l28 28v76H40z M92 20v28h28 M76 58v38 M58 80l18 18l18-18", accent: "#fca5a5" },
+    about: { icon: "M32 108V48l44-24l44 24v60 M52 108V72h48v36 M22 108h108 M62 52h10 M84 52h10", accent: "#67e8f9" }
   };
-  const variant = variants[root] || variants.news;
+  return variants[root] || variants.news;
+}
+
+function titleIcon(root) {
+  const variant = heroVariant(root);
+  return `<span class="title-icon" aria-hidden="true"><svg viewBox="0 0 150 140"><path d="${variant.icon}" fill="none" stroke="${variant.accent}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`;
+}
+
+function heroArt() {
   return `<div class="hero-art" aria-hidden="true">
     <svg viewBox="0 0 420 260" role="img">
       <defs>
@@ -250,23 +187,20 @@ function heroArt(root) {
           <feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#020b18" flood-opacity=".35"/>
         </filter>
       </defs>
-      <rect x="32" y="42" width="196" height="162" rx="18" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.22)"/>
-      <path d="${variant.icon}" fill="none" stroke="${variant.accent}" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="${variant.x}" y="${variant.y}" fill="#f8fafc" font-size="22" font-weight="900" font-family="Microsoft JhengHei, sans-serif">${variant.label}</text>
-      <circle cx="292" cy="126" r="88" fill="#0b1320" filter="url(#softShadow)"/>
-      <circle cx="292" cy="126" r="76" fill="#f8fafc"/>
-      <circle cx="292" cy="126" r="64" fill="#c92c35"/>
-      <circle cx="292" cy="126" r="51" fill="#187a58"/>
-      <circle cx="292" cy="126" r="38" fill="#111827"/>
-      <circle cx="292" cy="126" r="24" fill="#f8fafc"/>
-      <circle cx="292" cy="126" r="12" fill="#c92c35"/>
-      <path d="M58 196 L254 132" stroke="url(#dartShaft)" stroke-width="12" stroke-linecap="round"/>
-      <path d="M246 129 L288 121 L256 147 Z" fill="#f8fafc"/>
-      <path d="M48 202 L84 162 L104 184 L69 218 Z" fill="#c92c35"/>
-      <path d="M73 180 L102 145 L126 166 L96 200 Z" fill="#153a6b"/>
-      <path d="M42 206 L22 212 L48 188 Z" fill="#ffd166"/>
-      <path d="M126 209 C170 225 224 226 284 208" fill="none" stroke="#dbe7f6" stroke-width="2" opacity=".45"/>
-      <path d="M160 48 C208 30 280 28 348 56" fill="none" stroke="#dbe7f6" stroke-width="2" opacity=".35"/>
+      <path d="M84 204 C146 236 252 232 336 196" fill="none" stroke="#dbe7f6" stroke-width="2" opacity=".38"/>
+      <path d="M112 62 C174 26 276 28 352 66" fill="none" stroke="#dbe7f6" stroke-width="2" opacity=".32"/>
+      <circle cx="282" cy="126" r="88" fill="#0b1320" filter="url(#softShadow)"/>
+      <circle cx="282" cy="126" r="76" fill="#f8fafc"/>
+      <circle cx="282" cy="126" r="64" fill="#c92c35"/>
+      <circle cx="282" cy="126" r="51" fill="#187a58"/>
+      <circle cx="282" cy="126" r="38" fill="#111827"/>
+      <circle cx="282" cy="126" r="24" fill="#f8fafc"/>
+      <circle cx="282" cy="126" r="12" fill="#c92c35"/>
+      <path d="M54 188 L244 132" stroke="url(#dartShaft)" stroke-width="12" stroke-linecap="round"/>
+      <path d="M236 129 L280 121 L247 148 Z" fill="#f8fafc"/>
+      <path d="M44 194 L80 154 L100 176 L65 210 Z" fill="#c92c35"/>
+      <path d="M69 172 L98 137 L122 158 L92 192 Z" fill="#153a6b"/>
+      <path d="M38 198 L18 204 L44 180 Z" fill="#ffd166"/>
     </svg>
   </div>`;
 }
@@ -391,10 +325,10 @@ function pageHtml(route) {
       <div class="page-hero-inner">
         <div>
           <p class="eyebrow">${htmlEscape(route.group)} / ${htmlEscape(route.status)}</p>
-          <h1>${htmlEscape(route.title)}</h1>
+          <h1>${titleIcon(root)}<span>${htmlEscape(route.title)}</span></h1>
           <p>${htmlEscape(route.summary)}</p>
         </div>
-        ${heroArt(root)}
+        ${heroArt()}
       </div>
     </section>
     <section class="section real-data">
@@ -484,7 +418,7 @@ function homeHtml() {
 </html>`;
 }
 
-const css = `:root{--ink:#142033;--muted:#667085;--line:#d9e1ec;--paper:#fff;--wash:#f4f7fb;--navy:#153a6b;--red:#c92c35;--green:#187a58;--gold:#ffd166;font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",system-ui,sans-serif}*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--wash);letter-spacing:0}a{color:inherit;text-decoration:none}.site-header{position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(14px)}.nav{display:flex;align-items:center;justify-content:space-between;gap:18px;width:min(1180px,calc(100% - 32px));min-height:72px;margin:0 auto}.brand{display:flex;align-items:center;gap:12px;min-width:0}.brand-logo{width:74px;height:44px;object-fit:contain;border-radius:6px;background:#fff}.brand b,.brand small{display:block}.brand small{color:var(--muted);font-size:12px}.nav-links{display:flex;gap:16px;color:#344054;font-size:14px;font-weight:800}.home-hero,.page-hero{color:#fff;background:linear-gradient(105deg,rgba(10,23,43,.96),rgba(21,58,107,.88)),linear-gradient(135deg,#0a172b,#153a6b 60%,#c92c35 130%)}.home-hero-inner,.page-hero-inner,.section-inner{width:min(1180px,calc(100% - 32px));margin:0 auto}.home-hero-inner,.page-hero-inner{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,430px);gap:34px;align-items:center}.home-hero-inner{padding:76px 0}.page-hero-inner{padding:66px 0}.hero-art{justify-self:end;width:min(430px,100%);opacity:.98}.hero-art svg{display:block;width:100%;height:auto}.eyebrow{margin:0 0 14px;color:var(--gold);font-weight:900}.home-hero h1,.page-hero h1{max-width:860px;margin:0 0 18px;font-size:clamp(36px,6vw,72px);line-height:1.06}.home-hero p,.page-hero p{max-width:720px;color:#dbe7f6;font-size:18px;line-height:1.75}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 15px;border-radius:8px;background:#c92c35;color:#fff;font-weight:900}.button.secondary{border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1)}.target-panel{padding:0;background:transparent}.hero-logo{display:block;width:min(360px,100%);margin:0 auto 18px;border-radius:8px;background:#fff;box-shadow:0 12px 30px rgba(0,0,0,.22)}.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat-row span{border-radius:8px;background:rgba(255,255,255,.13);padding:12px;color:#dbe7f6;font-size:12px}.stat-row b{display:block;color:var(--gold);font-size:18px}.section{padding:52px 0}.section.alt{background:#fff}.section.real-data{background:#eef4fb}.section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:20px}.section-head h2{margin:0;font-size:28px}.section-head p{max-width:720px;margin:0;color:var(--muted);line-height:1.7}.text-link,.news-item a,.event-item a,.ranking-table a,.player-row a,.download-row a,.about-block a{color:var(--navy);font-weight:900;text-decoration:underline;text-underline-offset:3px}.news-list,.event-list,.player-list,.download-list{display:grid;gap:12px}.news-item,.event-item,.player-row,.download-row{display:grid;grid-template-columns:minmax(150px,.25fr) minmax(0,1fr) auto;gap:14px 22px;align-items:center;border:1px solid var(--line);border-radius:8px;background:#fff;padding:18px;box-shadow:0 10px 28px rgba(20,32,51,.06)}.news-item time,.event-date{color:var(--red);font-weight:900}.tag,.file-badge{display:inline-flex;width:max-content;margin-bottom:8px;border-radius:999px;background:#eef4fb;color:var(--navy);padding:5px 9px;font-size:12px;font-weight:900}.news-item h3,.event-item h3,.player-row h3,.download-row h3,.about-block h3{margin:0 0 8px;font-size:20px;line-height:1.35}.news-item p,.event-item p,.player-row p,.download-row p,.about-block p{margin:0;color:var(--muted);line-height:1.65}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:8px;background:#fff;box-shadow:0 10px 28px rgba(20,32,51,.06)}.ranking-table{width:100%;border-collapse:collapse;min-width:780px}.ranking-table th,.ranking-table td{padding:16px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.ranking-table th{background:#f8fafc;color:var(--navy);font-size:13px}.ranking-table tr:last-child td{border-bottom:0}.player-row{grid-template-columns:auto minmax(0,1fr) minmax(240px,.35fr) auto}.avatar{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:#153a6b;color:#fff;font-size:12px;font-weight:900}.player-row dl{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0}.player-row dt{color:var(--muted);font-size:12px;font-weight:900}.player-row dd{margin:3px 0 0}.download-row{grid-template-columns:auto minmax(0,1fr) auto}.about-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.about-block{border:1px solid var(--line);border-radius:8px;background:#fff;padding:20px;box-shadow:0 10px 28px rgba(20,32,51,.06)}.link-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.link-card{display:grid;gap:7px;min-height:88px;padding:15px;border:1px solid var(--line);border-radius:8px;background:#fff;box-shadow:0 10px 28px rgba(20,32,51,.06)}.link-card.current{border-color:rgba(201,44,53,.45);box-shadow:0 12px 28px rgba(201,44,53,.12)}.link-card b{color:var(--navy);font-size:14px}.link-card span{color:var(--muted);font-size:14px;line-height:1.45}.footer{padding:28px 16px;color:#dbe7f6;background:#0a172b;font-size:14px}.footer-inner{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px 18px;width:min(1180px,calc(100% - 32px));margin:0 auto;text-align:center}.footer b{color:#fff}.footer a{color:#fff;text-decoration:underline;text-underline-offset:3px}.footer-note{color:#98a8bd}@media (max-width:900px){.nav{align-items:flex-start;flex-direction:column;padding:14px 0}.nav-links{width:100%;overflow-x:auto;padding-bottom:4px}.home-hero-inner,.page-hero-inner,.about-grid,.link-grid{grid-template-columns:1fr}.hero-art{justify-self:start;width:min(360px,100%)}.news-item,.event-item,.player-row,.download-row{grid-template-columns:1fr;align-items:start}.player-row dl{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column}.home-hero-inner,.page-hero-inner{padding:52px 0}.home-hero h1,.page-hero h1{font-size:clamp(34px,10vw,52px)}.footer-inner{align-items:flex-start;flex-direction:column;text-align:left}}`;
+const css = `:root{--ink:#142033;--muted:#667085;--line:#d9e1ec;--paper:#fff;--wash:#f4f7fb;--navy:#153a6b;--red:#c92c35;--green:#187a58;--gold:#ffd166;font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",system-ui,sans-serif}*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--wash);letter-spacing:0}a{color:inherit;text-decoration:none}.site-header{position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(14px)}.nav{display:flex;align-items:center;justify-content:space-between;gap:18px;width:min(1180px,calc(100% - 32px));min-height:72px;margin:0 auto}.brand{display:flex;align-items:center;gap:12px;min-width:0}.brand-logo{width:74px;height:44px;object-fit:contain;border-radius:6px;background:#fff}.brand b,.brand small{display:block}.brand small{color:var(--muted);font-size:12px}.nav-links{display:flex;gap:16px;color:#344054;font-size:14px;font-weight:800}.home-hero,.page-hero{color:#fff;background:linear-gradient(105deg,rgba(10,23,43,.96),rgba(21,58,107,.88)),linear-gradient(135deg,#0a172b,#153a6b 60%,#c92c35 130%)}.home-hero-inner,.page-hero-inner,.section-inner{width:min(1180px,calc(100% - 32px));margin:0 auto}.home-hero-inner,.page-hero-inner{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,430px);gap:34px;align-items:center}.home-hero-inner{padding:76px 0}.page-hero-inner{padding:66px 0}.hero-art{justify-self:end;width:min(430px,100%);opacity:.98}.hero-art svg{display:block;width:100%;height:auto}.title-icon{display:inline-grid;place-items:center;flex:0 0 auto;width:76px;height:76px;margin-right:16px;border:1px solid rgba(255,255,255,.22);border-radius:8px;background:rgba(255,255,255,.1)}.title-icon svg{width:62px;height:58px}.eyebrow{margin:0 0 14px;color:var(--gold);font-weight:900}.home-hero h1,.page-hero h1{max-width:860px;margin:0 0 18px;font-size:clamp(36px,6vw,72px);line-height:1.06}.page-hero h1{display:flex;align-items:center}.home-hero p,.page-hero p{max-width:720px;color:#dbe7f6;font-size:18px;line-height:1.75}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 15px;border-radius:8px;background:#c92c35;color:#fff;font-weight:900}.button.secondary{border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1)}.target-panel{padding:0;background:transparent}.hero-logo{display:block;width:min(360px,100%);margin:0 auto 18px;border-radius:8px;background:#fff;box-shadow:0 12px 30px rgba(0,0,0,.22)}.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat-row span{border-radius:8px;background:rgba(255,255,255,.13);padding:12px;color:#dbe7f6;font-size:12px}.stat-row b{display:block;color:var(--gold);font-size:18px}.section{padding:52px 0}.section.alt{background:#fff}.section.real-data{background:#eef4fb}.section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:20px}.section-head h2{margin:0;font-size:28px}.section-head p{max-width:720px;margin:0;color:var(--muted);line-height:1.7}.text-link,.news-item a,.event-item a,.ranking-table a,.player-row a,.download-row a,.about-block a{color:var(--navy);font-weight:900;text-decoration:underline;text-underline-offset:3px}.news-list,.event-list,.player-list,.download-list{display:grid;gap:12px}.news-item,.event-item,.player-row,.download-row{display:grid;grid-template-columns:minmax(150px,.25fr) minmax(0,1fr) auto;gap:14px 22px;align-items:center;border:1px solid var(--line);border-radius:8px;background:#fff;padding:18px;box-shadow:0 10px 28px rgba(20,32,51,.06)}.news-item time,.event-date{color:var(--red);font-weight:900}.tag,.file-badge{display:inline-flex;width:max-content;margin-bottom:8px;border-radius:999px;background:#eef4fb;color:var(--navy);padding:5px 9px;font-size:12px;font-weight:900}.news-item h3,.event-item h3,.player-row h3,.download-row h3,.about-block h3{margin:0 0 8px;font-size:20px;line-height:1.35}.news-item p,.event-item p,.player-row p,.download-row p,.about-block p{margin:0;color:var(--muted);line-height:1.65}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:8px;background:#fff;box-shadow:0 10px 28px rgba(20,32,51,.06)}.ranking-table{width:100%;border-collapse:collapse;min-width:780px}.ranking-table th,.ranking-table td{padding:16px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.ranking-table th{background:#f8fafc;color:var(--navy);font-size:13px}.ranking-table tr:last-child td{border-bottom:0}.player-row{grid-template-columns:auto minmax(0,1fr) minmax(240px,.35fr) auto}.avatar{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:#153a6b;color:#fff;font-size:12px;font-weight:900}.player-row dl{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0}.player-row dt{color:var(--muted);font-size:12px;font-weight:900}.player-row dd{margin:3px 0 0}.download-row{grid-template-columns:auto minmax(0,1fr) auto}.about-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.about-block{border:1px solid var(--line);border-radius:8px;background:#fff;padding:20px;box-shadow:0 10px 28px rgba(20,32,51,.06)}.link-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.link-card{display:grid;gap:7px;min-height:88px;padding:15px;border:1px solid var(--line);border-radius:8px;background:#fff;box-shadow:0 10px 28px rgba(20,32,51,.06)}.link-card.current{border-color:rgba(201,44,53,.45);box-shadow:0 12px 28px rgba(201,44,53,.12)}.link-card b{color:var(--navy);font-size:14px}.link-card span{color:var(--muted);font-size:14px;line-height:1.45}.footer{padding:28px 16px;color:#dbe7f6;background:#0a172b;font-size:14px}.footer-inner{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px 18px;width:min(1180px,calc(100% - 32px));margin:0 auto;text-align:center}.footer b{color:#fff}.footer a{color:#fff;text-decoration:underline;text-underline-offset:3px}.footer-note{color:#98a8bd}@media (max-width:900px){.nav{align-items:flex-start;flex-direction:column;padding:14px 0}.nav-links{width:100%;overflow-x:auto;padding-bottom:4px}.home-hero-inner,.page-hero-inner,.about-grid,.link-grid{grid-template-columns:1fr}.hero-art{justify-self:start;width:min(360px,100%)}.page-hero h1{align-items:flex-start}.title-icon{width:58px;height:58px;margin-right:12px}.title-icon svg{width:46px;height:44px}.news-item,.event-item,.player-row,.download-row{grid-template-columns:1fr;align-items:start}.player-row dl{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column}.home-hero-inner,.page-hero-inner{padding:52px 0}.home-hero h1,.page-hero h1{font-size:clamp(34px,10vw,52px)}.footer-inner{align-items:flex-start;flex-direction:column;text-align:left}}`;
 
 mkdirSync("assets", { recursive: true });
 writeFileSync(join("assets", "demo.css"), css, "utf8");
