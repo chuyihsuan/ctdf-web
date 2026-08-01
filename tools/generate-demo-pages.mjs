@@ -10,6 +10,7 @@ const sources = {
   cnaGold: "https://www.cna.com.tw/news/aspt/202509260296.aspx",
   citizensSports: "https://sport115.tycg.gov.tw/",
   facebook: "https://www.facebook.com/CTDFTW/?locale=zh_TW",
+  asiaPacificCupBrief: "https://reurl.cc/RRbWrD",
   notes: "/docs/DEMO_REAL_DATA_NOTES.md",
   wdfMembers: "https://dartswdf.com/members",
   frd: "/docs/FRD.md",
@@ -100,11 +101,13 @@ const routes = Object.values(routeGroups).flat().map(([path, title, group, statu
 
 const data = {
   news: [
+    { date: "2026-08-01", category: "代表隊選拔", title: "2026 WDF 亞太盃中華台北代表隊選拔賽開放報名", desc: "兩年一次的國家代表隊選拔機會，賽事將於 2026 年 8 月 15 日、8 月 16 日在臺中市立向上國民中學舉行，報名至 2026 年 8 月 7 日截止。", source: sources.asiaPacificCupBrief, image: "/assets/wdf-asia-pacific-cup-2026-selection.png" },
     { date: "2026-02-11", category: "賽事公告", title: "114學年師生盃全國各級學校飛鏢錦標賽公告", desc: "澎湖縣政府教育處轉知總會辦理師生盃，賽事地點為桃園市中壢國中活動中心。", source: sources.penghu114 },
     { date: "2025-09-22", category: "國際參賽", title: "台灣競技飛鏢代表隊首度參加 WDF 世界盃", desc: "台灣代表隊首度登上 WDF 世界盃舞台，總會派出 8 名選手參賽。", source: sources.cnaWorldCup },
     { date: "2025-09-26", category: "國際成績", title: "蔡詠恩、楊奕晴於 WDF 世界盃 U18 女雙摘金", desc: "Demo 可作為青少年培育、國際參賽與成績專區的展示亮點。", source: sources.cnaGold }
   ],
   events: [
+    { date: "2026-08-15 至 2026-08-16", status: "報名截止 2026-08-07", title: "2026 WDF 亞太盃中華台北代表隊選拔賽", place: "臺中市立向上國民中學", desc: "選拔中華台北代表隊參加 2026 WDF Asia Pacific Cup 亞太盃飛鏢錦標賽，入選選手將有機會代表台灣遠征蒙古烏蘭巴托。", source: sources.asiaPacificCupBrief, image: "/assets/wdf-asia-pacific-cup-2026-selection.png" },
     { date: "2026-03-14 至 2026-03-15", status: "報名截止 2026-03-02", title: "114學年師生盃全國各級學校飛鏢錦標賽", place: "桃園市中壢國中活動中心", desc: "以學校為單位報名，可示範報名期限、場地、規程附件與聯絡方式。", source: sources.hualien114 },
     { date: "2025-06-14 至 2025-06-15", status: "歷史賽事", title: "113學年度國民中學暨高級中學飛鏢隊際聯賽", place: "學生隊際賽", desc: "臺中市政府教育局公告列有國中與高中學生聯賽規程、報名表與總會聯絡資訊。", source: sources.taichung113League },
     { date: "2026-03-14 至 2026-03-15", status: "規程摘要", title: "114學年師生盃賽事規程摘要", place: "學校公告轉知", desc: "公告列出賽事目的、日期、報名日期、地點與參加單位，適合做為詳情頁資料。", source: sources.bjps114 }
@@ -219,29 +222,37 @@ function heroArt() {
 }
 
 function renderNews(items = data.news) {
-  return `<div class="news-list">${items.map((item) => `
-    <article class="news-item">
-      <time>${htmlEscape(item.date)}</time>
+  return `<div class="news-list">${items.map((item) => {
+    const imageHtml = item.image ? `      <img class="item-thumb" src="${htmlEscape(item.image)}" alt="${htmlEscape(item.title)}">
+` : "";
+    return `
+    <article class="news-item${item.image ? " has-thumb" : ""}">
+${imageHtml}      <time>${htmlEscape(item.date)}</time>
       <div>
         <div class="item-title-row"><span class="tag">${htmlEscape(item.category)}</span><h3>${htmlEscape(item.title)}</h3></div>
         <p>${htmlEscape(item.desc)}</p>
       </div>
       ${sourceLink(item.source)}
-    </article>`).join("")}
+    </article>`;
+  }).join("")}
   </div>`;
 }
 
 function renderEvents(items = data.events) {
-  return `<div class="event-list">${items.map((item) => `
-    <article class="event-item">
-      <div class="event-date">${htmlEscape(item.date)}</div>
+  return `<div class="event-list">${items.map((item) => {
+    const imageHtml = item.image ? `      <img class="item-thumb" src="${htmlEscape(item.image)}" alt="${htmlEscape(item.title)}">
+` : "";
+    return `
+    <article class="event-item${item.image ? " has-thumb" : ""}">
+${imageHtml}      <div class="event-date">${htmlEscape(item.date)}</div>
       <div class="event-body">
         <div class="item-title-row"><span class="tag">${htmlEscape(item.status)}</span><h3>${htmlEscape(item.title)}</h3></div>
         <p><b>地點：</b>${htmlEscape(item.place)}</p>
         <p>${htmlEscape(item.desc)}</p>
       </div>
       ${sourceLink(item.source)}
-    </article>`).join("")}
+    </article>`;
+  }).join("")}
   </div>`;
 }
 
@@ -460,10 +471,12 @@ const cssWdfEnhancements = `.wdf-band{padding:40px 0;background:linear-gradient(
 
 const cssCompactListEnhancements = `.item-title-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}.item-title-row .tag{flex:0 0 auto;margin-bottom:0}.item-title-row h3{margin:0}.news-item,.event-item{padding:16px 18px}.news-item p,.event-item p{line-height:1.55}@media (max-width:640px){.item-title-row{align-items:flex-start;flex-direction:column;gap:7px}}`;
 
+const cssFeaturedThumbEnhancements = `.news-item.has-thumb,.event-item.has-thumb{grid-template-columns:150px minmax(128px,.16fr) minmax(0,1fr) auto}.item-thumb{display:block;width:150px;aspect-ratio:4/3;object-fit:cover;border-radius:8px;border:1px solid #d7e3f0;background:#fff}@media (max-width:900px){.news-item.has-thumb,.event-item.has-thumb{grid-template-columns:150px minmax(0,1fr);align-items:start}.news-item.has-thumb time,.event-item.has-thumb .event-date{grid-column:2}.news-item.has-thumb>div:not(.event-body),.event-item.has-thumb .event-body{grid-column:1 / -1}.news-item.has-thumb>a,.event-item.has-thumb>a{grid-column:1 / -1}}@media (max-width:640px){.news-item.has-thumb,.event-item.has-thumb{grid-template-columns:1fr}.item-thumb{width:100%;max-width:360px}.news-item.has-thumb time,.event-item.has-thumb .event-date,.news-item.has-thumb>div:not(.event-body),.event-item.has-thumb .event-body{grid-column:auto}}`;
+
 const cssDropdownNavEnhancements = `.nav-links{align-items:center}.nav-item{position:relative}.nav-trigger{display:inline-flex;align-items:center;min-height:38px}.nav-item>.nav-trigger:after{content:"";width:0;height:0;margin-left:6px;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;opacity:.62}.nav-menu{position:absolute;top:100%;left:50%;min-width:230px;padding:8px;border:1px solid #d7e3f0;border-radius:8px;background:rgba(255,255,255,.98);box-shadow:0 18px 38px rgba(21,58,107,.16);transform:translate(-50%,8px);opacity:0;pointer-events:none;transition:opacity .16s ease,transform .16s ease}.nav-menu a{display:block;padding:10px 12px;border-radius:7px;color:#153a6b;line-height:1.35;white-space:nowrap}.nav-menu a:after{display:none}.nav-menu a:hover,.nav-menu a:focus{background:#edf5ff}.nav-item:hover .nav-menu,.nav-item:focus-within .nav-menu{opacity:1;pointer-events:auto;transform:translate(-50%,0)}@media (max-width:900px){.nav-links{align-items:flex-start;flex-wrap:wrap;overflow-x:visible}.nav-item{width:auto}.nav-menu{left:0;right:auto;transform:translate(0,8px)}.nav-item:hover .nav-menu,.nav-item:focus-within .nav-menu{transform:translate(0,0)}}`;
 
 mkdirSync("assets", { recursive: true });
-writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements + cssCompactListEnhancements + cssDropdownNavEnhancements, "utf8");
+writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements + cssCompactListEnhancements + cssFeaturedThumbEnhancements + cssDropdownNavEnhancements, "utf8");
 writeFileSync("index.html", homeHtml(), "utf8");
 
 for (const route of routes) {
