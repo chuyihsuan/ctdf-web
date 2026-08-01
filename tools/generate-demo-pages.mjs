@@ -211,8 +211,7 @@ function renderNews(items = data.news) {
     <article class="news-item">
       <time>${htmlEscape(item.date)}</time>
       <div>
-        <span class="tag">${htmlEscape(item.category)}</span>
-        <h3>${htmlEscape(item.title)}</h3>
+        <div class="item-title-row"><span class="tag">${htmlEscape(item.category)}</span><h3>${htmlEscape(item.title)}</h3></div>
         <p>${htmlEscape(item.desc)}</p>
       </div>
       ${sourceLink(item.source)}
@@ -225,8 +224,7 @@ function renderEvents(items = data.events) {
     <article class="event-item">
       <div class="event-date">${htmlEscape(item.date)}</div>
       <div class="event-body">
-        <span class="tag">${htmlEscape(item.status)}</span>
-        <h3>${htmlEscape(item.title)}</h3>
+        <div class="item-title-row"><span class="tag">${htmlEscape(item.status)}</span><h3>${htmlEscape(item.title)}</h3></div>
         <p><b>地點：</b>${htmlEscape(item.place)}</p>
         <p>${htmlEscape(item.desc)}</p>
       </div>
@@ -465,8 +463,10 @@ const cssEnhancements = `body{background:#f5f8fc}.site-header{border-top:4px sol
 
 const cssWdfEnhancements = `.wdf-band{padding:40px 0;background:linear-gradient(135deg,#fffdf8 0%,#eef6ff 100%);border-bottom:1px solid #dfe8f4}.wdf-card{display:grid;grid-template-columns:190px minmax(0,1fr);gap:28px;align-items:center;padding:24px;border:1px solid #d7e3f0;border-radius:8px;background:rgba(255,255,255,.84);box-shadow:0 16px 34px rgba(21,58,107,.08)}.wdf-logo-wrap{display:grid;place-items:center;min-height:150px;border-radius:8px;background:#fff;border:1px solid #e2ebf5}.wdf-logo-wrap img{display:block;width:min(145px,100%);height:auto}.wdf-card h2{margin:0 0 10px;color:#153a6b;font-size:30px}.wdf-card p:not(.eyebrow){max-width:760px;margin:0 0 14px;color:#526277;line-height:1.75}@media (max-width:900px){.wdf-card{grid-template-columns:1fr}.wdf-logo-wrap{justify-content:start;min-height:auto;padding:18px}}`;
 
+const cssCompactListEnhancements = `.item-title-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}.item-title-row .tag{flex:0 0 auto;margin-bottom:0}.item-title-row h3{margin:0}.news-item,.event-item{padding:16px 18px}.news-item p,.event-item p{line-height:1.55}@media (max-width:640px){.item-title-row{align-items:flex-start;flex-direction:column;gap:7px}}`;
+
 mkdirSync("assets", { recursive: true });
-writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements, "utf8");
+writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements + cssCompactListEnhancements, "utf8");
 writeFileSync("index.html", homeHtml(), "utf8");
 
 for (const route of routes) {
