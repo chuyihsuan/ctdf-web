@@ -11,6 +11,7 @@ const sources = {
   citizensSports: "https://sport115.tycg.gov.tw/",
   facebook: "https://www.facebook.com/CTDFTW/?locale=zh_TW",
   notes: "/docs/DEMO_REAL_DATA_NOTES.md",
+  wdfMembers: "https://dartswdf.com/members",
   frd: "/docs/FRD.md",
   prd: "/docs/PRD.md",
   srd: "/docs/SRD.md"
@@ -387,6 +388,24 @@ function portalHtml() {
   </section>`;
 }
 
+function wdfMembershipHtml() {
+  return `<section class="wdf-band">
+    <div class="section-inner">
+      <div class="wdf-card">
+        <div class="wdf-logo-wrap">
+          <img src="/assets/wdf-logo.png" alt="World Darts Federation Logo">
+        </div>
+        <div>
+          <p class="eyebrow">World Darts Federation Member</p>
+          <h2>WDF 中華民國代表會員</h2>
+          <p>中華民國競技飛鏢總會為 World Darts Federation（WDF）會員代表，負責推動中華民國競技飛鏢與國際賽事、代表隊參賽及國際交流接軌。</p>
+          <a class="text-link" href="${sources.wdfMembers}" target="_blank" rel="noopener noreferrer">查看 WDF Members</a>
+        </div>
+      </div>
+    </div>
+  </section>`;
+}
+
 function homeHtml() {
   return `<!doctype html>
 <html lang="zh-Hant">
@@ -426,6 +445,7 @@ function homeHtml() {
         </div>
       </div>
     </section>
+    ${wdfMembershipHtml()}
     ${portalHtml()}
     ${homeSection("最新公告", "/news/", renderNews())}
     ${homeSection("賽事資訊", "/events/", renderEvents())}
@@ -443,8 +463,10 @@ const css = `:root{--ink:#142033;--muted:#667085;--line:#d9e1ec;--paper:#fff;--w
 
 const cssEnhancements = `body{background:#f5f8fc}.site-header{border-top:4px solid #d83a45;box-shadow:0 8px 24px rgba(20,32,51,.06)}.nav-links a{position:relative;padding:8px 0}.nav-links a:after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;border-radius:999px;background:#d83a45;transform:scaleX(0);transform-origin:left;transition:transform .18s ease}.nav-links a:hover:after{transform:scaleX(1)}.home-hero,.page-hero{position:relative;overflow:hidden;color:#142033;border-bottom:1px solid #dfe8f4}.home-hero{background:linear-gradient(90deg,rgba(255,255,255,.9) 0%,rgba(246,250,255,.82) 48%,rgba(255,246,247,.74) 100%),url("/assets/ctdf-world-cup-2025.jpg") center 38%/cover no-repeat}.page-hero{background:radial-gradient(circle at 84% 22%,rgba(21,58,107,.14),transparent 28%),radial-gradient(circle at 10% 88%,rgba(24,122,88,.12),transparent 30%),linear-gradient(135deg,#f9fcff 0%,#eef6ff 52%,#fff1f3 100%)}.home-hero:after,.page-hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:linear-gradient(90deg,#d83a45,#f6c85f,#61b99a,#2f6fb0);opacity:.9}.home-hero-inner,.page-hero-inner{position:relative;z-index:1}.home-hero p,.page-hero p{color:#475467}.eyebrow{color:#2f6fb0}.title-icon{border-color:#d9e7f7;background:#fff;box-shadow:0 10px 24px rgba(21,58,107,.08)}.target-panel{position:relative}.target-panel:before{content:"";position:absolute;inset:-18px;border:1px solid rgba(223,232,244,.9);border-radius:8px;background:rgba(255,255,255,.72);box-shadow:0 18px 42px rgba(21,58,107,.12);z-index:-1}.hero-logo{box-shadow:0 16px 34px rgba(21,58,107,.16)}.stat-row span{background:rgba(255,255,255,.82);color:#475467;border:1px solid #dfe8f4}.stat-row b{color:#2f6fb0}.button{background:#d83a45;box-shadow:0 12px 22px rgba(216,58,69,.18)}.button.secondary{border:1px solid #bfd2e8;background:rgba(255,255,255,.88);color:#153a6b}.portal-band{padding:46px 0;background:linear-gradient(135deg,#f0f7ff 0%,#fff7f7 52%,#f2fbf6 100%);color:#142033;border-top:0;border-bottom:1px solid #dfe8f4}.portal-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:18px}.portal-head h2{max-width:620px;margin:0;font-size:30px;line-height:1.25}.portal-head .eyebrow{margin:0;color:#2f6fb0}.portal-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.portal-card{position:relative;display:grid;align-content:start;gap:10px;min-height:150px;padding:18px;border:1px solid #dfe8f4;border-radius:8px;background:#fff;box-shadow:0 16px 34px rgba(21,58,107,.08);overflow:hidden}.portal-card:nth-child(1){background:#edf5ff}.portal-card:nth-child(2){background:#fff0f1}.portal-card:nth-child(3){background:#eaf8f1}.portal-card:nth-child(4){background:#fff5db}.portal-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#2f6fb0}.portal-card:nth-child(2):before{background:#d83a45}.portal-card:nth-child(3):before{background:#61b99a}.portal-card:nth-child(4):before{background:#f6c85f}.portal-card span{position:relative;color:#153a6b;font-size:20px;font-weight:900;line-height:1.35}.portal-card p{position:relative;margin:0;color:#526277;line-height:1.6}.portal-card:hover{border-color:#b9cce4;transform:translateY(-2px)}.section{background:#fff}.section:nth-of-type(3n){background:#f0f7ff}.section:nth-of-type(3n+1){background:#fff7f7}.section:nth-of-type(3n+2){background:#f2fbf6}.section.alt{background:#fffdf6}.section.real-data{background:#eef6ff}.section-head h2{position:relative;padding-left:14px}.section-head h2:before{content:"";position:absolute;left:0;top:.18em;bottom:.18em;width:4px;border-radius:999px;background:#d83a45}.news-item,.event-item,.player-row,.download-row,.about-block,.link-card,.table-wrap{position:relative;overflow:hidden;border-color:#d7e3f0;box-shadow:0 12px 28px rgba(21,58,107,.07)}.news-item:before,.event-item:before,.player-row:before,.download-row:before,.about-block:before,.link-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#d83a45}.event-item:before{background:#61b99a}.player-row:before{background:#2f6fb0}.download-row:before{background:#f6c85f}.about-block:before,.link-card:before{background:#9db8d8}.ranking-table th{background:#dfeeff;color:#153a6b}.ranking-table tbody tr:nth-child(even){background:#f8fbff}.avatar{box-shadow:inset 0 0 0 4px rgba(255,255,255,.38);background:linear-gradient(135deg,#2f6fb0,#61b99a)}.tag,.file-badge{border:1px solid rgba(21,58,107,.12);background:#edf5ff}.footer{background:#edf4fb;color:#475467;border-top:1px solid #dfe8f4}.footer b,.footer a{color:#153a6b}.footer-note{color:#7a8ba1}@media (max-width:900px){.home-hero{background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(246,250,255,.86)),url("/assets/ctdf-world-cup-2025.jpg") center top/cover no-repeat}.portal-head{align-items:flex-start;flex-direction:column}.portal-grid{grid-template-columns:1fr 1fr}.target-panel:before{inset:-10px}}@media (max-width:640px){.portal-grid{grid-template-columns:1fr}.portal-card{min-height:auto}}`;
 
+const cssWdfEnhancements = `.wdf-band{padding:40px 0;background:linear-gradient(135deg,#fffdf8 0%,#eef6ff 100%);border-bottom:1px solid #dfe8f4}.wdf-card{display:grid;grid-template-columns:190px minmax(0,1fr);gap:28px;align-items:center;padding:24px;border:1px solid #d7e3f0;border-radius:8px;background:rgba(255,255,255,.84);box-shadow:0 16px 34px rgba(21,58,107,.08)}.wdf-logo-wrap{display:grid;place-items:center;min-height:150px;border-radius:8px;background:#fff;border:1px solid #e2ebf5}.wdf-logo-wrap img{display:block;width:min(145px,100%);height:auto}.wdf-card h2{margin:0 0 10px;color:#153a6b;font-size:30px}.wdf-card p:not(.eyebrow){max-width:760px;margin:0 0 14px;color:#526277;line-height:1.75}@media (max-width:900px){.wdf-card{grid-template-columns:1fr}.wdf-logo-wrap{justify-content:start;min-height:auto;padding:18px}}`;
+
 mkdirSync("assets", { recursive: true });
-writeFileSync(join("assets", "demo.css"), css + cssEnhancements, "utf8");
+writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements, "utf8");
 writeFileSync("index.html", homeHtml(), "utf8");
 
 for (const route of routes) {
