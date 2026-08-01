@@ -140,7 +140,19 @@ function htmlEscape(value) {
 }
 
 function navHtml() {
-  return nav.map(([label, href]) => `<a href="${href}">${label}</a>`).join("");
+  return nav.map(([label, href]) => {
+    const root = href === "/" ? "" : href.replaceAll("/", "");
+    const children = root
+      ? routes.filter((item) => item.path.split("/")[0] === root)
+      : [];
+    if (children.length <= 1) return `<a class="nav-trigger" href="${href}">${label}</a>`;
+    return `<div class="nav-item">
+      <a class="nav-trigger" href="${href}">${label}</a>
+      <div class="nav-menu">
+        ${children.map((item) => `<a href="/${item.path}/">${htmlEscape(item.title)}</a>`).join("")}
+      </div>
+    </div>`;
+  }).join("");
 }
 
 function footerHtml() {
@@ -293,14 +305,6 @@ function renderContent(root) {
   return (renderers[root] || (() => renderDefault(root)))();
 }
 
-function childLinks(route) {
-  const root = route.path.split("/")[0];
-  return routes
-    .filter((item) => item.path.split("/")[0] === root)
-    .map((item) => `<a class="link-card${item.path === route.path ? " current" : ""}" href="/${item.path}/"><b>/${item.path}</b><span>${htmlEscape(item.title)}</span></a>`)
-    .join("");
-}
-
 function pageHtml(route) {
   const root = route.path.split("/")[0];
   return `<!doctype html>
@@ -337,15 +341,6 @@ function pageHtml(route) {
           <p>此區依資料性質採用不同排版。正式上線前，內容仍需由總會確認。</p>
         </div>
         ${renderContent(root)}
-      </div>
-    </section>
-    <section class="section alt">
-      <div class="section-inner">
-        <div class="section-head">
-          <h2>同區頁面</h2>
-          <p>查看同一功能區的其他頁面。</p>
-        </div>
-        <div class="link-grid">${childLinks(route)}</div>
       </div>
     </section>
   </main>
@@ -465,8 +460,10 @@ const cssWdfEnhancements = `.wdf-band{padding:40px 0;background:linear-gradient(
 
 const cssCompactListEnhancements = `.item-title-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}.item-title-row .tag{flex:0 0 auto;margin-bottom:0}.item-title-row h3{margin:0}.news-item,.event-item{padding:16px 18px}.news-item p,.event-item p{line-height:1.55}@media (max-width:640px){.item-title-row{align-items:flex-start;flex-direction:column;gap:7px}}`;
 
+const cssDropdownNavEnhancements = `.nav-links{align-items:center}.nav-item{position:relative}.nav-trigger{display:inline-flex;align-items:center;min-height:38px}.nav-item>.nav-trigger:after{content:"";width:0;height:0;margin-left:6px;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;opacity:.62}.nav-menu{position:absolute;top:100%;left:50%;min-width:230px;padding:8px;border:1px solid #d7e3f0;border-radius:8px;background:rgba(255,255,255,.98);box-shadow:0 18px 38px rgba(21,58,107,.16);transform:translate(-50%,8px);opacity:0;pointer-events:none;transition:opacity .16s ease,transform .16s ease}.nav-menu a{display:block;padding:10px 12px;border-radius:7px;color:#153a6b;line-height:1.35;white-space:nowrap}.nav-menu a:after{display:none}.nav-menu a:hover,.nav-menu a:focus{background:#edf5ff}.nav-item:hover .nav-menu,.nav-item:focus-within .nav-menu{opacity:1;pointer-events:auto;transform:translate(-50%,0)}@media (max-width:900px){.nav-links{align-items:flex-start;flex-wrap:wrap;overflow-x:visible}.nav-item{width:auto}.nav-menu{left:0;right:auto;transform:translate(0,8px)}.nav-item:hover .nav-menu,.nav-item:focus-within .nav-menu{transform:translate(0,0)}}`;
+
 mkdirSync("assets", { recursive: true });
-writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements + cssCompactListEnhancements, "utf8");
+writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements + cssCompactListEnhancements + cssDropdownNavEnhancements, "utf8");
 writeFileSync("index.html", homeHtml(), "utf8");
 
 for (const route of routes) {
