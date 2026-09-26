@@ -5,8 +5,6 @@ CTDF Demo route list
 /events/ 賽事資訊
 /events/results/ 賽事成績
 /downloads/ 文件下載
-/downloads/forms/ 表單下載
-/downloads/rules/ 規章下載
 /downloads/annual/ 年度計畫 / 報告
 /downloads/reports/ 會務報告下載
 /about/ 關於總會

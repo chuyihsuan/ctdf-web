@@ -111,7 +111,9 @@ const hiddenRoutePaths = new Set([
   "admin/rankings",
   "players",
   "players/demo-player",
-  "admin/players"
+  "admin/players",
+  "downloads/forms",
+  "downloads/rules"
 ]);
 
 const visibleRoutes = routes.filter((route) => !hiddenRoutePaths.has(route.path));
