@@ -457,9 +457,9 @@ function homeHtml() {
         <div class="target-panel" aria-label="CTDF 視覺識別">
           <img class="hero-logo" src="/assets/ctdf-logo.png" alt="CTDF Logo">
           <div class="stat-row">
-            <span><b>公告</b>列表</span>
-            <span><b>賽事</b>賽程</span>
-            <span><b>選手</b>資料</span>
+            <span><b>關於本會</b></span>
+            <span><b>公告列表</b></span>
+            <span><b>賽事資訊</b></span>
           </div>
         </div>
       </div>
