@@ -457,9 +457,9 @@ function homeHtml() {
         <div class="target-panel" aria-label="CTDF 視覺識別">
           <img class="hero-logo" src="/assets/ctdf-logo.png" alt="CTDF Logo">
           <div class="stat-row">
-            <span><b>關於本會</b></span>
-            <span><b>公告列表</b></span>
-            <span><b>賽事資訊</b></span>
+            <a href="/about/"><b>關於</b>本會</a>
+            <a href="/news/"><b>公告</b>列表</a>
+            <a href="/events/"><b>賽事</b>資訊</a>
           </div>
         </div>
       </div>
@@ -495,8 +495,10 @@ const cssFixedFooterEnhancements = `body{padding-bottom:74px}.footer{position:fi
 
 const cssDropdownNavEnhancements = `.nav-links{align-items:center}.nav-item{position:relative}.nav-trigger{display:inline-flex;align-items:center;min-height:38px}.nav-item>.nav-trigger:after{content:"";width:0;height:0;margin-left:6px;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;opacity:.62}.nav-menu{position:absolute;top:100%;left:50%;min-width:230px;padding:8px;border:1px solid #d7e3f0;border-radius:8px;background:rgba(255,255,255,.98);box-shadow:0 18px 38px rgba(21,58,107,.16);transform:translate(-50%,8px);opacity:0;pointer-events:none;transition:opacity .16s ease,transform .16s ease}.nav-menu a{display:block;padding:10px 12px;border-radius:7px;color:#153a6b;line-height:1.35;white-space:nowrap}.nav-menu a:after{display:none}.nav-menu a:hover,.nav-menu a:focus{background:#edf5ff}.nav-item:hover .nav-menu,.nav-item:focus-within .nav-menu{opacity:1;pointer-events:auto;transform:translate(-50%,0)}@media (max-width:900px){.nav-links{align-items:flex-start;flex-wrap:wrap;overflow-x:visible}.nav-item{width:auto}.nav-menu{left:0;right:auto;transform:translate(0,8px)}.nav-item:hover .nav-menu,.nav-item:focus-within .nav-menu{transform:translate(0,0)}}`;
 
+const cssQuickLinksEnhancements = `.stat-row a{display:grid;place-items:center;min-height:58px;border:1px solid #dfe8f4;border-radius:8px;background:rgba(255,255,255,.82);padding:12px;color:#475467;text-align:center;transition:border-color .16s ease,box-shadow .16s ease,transform .16s ease}.stat-row a:hover,.stat-row a:focus-visible{border-color:#9db8d8;box-shadow:0 8px 18px rgba(21,58,107,.14);transform:translateY(-2px);outline:none}.stat-row a:focus-visible{box-shadow:0 0 0 3px rgba(47,111,176,.24),0 8px 18px rgba(21,58,107,.14)}`;
+
 mkdirSync("assets", { recursive: true });
-writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements + cssCompactListEnhancements + cssFeaturedThumbEnhancements + cssCompactHeroEnhancements + cssHomeTitleEnhancements + cssFixedFooterEnhancements + cssDropdownNavEnhancements, "utf8");
+writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements + cssCompactListEnhancements + cssFeaturedThumbEnhancements + cssCompactHeroEnhancements + cssHomeTitleEnhancements + cssFixedFooterEnhancements + cssDropdownNavEnhancements + cssQuickLinksEnhancements, "utf8");
 writeFileSync("index.html", homeHtml(), "utf8");
 
 for (const route of routes) {
