@@ -86,7 +86,9 @@ const routeGroups = {
     ["admin/players", "選手管理", "後台", "MVP", "維護選手資料與公開欄位。"],
     ["admin/members", "會員管理", "後台", "MVP", "管理會員狀態、權限與審核。"],
     ["admin/downloads", "文件管理", "後台", "MVP", "上傳文件、管理版本與分類。"],
-    ["admin/settings/site", "網站基本設定", "後台", "MVP", "管理網站名稱、Logo、SEO 與聯絡資訊。"]
+    ["admin/media", "影音管理", "後台", "Demo", "管理影音網址、縮圖、說明與發布狀態。"],
+    ["admin/settings/site", "網站基本設定", "後台", "MVP", "管理網站名稱、Logo、SEO 與聯絡資訊。"],
+    ["admin/logs", "操作紀錄", "後台", "Demo", "查看內容建立、修改、送審與發布紀錄。"]
   ]
 };
 
@@ -113,6 +115,7 @@ const hiddenRoutePaths = new Set([
   "players",
   "players/demo-player",
   "admin/players",
+  "admin/members",
   "downloads/forms",
   "downloads/rules"
 ]);
@@ -357,8 +360,187 @@ function renderContent(root, path) {
   return (renderers[root] || (() => renderDefault(root)))();
 }
 
+const adminModules = {
+  "admin/news": {
+    label: "公告管理",
+    singular: "公告",
+    description: "建立公告草稿、預覽內容並模擬送審或發布。",
+    rows: [
+      { title: "2026 WDF 亞太盃代表隊選拔賽開放報名", category: "代表隊選拔", date: "2026-08-01", status: "published", updated: "今天 10:24" },
+      { title: "114學年師生盃全國各級學校飛鏢錦標賽公告", category: "賽事公告", date: "2026-02-11", status: "review", updated: "昨天 16:40" },
+      { title: "中華台北代表隊國際參賽消息", category: "國際參賽", date: "2025-09-22", status: "draft", updated: "9月25日" }
+    ],
+    fields: [
+      ["title", "公告標題", "text", "請輸入清楚的公告標題"],
+      ["category", "公告分類", "select", ["賽事公告", "代表隊選拔", "國際參賽", "總會消息"]],
+      ["date", "發布日期", "date", ""],
+      ["summary", "公告摘要", "textarea", "顯示於公告列表的簡短說明"],
+      ["body", "公告內文", "textarea", "請輸入完整公告內容"],
+      ["cover", "封面圖片", "file", "image/*"],
+      ["attachment", "附件", "file", ".pdf,.doc,.docx,.xls,.xlsx"]
+    ]
+  },
+  "admin/events": {
+    label: "賽事管理",
+    singular: "賽事",
+    description: "集中維護賽事日期、地點、規程、報名與成績資料。",
+    rows: [
+      { title: "2026 WDF 亞太盃中華台北代表隊選拔賽", category: "硬式飛鏢", date: "2026-08-15", status: "published", updated: "今天 09:15" },
+      { title: "114學年師生盃全國各級學校飛鏢錦標賽", category: "電子飛鏢", date: "2026-03-14", status: "review", updated: "昨天 14:08" },
+      { title: "全國青少年飛鏢交流賽", category: "硬式飛鏢", date: "2026-11-08", status: "scheduled", updated: "9月23日" }
+    ],
+    fields: [
+      ["title", "賽事名稱", "text", "請輸入賽事完整名稱"],
+      ["category", "賽事項目", "select", ["硬式飛鏢", "電子飛鏢", "綜合賽事"]],
+      ["date", "開始日期", "date", ""],
+      ["end_date", "結束日期", "date", ""],
+      ["venue", "賽事地點", "text", "場館與地址"],
+      ["registration_url", "報名網址", "url", "https://"],
+      ["summary", "賽事說明", "textarea", "賽事對象、組別與重要時程"],
+      ["attachment", "競賽規程", "file", ".pdf,.doc,.docx"]
+    ]
+  },
+  "admin/media": {
+    label: "影音管理",
+    singular: "影音",
+    description: "管理 YouTube 或 Facebook 影音連結及前台縮圖。",
+    rows: [
+      { title: "2026 WDF 亞太盃代表隊選拔賽", category: "代表隊", date: "2026-08-15", status: "published", updated: "今天 11:02" },
+      { title: "WDF 世界盃中華台北代表隊紀錄", category: "國際賽事", date: "2025-09-26", status: "published", updated: "9月24日" },
+      { title: "CTDF 活動與賽事影音", category: "總會影音", date: "2026-09-20", status: "draft", updated: "9月20日" }
+    ],
+    fields: [
+      ["title", "影音標題", "text", "請輸入影片標題"],
+      ["category", "影音分類", "select", ["代表隊", "國際賽事", "總會影音", "活動紀錄"]],
+      ["date", "影音日期", "date", ""],
+      ["media_url", "影音網址", "url", "YouTube 或 Facebook 網址"],
+      ["summary", "影音說明", "textarea", "顯示於影音卡片的簡短說明"],
+      ["cover", "自訂縮圖", "file", "image/*"]
+    ]
+  },
+  "admin/downloads": {
+    label: "文件管理",
+    singular: "文件",
+    description: "上傳文件、管理版本，並控制前台公開與封存狀態。",
+    rows: [
+      { title: "113學年度國中暨高中飛鏢隊際聯賽規程", category: "競賽規程", date: "2025-04-24", status: "published", updated: "8月18日" },
+      { title: "114學年師生盃報名與規程", category: "報名資訊", date: "2026-02-01", status: "review", updated: "8月12日" },
+      { title: "年度會務報告", category: "會務報告", date: "2026-09-01", status: "draft", updated: "8月08日" }
+    ],
+    fields: [
+      ["title", "文件名稱", "text", "請輸入對外顯示名稱"],
+      ["category", "文件分類", "select", ["競賽規程", "報名資訊", "年度計畫", "會務報告"]],
+      ["version", "文件版本", "text", "例如：v1.0"],
+      ["date", "更新日期", "date", ""],
+      ["summary", "文件說明", "textarea", "說明文件用途與適用對象"],
+      ["attachment", "上傳文件", "file", ".pdf,.doc,.docx,.xls,.xlsx"]
+    ]
+  },
+  "admin/pages": {
+    label: "頁面管理",
+    singular: "頁面",
+    description: "修改固定頁面的文字與圖片，版型仍由網站統一處理。",
+    rows: [
+      { title: "關於總會", category: "關於本會", date: "固定頁面", status: "published", updated: "8月30日" },
+      { title: "組織架構", category: "關於本會", date: "固定頁面", status: "published", updated: "8月28日" },
+      { title: "聯絡我們", category: "關於本會", date: "固定頁面", status: "review", updated: "8月27日" },
+      { title: "隱私權政策", category: "網站政策", date: "固定頁面", status: "draft", updated: "8月22日" }
+    ],
+    fields: [
+      ["title", "頁面標題", "text", "頁面標題"],
+      ["category", "頁面位置", "select", ["關於本會", "網站政策", "聯絡資訊"]],
+      ["summary", "頁面摘要", "textarea", "顯示於頁首的簡短說明"],
+      ["body", "頁面內容", "textarea", "網站會自動套用固定版型"],
+      ["cover", "頁面圖片", "file", "image/*"]
+    ]
+  }
+};
+
+const adminNav = [
+  ["總覽", "/admin/", "admin"],
+  ["公告", "/admin/news/", "admin/news"],
+  ["賽事", "/admin/events/", "admin/events"],
+  ["影音", "/admin/media/", "admin/media"],
+  ["文件", "/admin/downloads/", "admin/downloads"],
+  ["頁面", "/admin/pages/", "admin/pages"],
+  ["網站設定", "/admin/settings/site/", "admin/settings/site"],
+  ["操作紀錄", "/admin/logs/", "admin/logs"]
+];
+
+function adminSidebar(path) {
+  return `<aside class="admin-sidebar" aria-label="後台功能">
+    <div class="admin-sidebar-title">內容管理</div>
+    <nav>${adminNav.map(([label, href, key]) => `<a href="${href}"${path === key ? ' class="active" aria-current="page"' : ""}>${label}</a>`).join("")}</nav>
+    <div class="admin-user"><span>秘書處管理員</span><small>Demo 權限</small></div>
+  </aside>`;
+}
+
+function adminStatus(status) {
+  const labels = { draft: "草稿", review: "待審核", scheduled: "已排程", published: "已發布", archived: "已封存" };
+  return `<span class="status-badge status-${status}" data-status-label>${labels[status] || status}</span>`;
+}
+
+function adminField([name, label, type, option]) {
+  if (type === "select") {
+    return `<label class="admin-field"><span>${label}</span><select name="${name}" required><option value="">請選擇</option>${option.map((value) => `<option>${value}</option>`).join("")}</select></label>`;
+  }
+  if (type === "textarea") {
+    return `<label class="admin-field admin-field-wide"><span>${label}</span><textarea name="${name}" rows="${name === "body" ? 8 : 4}" placeholder="${option}"></textarea></label>`;
+  }
+  if (type === "file") {
+    return `<label class="admin-field admin-field-wide"><span>${label}</span><input name="${name}" type="file" accept="${option}"><small>Demo 僅顯示選取的檔名，不會實際上傳。</small></label>`;
+  }
+  return `<label class="admin-field"><span>${label}</span><input name="${name}" type="${type}" placeholder="${option}"${name === "title" ? " required" : ""}></label>`;
+}
+
+function adminEditor(config) {
+  return `<dialog class="admin-dialog" data-editor-dialog>
+    <form class="admin-editor" data-editor-form>
+      <div class="admin-dialog-head"><div><small>內容編輯</small><h2 data-editor-heading>新增${config.singular}</h2></div><button class="icon-button" type="button" data-close-editor aria-label="關閉">×</button></div>
+      <div class="admin-form-grid">${config.fields.map(adminField).join("")}
+        <label class="admin-field"><span>內容狀態</span><select name="status"><option value="draft">草稿</option><option value="review">待審核</option><option value="scheduled">已排程</option><option value="published">已發布</option></select></label>
+      </div>
+      <div class="admin-form-actions"><button class="admin-button secondary" type="button" data-preview>預覽</button><span class="action-spacer"></span><button class="admin-button secondary" type="button" data-save-draft>儲存草稿</button><button class="admin-button" type="button" data-submit-review>送交審核</button><button class="admin-button publish" type="submit">發布</button></div>
+    </form>
+  </dialog>
+  <dialog class="admin-dialog preview-dialog" data-preview-dialog>
+    <div class="admin-dialog-head"><div><small>前台版型預覽</small><h2 data-preview-title>內容預覽</h2></div><button class="icon-button" type="button" data-close-preview aria-label="關閉">×</button></div>
+    <div class="preview-surface"><span class="tag" data-preview-category>分類</span><h1 data-preview-heading>尚未輸入標題</h1><p data-preview-summary>填寫內容後即可在此確認前台呈現方式。</p><div class="preview-body" data-preview-body></div></div>
+  </dialog>`;
+}
+
+function adminModuleContent(path, config) {
+  return `<div class="admin-page-head"><div><p class="admin-kicker">內容管理</p><h1>${config.label}</h1><p>${config.description}</p></div><button class="admin-button" type="button" data-new>＋ 新增${config.singular}</button></div>
+    <section class="admin-panel">
+      <div class="admin-toolbar"><label class="admin-search"><span class="sr-only">搜尋</span><input type="search" placeholder="搜尋標題或分類" data-search></label><label><span class="sr-only">狀態篩選</span><select data-status-filter><option value="">全部狀態</option><option value="draft">草稿</option><option value="review">待審核</option><option value="scheduled">已排程</option><option value="published">已發布</option></select></label><span class="admin-count" data-count>${config.rows.length} 筆內容</span></div>
+      <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>標題</th><th>分類</th><th>日期</th><th>狀態</th><th>最後更新</th><th><span class="sr-only">操作</span></th></tr></thead><tbody data-content-rows>${config.rows.map((row) => `<tr data-row data-status="${row.status}"><td><b>${htmlEscape(row.title)}</b></td><td>${htmlEscape(row.category)}</td><td>${htmlEscape(row.date)}</td><td>${adminStatus(row.status)}</td><td>${htmlEscape(row.updated)}</td><td><button class="table-action" type="button" data-edit data-title="${htmlEscape(row.title)}" data-category="${htmlEscape(row.category)}" data-date="${htmlEscape(row.date)}" data-status="${row.status}">編輯</button></td></tr>`).join("")}</tbody></table></div>
+      <div class="admin-empty" data-empty hidden>找不到符合條件的內容。</div>
+    </section>${adminEditor(config)}`;
+}
+
+function adminDashboardContent() {
+  return `<div class="admin-page-head"><div><p class="admin-kicker">2026年9月27日</p><h1>後台總覽</h1><p>查看待辦內容與近期發布狀態。此頁為操作 Demo，不會變更正式網站。</p></div><a class="admin-button" href="/admin/news/">＋ 新增公告</a></div>
+    <div class="admin-metrics"><article><span>待審核</span><b>3</b><small>公告、賽事與文件</small></article><article><span>草稿</span><b>5</b><small>尚未送審內容</small></article><article><span>已排程</span><b>1</b><small>未來七日發布</small></article><article><span>本月發布</span><b>8</b><small>公開內容更新</small></article></div>
+    <div class="admin-dashboard-grid"><section class="admin-panel"><div class="admin-panel-head"><h2>待辦事項</h2><span>依優先順序</span></div><div class="task-list"><a href="/admin/news/"><span class="task-dot red"></span><span><b>師生盃公告等待審核</b><small>公告管理 · 昨天 16:40</small></span><strong>審核</strong></a><a href="/admin/events/"><span class="task-dot green"></span><span><b>確認賽事報名截止日期</b><small>賽事管理 · 昨天 14:08</small></span><strong>處理</strong></a><a href="/admin/downloads/"><span class="task-dot gold"></span><span><b>規程文件等待發布</b><small>文件管理 · 8月12日</small></span><strong>檢視</strong></a></div></section><section class="admin-panel"><div class="admin-panel-head"><h2>快速新增</h2><span>選擇內容類型</span></div><div class="admin-quick-grid"><a href="/admin/news/">公告</a><a href="/admin/events/">賽事</a><a href="/admin/media/">影音</a><a href="/admin/downloads/">文件</a></div></section></div>`;
+}
+
+function adminSettingsContent() {
+  return `<div class="admin-page-head"><div><p class="admin-kicker">系統設定</p><h1>網站基本設定</h1><p>管理全站共用的名稱、聯絡方式與社群連結。</p></div></div><form class="admin-panel admin-settings" data-settings-form><div class="admin-panel-head"><h2>基本資料</h2><span>套用於頁首、頁尾與聯絡頁</span></div><div class="admin-form-grid"><label class="admin-field admin-field-wide"><span>網站名稱</span><input name="site_name" value="中華民國競技飛鏢總會"></label><label class="admin-field"><span>電話</span><input name="phone" value="+886 2 2732 1422"></label><label class="admin-field"><span>Email</span><input name="email" type="email" value="ctdf0306@gmail.com"></label><label class="admin-field admin-field-wide"><span>地址</span><input name="address" value="臺北市南港區松河街384號5樓"></label><label class="admin-field admin-field-wide"><span>Facebook 網址</span><input name="facebook" type="url" value="https://www.facebook.com/CTDFTW/"></label></div><div class="admin-form-actions"><span class="action-spacer"></span><button class="admin-button" type="submit">儲存設定</button></div></form>`;
+}
+
+function adminLogsContent() {
+  const logs = [["今天 11:02", "秘書處管理員", "發布", "影音：2026 WDF 亞太盃代表隊選拔賽"], ["今天 10:24", "秘書處管理員", "修改", "公告：代表隊選拔賽開放報名"], ["昨天 16:40", "內容編輯", "送審", "公告：114學年師生盃錦標賽"], ["昨天 14:08", "賽事管理員", "修改", "賽事：114學年師生盃錦標賽"]];
+  return `<div class="admin-page-head"><div><p class="admin-kicker">系統紀錄</p><h1>操作紀錄</h1><p>重要新增、修改、送審與發布動作會保留於此。</p></div></div><section class="admin-panel"><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>時間</th><th>管理者</th><th>動作</th><th>內容</th></tr></thead><tbody>${logs.map((row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join("")}</tr>`).join("")}</tbody></table></div></section>`;
+}
+
+function adminHtml(route) {
+  const content = route.path === "admin" ? adminDashboardContent() : route.path === "admin/settings/site" ? adminSettingsContent() : route.path === "admin/logs" ? adminLogsContent() : adminModules[route.path] ? adminModuleContent(route.path, adminModules[route.path]) : adminDashboardContent();
+  return `<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${htmlEscape(route.title)} | CTDF Admin Demo</title><meta name="robots" content="noindex, nofollow"><link rel="stylesheet" href="/assets/demo.css"></head><body class="admin-page" data-admin-path="${route.path}"><header class="admin-topbar"><a class="admin-brand" href="/admin/"><img src="/assets/ctdf-logo.png" alt="CTDF"><span><b>CTDF 後台管理</b><small>操作 Demo</small></span></a><div><span class="demo-badge">DEMO</span><a class="view-site" href="/">查看前台</a></div></header><div class="admin-shell">${adminSidebar(route.path)}<main class="admin-main">${content}</main></div><div class="admin-toast" role="status" aria-live="polite" data-toast></div><script src="/assets/admin-demo.js"></script></body></html>`;
+}
+
 function pageHtml(route) {
   const root = route.path.split("/")[0];
+  if (root === "admin") return adminHtml(route);
   const bodyClass = route.path === "media/videos" ? "video-page" : "";
   return `<!doctype html>
 <html lang="zh-Hant">
@@ -522,8 +704,12 @@ const cssVisiblePortalEnhancements = `.portal-grid{grid-template-columns:repeat(
 
 const cssVideoEnhancements = `.video-page{overflow-x:hidden}.video-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 18px}.video-card{display:grid;align-content:start;color:var(--ink)}.video-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;border:1px solid #d7e3f0;border-radius:8px;background:#fff;box-shadow:0 12px 28px rgba(21,58,107,.08)}.video-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .22s ease}.video-card:hover .video-thumb img,.video-card:focus-visible .video-thumb img{transform:scale(1.035)}.video-play{position:absolute;left:50%;top:50%;width:58px;height:58px;border-radius:50%;background:#e52335;box-shadow:0 10px 26px rgba(229,35,53,.34);transform:translate(-50%,-50%)}.video-play:after{content:"";position:absolute;left:23px;top:18px;border-top:11px solid transparent;border-bottom:11px solid transparent;border-left:17px solid #fff}.video-meta{display:flex;align-items:center;gap:10px;margin:12px 0 8px;color:#7a8ba1;font-size:12px}.video-meta span{border:1px solid #bfd2e8;border-radius:999px;padding:4px 8px;background:#edf5ff;color:#153a6b}.video-card h3{margin:0 0 8px;color:#142033;font-size:19px;line-height:1.45}.video-card p{margin:0;color:#667085;line-height:1.65}.video-link{margin-top:12px;color:#c92c35;font-size:13px}.video-card:focus-visible{border-radius:8px;outline:3px solid rgba(47,111,176,.3);outline-offset:5px}@media (max-width:900px){.video-grid{grid-template-columns:1fr 1fr}}@media (max-width:640px){.video-grid{grid-template-columns:1fr}.video-play{width:52px;height:52px}.video-play:after{left:21px;top:16px}}`;
 
+const cssAdminEnhancements = `.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}.admin-page{min-height:100vh;padding:0;background:#f4f7fb;color:#172033}.admin-topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;height:68px;padding:0 28px;border-top:4px solid #d83a45;border-bottom:1px solid #dce4ee;background:#fff;box-shadow:0 4px 18px rgba(20,32,51,.05)}.admin-brand{display:flex;align-items:center;gap:12px}.admin-brand img{width:64px;height:40px;object-fit:contain}.admin-brand b,.admin-brand small{display:block}.admin-brand small{margin-top:2px;color:#7a8ba1;font-size:12px}.admin-topbar>div{display:flex;align-items:center;gap:12px}.demo-badge{border-radius:999px;background:#fff1f2;color:#c92c35;padding:5px 9px;font-size:11px;font-weight:900}.view-site{color:#153a6b;font-size:14px;font-weight:800;text-decoration:underline;text-underline-offset:3px}.admin-shell{display:grid;grid-template-columns:220px minmax(0,1fr);min-height:calc(100vh - 68px)}.admin-sidebar{position:sticky;top:68px;display:flex;flex-direction:column;height:calc(100vh - 68px);border-right:1px solid #dce4ee;background:#fff;padding:24px 14px}.admin-sidebar-title{padding:0 12px 10px;color:#98a2b3;font-size:12px;font-weight:900}.admin-sidebar nav{display:grid;gap:3px}.admin-sidebar nav a{display:flex;align-items:center;min-height:42px;padding:0 12px;border-radius:7px;color:#46556a;font-size:14px;font-weight:800}.admin-sidebar nav a:hover{background:#f3f7fc;color:#153a6b}.admin-sidebar nav a.active{background:#e9f2fc;color:#153a6b;box-shadow:inset 3px 0 #2f6fb0}.admin-user{display:grid;gap:2px;margin-top:auto;padding:14px 12px 0;border-top:1px solid #e4eaf1;font-size:13px;font-weight:800}.admin-user small{color:#7a8ba1;font-weight:500}.admin-main{min-width:0;padding:34px clamp(20px,4vw,54px) 64px}.admin-page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:24px}.admin-page-head h1{margin:2px 0 7px;font-size:30px;line-height:1.2}.admin-page-head p:not(.admin-kicker){max-width:680px;margin:0;color:#667085;line-height:1.55}.admin-kicker{margin:0;color:#2f6fb0;font-size:12px;font-weight:900}.admin-button{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 15px;border:1px solid #153a6b;border-radius:7px;background:#153a6b;color:#fff;font:inherit;font-size:14px;font-weight:900;cursor:pointer;white-space:nowrap}.admin-button:hover{background:#0f2d55}.admin-button.secondary{border-color:#c8d5e4;background:#fff;color:#153a6b}.admin-button.publish{border-color:#187a58;background:#187a58}.icon-button{display:grid;place-items:center;width:38px;height:38px;border:0;border-radius:7px;background:#eef3f8;color:#344054;font-size:25px;cursor:pointer}.admin-panel{overflow:hidden;border:1px solid #dce4ee;border-radius:8px;background:#fff;box-shadow:0 10px 28px rgba(21,58,107,.06)}.admin-toolbar{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid #e5ebf2}.admin-toolbar input,.admin-toolbar select,.admin-field input,.admin-field select,.admin-field textarea{width:100%;border:1px solid #cfd9e6;border-radius:7px;background:#fff;color:#172033;font:inherit;font-size:14px;outline:none}.admin-toolbar input,.admin-toolbar select,.admin-field input,.admin-field select{height:42px;padding:0 11px}.admin-toolbar input:focus,.admin-toolbar select:focus,.admin-field input:focus,.admin-field select:focus,.admin-field textarea:focus{border-color:#2f6fb0;box-shadow:0 0 0 3px rgba(47,111,176,.15)}.admin-search{width:min(380px,50%)}.admin-count{margin-left:auto;color:#7a8ba1;font-size:13px}.admin-table-wrap{overflow:auto}.admin-table{width:100%;min-width:780px;border-collapse:collapse}.admin-table th,.admin-table td{padding:15px 16px;border-bottom:1px solid #e8edf3;text-align:left;vertical-align:middle}.admin-table th{background:#f8fafc;color:#526277;font-size:12px}.admin-table td{color:#526277;font-size:14px}.admin-table td:first-child{color:#172033}.admin-table tr:last-child td{border-bottom:0}.table-action{border:0;background:transparent;color:#2f6fb0;font:inherit;font-weight:900;cursor:pointer}.status-badge{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:900;white-space:nowrap}.status-draft{background:#eef1f5;color:#526277}.status-review{background:#fff4d6;color:#8a5a00}.status-scheduled{background:#eaf1ff;color:#2b59a2}.status-published{background:#e9f8f1;color:#187a58}.status-archived{background:#f2eefa;color:#66508d}.admin-empty{padding:48px;text-align:center;color:#667085}.admin-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}.admin-metrics article{display:grid;gap:7px;padding:18px;border:1px solid #dce4ee;border-radius:8px;background:#fff}.admin-metrics span{color:#526277;font-size:13px;font-weight:800}.admin-metrics b{color:#153a6b;font-size:30px}.admin-metrics small{color:#8a98aa}.admin-dashboard-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,.8fr);gap:18px}.admin-panel-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:17px 18px;border-bottom:1px solid #e5ebf2}.admin-panel-head h2{margin:0;font-size:18px}.admin-panel-head span{color:#8a98aa;font-size:12px}.task-list{display:grid}.task-list a{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:16px 18px;border-bottom:1px solid #e8edf3}.task-list a:last-child{border-bottom:0}.task-list small{display:block;margin-top:4px;color:#8a98aa}.task-list strong{color:#2f6fb0;font-size:13px}.task-dot{width:9px;height:9px;border-radius:50%;background:#2f6fb0}.task-dot.red{background:#d83a45}.task-dot.green{background:#61b99a}.task-dot.gold{background:#e8ad2f}.admin-quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:16px}.admin-quick-grid a{display:grid;place-items:center;min-height:72px;border:1px solid #dce4ee;border-radius:7px;background:#f8fafc;color:#153a6b;font-weight:900}.admin-quick-grid a:hover{border-color:#9db8d8;background:#edf5ff}.admin-dialog{width:min(860px,calc(100% - 28px));max-height:calc(100vh - 30px);padding:0;border:0;border-radius:8px;background:#fff;color:#172033;box-shadow:0 26px 80px rgba(12,26,45,.28)}.admin-dialog::backdrop{background:rgba(16,28,45,.58);backdrop-filter:blur(2px)}.admin-editor{margin:0}.admin-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 20px;border-bottom:1px solid #e5ebf2}.admin-dialog-head small{color:#2f6fb0;font-weight:900}.admin-dialog-head h2{margin:3px 0 0;font-size:22px}.admin-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:17px 18px;padding:22px;overflow:auto}.admin-field{display:grid;align-content:start;gap:7px;color:#344054;font-size:13px;font-weight:800}.admin-field-wide{grid-column:1 / -1}.admin-field textarea{min-height:105px;padding:11px;resize:vertical;line-height:1.55}.admin-field input[type=file]{height:auto;padding:10px}.admin-field small{color:#8a98aa;font-weight:500}.admin-form-actions{display:flex;align-items:center;gap:9px;padding:15px 20px;border-top:1px solid #e5ebf2;background:#f8fafc}.action-spacer{flex:1}.preview-dialog{width:min(760px,calc(100% - 28px))}.preview-surface{padding:36px}.preview-surface h1{margin:12px 0;font-size:34px;line-height:1.25}.preview-surface p,.preview-body{color:#526277;line-height:1.75}.preview-body{margin-top:22px;padding-top:22px;border-top:1px solid #e1e7ef;white-space:pre-wrap}.admin-settings{max-width:900px}.admin-settings .admin-form-actions{border-radius:0 0 8px 8px}.admin-toast{position:fixed;right:24px;bottom:24px;z-index:50;max-width:340px;border-radius:7px;background:#153a6b;color:#fff;padding:12px 16px;box-shadow:0 14px 34px rgba(21,58,107,.24);font-size:14px;font-weight:800;opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .18s ease,transform .18s ease}.admin-toast.show{opacity:1;transform:translateY(0)}@media (max-width:900px){.admin-topbar{padding:0 16px}.admin-shell{grid-template-columns:1fr}.admin-sidebar{position:static;display:block;width:100%;height:auto;padding:10px 16px;border-right:0;border-bottom:1px solid #dce4ee;overflow-x:auto}.admin-sidebar-title,.admin-user{display:none}.admin-sidebar nav{display:flex;width:max-content}.admin-sidebar nav a{min-height:38px;white-space:nowrap}.admin-main{padding:26px 16px 54px}.admin-metrics{grid-template-columns:1fr 1fr}.admin-dashboard-grid{grid-template-columns:1fr}.admin-page-head{align-items:flex-start;flex-direction:column}.admin-page-head .admin-button{align-self:stretch}.admin-toolbar{align-items:stretch;flex-wrap:wrap}.admin-search{width:100%}.admin-count{display:flex;align-items:center;margin-left:0}.admin-form-grid{grid-template-columns:1fr}.admin-field-wide{grid-column:auto}}@media (max-width:560px){.admin-brand span{display:none}.admin-metrics{grid-template-columns:1fr 1fr}.admin-form-actions{align-items:stretch;flex-direction:column}.admin-form-actions .action-spacer{display:none}.admin-form-actions .admin-button{width:100%}.preview-surface{padding:24px}.preview-surface h1{font-size:27px}}`;
+
+const cssAdminResponsiveFix = `.admin-page{overflow-x:hidden}.admin-shell{min-width:0}@media (max-width:900px){.admin-shell{width:100%;overflow:hidden}.admin-main{width:100%;overflow:hidden}}`;
+
 mkdirSync("assets", { recursive: true });
-writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements + cssCompactListEnhancements + cssFeaturedThumbEnhancements + cssCompactHeroEnhancements + cssHomeTitleEnhancements + cssFixedFooterEnhancements + cssDropdownNavEnhancements + cssQuickLinksEnhancements + cssVisiblePortalEnhancements + cssVideoEnhancements, "utf8");
+writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements + cssCompactListEnhancements + cssFeaturedThumbEnhancements + cssCompactHeroEnhancements + cssHomeTitleEnhancements + cssFixedFooterEnhancements + cssDropdownNavEnhancements + cssQuickLinksEnhancements + cssVisiblePortalEnhancements + cssVideoEnhancements + cssAdminEnhancements + cssAdminResponsiveFix, "utf8");
 writeFileSync("index.html", homeHtml(), "utf8");
 
 for (const route of routes) {

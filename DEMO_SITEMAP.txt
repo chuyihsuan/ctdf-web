@@ -25,6 +25,7 @@ CTDF Demo route list
 /admin/news/ 公告管理
 /admin/pages/ 頁面管理
 /admin/events/ 賽事管理
-/admin/members/ 會員管理
 /admin/downloads/ 文件管理
+/admin/media/ 影音管理
 /admin/settings/site/ 網站基本設定
+/admin/logs/ 操作紀錄
