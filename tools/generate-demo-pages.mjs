@@ -22,7 +22,6 @@ const nav = [
   ["首頁", "/"],
   ["公告", "/news/"],
   ["賽事", "/events/"],
-  ["排名", "/rankings/"],
   ["選手", "/players/"],
   ["下載", "/downloads/"],
   ["關於", "/about/"]
@@ -99,6 +98,22 @@ const routes = Object.values(routeGroups).flat().map(([path, title, group, statu
   summary
 }));
 
+// Keep these pages available for future phases, but hide them from the current demo navigation and sitemap.
+const hiddenRoutePaths = new Set([
+  "news/demo-announcement",
+  "events/calendar",
+  "events/list",
+  "events/demo-event",
+  "rankings",
+  "rankings/main",
+  "rankings/youth",
+  "rankings/history",
+  "rankings/region",
+  "admin/rankings"
+]);
+
+const visibleRoutes = routes.filter((route) => !hiddenRoutePaths.has(route.path));
+
 const data = {
   news: [
     { date: "2026-08-01", category: "代表隊選拔", title: "2026 WDF 亞太盃中華台北代表隊選拔賽開放報名", desc: "兩年一次的國家代表隊選拔機會，賽事將於 2026 年 8 月 15 日、8 月 16 日在臺中市立向上國民中學舉行，報名至 2026 年 8 月 7 日截止。", source: sources.asiaPacificCupBrief, image: "/assets/wdf-asia-pacific-cup-2026-selection.png" },
@@ -119,7 +134,7 @@ const data = {
   ],
   players: [
     { name: "正式選手資料待總會授權", group: "Demo 預留", region: "不揭露未授權個資", status: "建議正式版由後台維護公開欄位", source: sources.frd },
-    { name: "國際賽事成果可建立選手頁", group: "U18 / 代表隊", region: "依總會核定資料", status: "可連結排名成績與賽事成績", source: sources.cnaGold }
+    { name: "國際賽事成果可建立選手頁", group: "U18 / 代表隊", region: "依總會核定資料", status: "可連結賽事成績", source: sources.cnaGold }
   ],
   downloads: [
     { type: "競賽規程", title: "113學年度國中暨高中飛鏢隊際聯賽規程", owner: "臺中市政府教育局公告附件", updated: "2025-04-24", source: sources.taichung113League },
@@ -146,7 +161,7 @@ function navHtml() {
   return nav.map(([label, href]) => {
     const root = href === "/" ? "" : href.replaceAll("/", "");
     const children = root
-      ? routes.filter((item) => item.path.split("/")[0] === root)
+      ? visibleRoutes.filter((item) => item.path.split("/")[0] === root)
       : [];
     if (children.length <= 1) return `<a class="nav-trigger" href="${href}">${label}</a>`;
     return `<div class="nav-item">
@@ -299,7 +314,7 @@ function renderAbout(items = data.about) {
 function renderDefault(root) {
   if (root === "fairplay") return renderDownloads([{ type: "政策資料", title: "公平競賽與反禁藥資料入口", owner: "MVP 文件規劃", updated: "Demo", source: sources.frd }]);
   if (root === "member") return renderPlayers([{ name: "會員系統規劃", group: "Supabase Auth", region: "登入與權限控管", status: "Demo 先保留入口與流程示意。", source: sources.srd }]);
-  if (root === "admin") return renderDownloads([{ type: "後台模組", title: "公告、賽事、排名、文件與權限管理", owner: "PRD / SRD", updated: "Demo", source: sources.prd }]);
+  if (root === "admin") return renderDownloads([{ type: "後台模組", title: "公告、賽事、文件與權限管理", owner: "PRD / SRD", updated: "Demo", source: sources.prd }]);
   if (root === "media") return renderNews([{ date: "2025-09-22", category: "媒體報導", title: "媒體報導可串接新聞來源", desc: "媒體專區可彙整中央社等公開新聞，並以外部連結保留原始來源。", source: sources.cnaWorldCup }]);
   return renderDownloads([{ type: "Demo", title: "待總會提供正式資料", owner: "專案文件", updated: "Demo", source: sources.notes }]);
 }
@@ -374,9 +389,9 @@ function homeSection(title, href, body) {
 
 function portalHtml() {
   const portals = [
-    ["WDF & 國際賽事", "代表隊參賽、國際新聞、WDF 世界盃成果", "/rankings/"],
+    ["WDF & 國際賽事", "代表隊參賽、國際新聞、WDF 世界盃成果", "/news/"],
     ["CTDF 賽事系統", "賽事公告、報名時程、競賽規程與賽果", "/events/"],
-    ["排名與選手", "積分排名、青少年成果、選手公開資料", "/players/"],
+    ["選手專區", "青少年成果、代表隊與選手公開資料", "/players/"],
     ["文件與規章", "報名表、規章、下載文件與公告附件", "/downloads/"]
   ];
   return `<section class="portal-band">
@@ -433,7 +448,7 @@ function homeHtml() {
         <div>
           <p class="eyebrow">Official Website Demo</p>
           <h1>中華民國競技飛鏢總會</h1>
-          <p>以實際公開資料示範公告、賽事、排名、選手資料、文件下載與總會資訊，並依內容性質使用不同版型。</p>
+          <p>以實際公開資料示範公告、賽事、選手資料、文件下載與總會資訊，並依內容性質使用不同版型。</p>
           <div class="actions">
             <a class="button" href="/news/">看最新公告</a>
             <a class="button secondary" href="/events/">看賽事資訊</a>
@@ -444,7 +459,7 @@ function homeHtml() {
           <div class="stat-row">
             <span><b>公告</b>列表</span>
             <span><b>賽事</b>賽程</span>
-            <span><b>排名</b>表格</span>
+            <span><b>選手</b>資料</span>
           </div>
         </div>
       </div>
@@ -453,7 +468,6 @@ function homeHtml() {
     ${portalHtml()}
     ${homeSection("最新公告", "/news/", renderNews())}
     ${homeSection("賽事資訊", "/events/", renderEvents())}
-    ${homeSection("排名成績", "/rankings/", renderRankings())}
     ${homeSection("選手資料庫", "/players/", renderPlayers())}
     ${homeSection("文件下載", "/downloads/", renderDownloads())}
     ${homeSection("關於總會", "/about/", renderAbout())}
@@ -491,7 +505,7 @@ for (const route of routes) {
   writeFileSync(filePath, pageHtml(route), "utf8");
 }
 
-const sitemap = routes.map((route) => `/${route.path}/ ${route.title}`).join("\n");
+const sitemap = visibleRoutes.map((route) => `/${route.path}/ ${route.title}`).join("\n");
 writeFileSync("DEMO_SITEMAP.txt", `CTDF Demo route list\n\n/\n${sitemap}\n`, "utf8");
 
 console.log(`Generated ${routes.length} demo pages plus homepage.`);
