@@ -475,10 +475,6 @@ function homeHtml() {
           <p class="eyebrow">Official Website Demo</p>
           <h1>中華民國競技飛鏢總會</h1>
           <p>以實際公開資料示範公告、賽事、文件下載與總會資訊，並依內容性質使用不同版型。</p>
-          <div class="actions">
-            <a class="button" href="/news/">看最新公告</a>
-            <a class="button secondary" href="/events/">看賽事資訊</a>
-          </div>
         </div>
         <div class="target-panel" aria-label="CTDF 視覺識別">
           <img class="hero-logo" src="/assets/ctdf-logo.png" alt="CTDF Logo">
