@@ -22,6 +22,7 @@ const nav = [
   ["首頁", "/"],
   ["公告", "/news/"],
   ["賽事", "/events/"],
+  ["影音專區", "/media/videos/"],
   ["下載", "/downloads/"],
   ["關於", "/about/"]
 ];
@@ -144,6 +145,11 @@ const data = {
     { type: "競賽規程", title: "113學年度國中暨高中飛鏢隊際聯賽規程", owner: "臺中市政府教育局公告附件", updated: "2025-04-24", source: sources.taichung113League },
     { type: "報名資訊", title: "114學年師生盃報名與規程來源", owner: "總會 FB 與各縣市教育單位公告", updated: "2026-02", source: sources.hualien114 },
     { type: "Demo 文件", title: "實際資料使用說明", owner: "專案文件", updated: "Demo", source: sources.notes }
+  ],
+  videos: [
+    { category: "代表隊", date: "2026-08", title: "2026 WDF 亞太盃代表隊選拔賽", desc: "代表隊選拔、賽事花絮與相關影音可集中於此，正式影片將由總會確認後上架。", image: "/assets/wdf-asia-pacific-cup-2026-selection.png", source: sources.facebook },
+    { category: "國際賽事", date: "2025-09", title: "WDF 世界盃中華台北代表隊紀錄", desc: "彙整國際參賽紀錄、代表隊訪談與賽事精華，建立具公信力的影音資料入口。", image: "/assets/ctdf-world-cup-2025.jpg", source: sources.facebook },
+    { category: "總會影音", date: "Demo", title: "CTDF 活動與賽事影音", desc: "未來可串接 YouTube 或 Facebook 影片，集中呈現活動紀錄、賽事轉播與推廣內容。", image: "/assets/ctdf-facebook-cover.png", source: sources.facebook }
   ],
   about: [
     ["網站識別", "中華民國競技飛鏢總會 / Chinese Taipei Dart Federation，Demo 使用使用者提供之 CTDF Logo。", sources.facebook],
@@ -305,6 +311,21 @@ function renderDownloads(items = data.downloads) {
   </div>`;
 }
 
+function renderVideos(items = data.videos) {
+  return `<div class="video-grid">${items.map((item) => `
+    <a class="video-card" href="${htmlEscape(item.source)}" target="_blank" rel="noopener noreferrer">
+      <div class="video-thumb">
+        <img src="${htmlEscape(item.image)}" alt="${htmlEscape(item.title)}">
+        <span class="video-play" aria-hidden="true"></span>
+      </div>
+      <div class="video-meta"><span>${htmlEscape(item.category)}</span><time>${htmlEscape(item.date)}</time></div>
+      <h3>${htmlEscape(item.title)}</h3>
+      <p>${htmlEscape(item.desc)}</p>
+      <b class="video-link">前往影音來源</b>
+    </a>`).join("")}
+  </div>`;
+}
+
 function renderAbout(items = data.about) {
   return `<div class="about-grid">${items.map(([title, body, source]) => `
     <article class="about-block">
@@ -323,7 +344,8 @@ function renderDefault(root) {
   return renderDownloads([{ type: "Demo", title: "待總會提供正式資料", owner: "專案文件", updated: "Demo", source: sources.notes }]);
 }
 
-function renderContent(root) {
+function renderContent(root, path) {
+  if (path === "media/videos") return renderVideos();
   const renderers = {
     news: renderNews,
     events: renderEvents,
@@ -337,6 +359,7 @@ function renderContent(root) {
 
 function pageHtml(route) {
   const root = route.path.split("/")[0];
+  const bodyClass = route.path === "media/videos" ? "video-page" : "";
   return `<!doctype html>
 <html lang="zh-Hant">
 <head>
@@ -346,7 +369,7 @@ function pageHtml(route) {
   <meta name="robots" content="noindex, nofollow">
   <link rel="stylesheet" href="/assets/demo.css">
 </head>
-<body>
+<body class="${bodyClass}">
   <header class="site-header">
     <nav class="nav" aria-label="主要導覽">
       <a class="brand" href="/"><img class="brand-logo" src="/assets/ctdf-logo.png" alt="CTDF Logo"><span><b>中華民國競技飛鏢總會</b><small>Demo Website</small></span></a>
@@ -370,7 +393,7 @@ function pageHtml(route) {
           <h2>${htmlEscape(route.title)} Demo</h2>
           <p>此區依資料性質採用不同排版。正式上線前，內容仍需由總會確認。</p>
         </div>
-        ${renderContent(root)}
+        ${renderContent(root, route.path)}
       </div>
     </section>
   </main>
@@ -501,8 +524,10 @@ const cssQuickLinksEnhancements = `.stat-row a{display:grid;place-items:center;m
 
 const cssVisiblePortalEnhancements = `.portal-grid{grid-template-columns:repeat(3,minmax(0,1fr))}@media (max-width:900px){.portal-grid{grid-template-columns:1fr 1fr}}@media (max-width:640px){.portal-grid{grid-template-columns:1fr}}`;
 
+const cssVideoEnhancements = `.video-page{padding-bottom:0;background:#090d12;overflow-x:hidden}.video-page .page-hero{color:#fff;border-bottom-color:#27313f;background:linear-gradient(110deg,rgba(9,13,18,.96),rgba(19,27,39,.92)),url("/assets/ctdf-world-cup-2025.jpg") center 36%/cover no-repeat}.video-page .page-hero h1{color:#fff}.video-page .page-hero:after{background:#d83a45}.video-page .page-hero p{color:#b8c2d1}.video-page .section.real-data{background:#090d12}.video-page .section-head h2{color:#fff}.video-page .section-head p{color:#aab5c5}.video-page .footer{position:static}.video-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 18px}.video-card{display:grid;align-content:start;color:#fff}.video-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;border:1px solid #2b3543;border-radius:8px;background:#111827}.video-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .22s ease}.video-card:hover .video-thumb img,.video-card:focus-visible .video-thumb img{transform:scale(1.035)}.video-play{position:absolute;left:50%;top:50%;width:58px;height:58px;border-radius:50%;background:#e52335;box-shadow:0 10px 26px rgba(229,35,53,.34);transform:translate(-50%,-50%)}.video-play:after{content:"";position:absolute;left:23px;top:18px;border-top:11px solid transparent;border-bottom:11px solid transparent;border-left:17px solid #fff}.video-meta{display:flex;align-items:center;gap:10px;margin:12px 0 8px;color:#8f9bab;font-size:12px}.video-meta span{border:1px solid #344154;border-radius:999px;padding:4px 8px;color:#d9e2ee}.video-card h3{margin:0 0 8px;font-size:19px;line-height:1.45}.video-card p{margin:0;color:#aab5c5;line-height:1.65}.video-link{margin-top:12px;color:#ff5a68;font-size:13px}.video-card:focus-visible{border-radius:8px;outline:3px solid rgba(229,35,53,.45);outline-offset:5px}@media (max-width:900px){.video-grid{grid-template-columns:1fr 1fr}}@media (max-width:640px){.video-grid{grid-template-columns:1fr}.video-play{width:52px;height:52px}.video-play:after{left:21px;top:16px}}`;
+
 mkdirSync("assets", { recursive: true });
-writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements + cssCompactListEnhancements + cssFeaturedThumbEnhancements + cssCompactHeroEnhancements + cssHomeTitleEnhancements + cssFixedFooterEnhancements + cssDropdownNavEnhancements + cssQuickLinksEnhancements + cssVisiblePortalEnhancements, "utf8");
+writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements + cssCompactListEnhancements + cssFeaturedThumbEnhancements + cssCompactHeroEnhancements + cssHomeTitleEnhancements + cssFixedFooterEnhancements + cssDropdownNavEnhancements + cssQuickLinksEnhancements + cssVisiblePortalEnhancements + cssVideoEnhancements, "utf8");
 writeFileSync("index.html", homeHtml(), "utf8");
 
 for (const route of routes) {
