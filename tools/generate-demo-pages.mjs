@@ -22,7 +22,6 @@ const nav = [
   ["首頁", "/"],
   ["公告", "/news/"],
   ["賽事", "/events/"],
-  ["選手", "/players/"],
   ["下載", "/downloads/"],
   ["關於", "/about/"]
 ];
@@ -109,7 +108,10 @@ const hiddenRoutePaths = new Set([
   "rankings/youth",
   "rankings/history",
   "rankings/region",
-  "admin/rankings"
+  "admin/rankings",
+  "players",
+  "players/demo-player",
+  "admin/players"
 ]);
 
 const visibleRoutes = routes.filter((route) => !hiddenRoutePaths.has(route.path));
@@ -391,7 +393,6 @@ function portalHtml() {
   const portals = [
     ["WDF & 國際賽事", "代表隊參賽、國際新聞、WDF 世界盃成果", "/news/"],
     ["CTDF 賽事系統", "賽事公告、報名時程、競賽規程與賽果", "/events/"],
-    ["選手專區", "青少年成果、代表隊與選手公開資料", "/players/"],
     ["文件與規章", "報名表、規章、下載文件與公告附件", "/downloads/"]
   ];
   return `<section class="portal-band">
@@ -448,7 +449,7 @@ function homeHtml() {
         <div>
           <p class="eyebrow">Official Website Demo</p>
           <h1>中華民國競技飛鏢總會</h1>
-          <p>以實際公開資料示範公告、賽事、選手資料、文件下載與總會資訊，並依內容性質使用不同版型。</p>
+          <p>以實際公開資料示範公告、賽事、文件下載與總會資訊，並依內容性質使用不同版型。</p>
           <div class="actions">
             <a class="button" href="/news/">看最新公告</a>
             <a class="button secondary" href="/events/">看賽事資訊</a>
@@ -468,7 +469,6 @@ function homeHtml() {
     ${portalHtml()}
     ${homeSection("最新公告", "/news/", renderNews())}
     ${homeSection("賽事資訊", "/events/", renderEvents())}
-    ${homeSection("選手資料庫", "/players/", renderPlayers())}
     ${homeSection("文件下載", "/downloads/", renderDownloads())}
     ${homeSection("關於總會", "/about/", renderAbout())}
   </main>
@@ -497,8 +497,10 @@ const cssDropdownNavEnhancements = `.nav-links{align-items:center}.nav-item{posi
 
 const cssQuickLinksEnhancements = `.stat-row a{display:grid;place-items:center;min-height:58px;border:1px solid #dfe8f4;border-radius:8px;background:rgba(255,255,255,.82);padding:12px;color:#475467;text-align:center;transition:border-color .16s ease,box-shadow .16s ease,transform .16s ease}.stat-row a:hover,.stat-row a:focus-visible{border-color:#9db8d8;box-shadow:0 8px 18px rgba(21,58,107,.14);transform:translateY(-2px);outline:none}.stat-row a:focus-visible{box-shadow:0 0 0 3px rgba(47,111,176,.24),0 8px 18px rgba(21,58,107,.14)}`;
 
+const cssVisiblePortalEnhancements = `.portal-grid{grid-template-columns:repeat(3,minmax(0,1fr))}@media (max-width:900px){.portal-grid{grid-template-columns:1fr 1fr}}@media (max-width:640px){.portal-grid{grid-template-columns:1fr}}`;
+
 mkdirSync("assets", { recursive: true });
-writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements + cssCompactListEnhancements + cssFeaturedThumbEnhancements + cssCompactHeroEnhancements + cssHomeTitleEnhancements + cssFixedFooterEnhancements + cssDropdownNavEnhancements + cssQuickLinksEnhancements, "utf8");
+writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements + cssCompactListEnhancements + cssFeaturedThumbEnhancements + cssCompactHeroEnhancements + cssHomeTitleEnhancements + cssFixedFooterEnhancements + cssDropdownNavEnhancements + cssQuickLinksEnhancements + cssVisiblePortalEnhancements, "utf8");
 writeFileSync("index.html", homeHtml(), "utf8");
 
 for (const route of routes) {

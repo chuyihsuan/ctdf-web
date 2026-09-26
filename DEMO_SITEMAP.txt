@@ -4,8 +4,6 @@ CTDF Demo route list
 /news/ 最新公告
 /events/ 賽事資訊
 /events/results/ 賽事成績
-/players/ 選手資料庫
-/players/demo-player/ 選手個人頁範例
 /downloads/ 文件下載
 /downloads/forms/ 表單下載
 /downloads/rules/ 規章下載
@@ -29,7 +27,6 @@ CTDF Demo route list
 /admin/news/ 公告管理
 /admin/pages/ 頁面管理
 /admin/events/ 賽事管理
-/admin/players/ 選手管理
 /admin/members/ 會員管理
 /admin/downloads/ 文件管理
 /admin/settings/site/ 網站基本設定
