@@ -21,6 +21,7 @@ CTDF Demo route list
 /member/login/ 會員登入 / 註冊
 /member/profile/ 會員資料
 /member/fee/ 會費繳納
+/admin/login/ 後台登入
 /admin/ 後台管理
 /admin/news/ 公告管理
 /admin/pages/ 頁面管理
