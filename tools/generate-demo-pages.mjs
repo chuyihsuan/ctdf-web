@@ -665,7 +665,7 @@ function homeHtml() {
       <div class="home-hero-inner">
         <div>
           <p class="eyebrow">Official Website</p>
-          <h1>中華民國競技飛鏢總會(審查版)</h1>
+          <h1>中華民國競技飛鏢總會<br><small>(審查版)</small></h1>
           <p>提供總會公告、賽事資訊、文件連結、國際交流與會務公開資訊。</p>
         </div>
         <div class="target-panel" aria-label="CTDF 視覺識別">
