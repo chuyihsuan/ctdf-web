@@ -246,6 +246,8 @@ SUPABASE_SERVICE_ROLE_KEY=
 - `網站內容素材庫/`
 - `docs/CONTENT_PUBLISHING_MANUAL.md`：網站內容角色分工、上架、修改、下架與緊急處理操作手冊。
 - `docs/HINET_VERCEL_DNS_MANUAL.md`：HiNet DNS 代管啟用、Vercel 正式網域連接、驗證與錯誤排除操作手冊。
+- `output/pdf/`：提供未來維護者使用的三份 PDF 操作手冊。
+- `output/pptx/CTDF_網站維護與發布流程_管理層簡報_v1.0.pptx`：向秘書長與會長說明內容發布、權限分工及正式網域維運的整合簡報。
 
 ## 授權與保密
 
