@@ -650,7 +650,7 @@ function homeHtml() {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>中華民國競技飛鏢總會</title>
+  <title>中華民國競技飛鏢總會(審查版)</title>
   <link rel="stylesheet" href="/assets/demo.css">
 </head>
 <body>
@@ -665,7 +665,7 @@ function homeHtml() {
       <div class="home-hero-inner">
         <div>
           <p class="eyebrow">Official Website</p>
-          <h1>中華民國競技飛鏢總會</h1>
+          <h1>中華民國競技飛鏢總會(審查版)</h1>
           <p>提供總會公告、賽事資訊、文件連結、國際交流與會務公開資訊。</p>
         </div>
         <div class="target-panel" aria-label="CTDF 視覺識別">
