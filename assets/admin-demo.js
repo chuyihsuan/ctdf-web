@@ -1,7 +1,8 @@
 (() => {
   const page = document.body;
   const path = page.dataset.adminPath || "";
-  const authKey = "ctdf-admin-demo-auth";
+  const authKey = "ctdf-admin-auth";
+  const credentialHash = "565f57258a979f55e12b8fbf33f5820e2d7214c6b79c6fe24581f4ba33c32cb8";
   const textEncoder = new TextEncoder();
   const textDecoder = new TextDecoder();
   const statusLabels = {
@@ -19,10 +20,13 @@
       window.location.replace("/admin/");
       return;
     }
-    loginForm.addEventListener("submit", (event) => {
+    loginForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const values = Object.fromEntries(new FormData(loginForm));
-      if (values.account === "secretary" && values.password === "CTDF-DEMO") {
+      const credentialBytes = textEncoder.encode(`${values.account}:${values.password}`);
+      const digest = await crypto.subtle.digest("SHA-256", credentialBytes);
+      const submittedHash = Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
+      if (submittedHash === credentialHash) {
         sessionStorage.setItem(authKey, "active");
         const destination = new URLSearchParams(window.location.search).get("return");
         window.location.assign(destination?.startsWith("/admin/") ? destination : "/admin/");
@@ -537,7 +541,7 @@
       const fileNameLength = view.getUint16(offset + 26, true);
       const extraLength = view.getUint16(offset + 28, true);
       if (flags & 0x0008) throw new Error("不支援使用 data descriptor 的 ZIP。");
-      if (method !== 0) throw new Error("此 Demo 只能匯入由本後台產生的 ZIP 上架包。");
+      if (method !== 0) throw new Error("本平台只能匯入由內容管理功能產生的 ZIP 上架包。");
       const nameStart = offset + 30;
       const dataStart = nameStart + fileNameLength + extraLength;
       const name = textDecoder.decode(bytes.slice(nameStart, nameStart + fileNameLength));

@@ -38,8 +38,11 @@ const JSZip = require(path.join(runtimeModules, "jszip"));
   await page.waitForURL("**/admin/login/**");
   await page.screenshot({ path: path.join(outputDirectory, "ctdf-admin-login.png"), fullPage: true });
 
-  await page.getByLabel("帳號").fill("secretary");
-  await page.getByLabel("密碼").fill("CTDF-DEMO");
+  const account = process.env.CTDF_ADMIN_TEST_ACCOUNT;
+  const password = process.env.CTDF_ADMIN_TEST_PASSWORD;
+  if (!account || !password) throw new Error("請設定 CTDF_ADMIN_TEST_ACCOUNT 與 CTDF_ADMIN_TEST_PASSWORD 後再執行管理平台測試。");
+  await page.getByLabel("帳號").fill(account);
+  await page.getByLabel("密碼").fill(password);
   await page.getByRole("button", { name: "登入" }).click();
   await page.waitForURL("**/admin/");
   await page.goto("http://localhost:4173/admin/news/");

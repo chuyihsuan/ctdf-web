@@ -11,7 +11,7 @@ const sources = {
   citizensSports: "https://sport115.tycg.gov.tw/",
   facebook: "https://www.facebook.com/CTDFTW/?locale=zh_TW",
   asiaPacificCupBrief: "https://reurl.cc/RRbWrD",
-  notes: "/docs/DEMO_REAL_DATA_NOTES.md",
+  notes: "/docs/PUBLIC_DATA_NOTES.md",
   wdfMembers: "https://dartswdf.com/members",
   frd: "/docs/FRD.md",
   prd: "/docs/PRD.md",
@@ -30,14 +30,14 @@ const nav = [
 const routeGroups = {
   news: [
     ["news", "最新公告", "公開資訊", "MVP", "以公告清單方式呈現總會消息、賽事通知與國際參賽新聞。"],
-    ["news/demo-announcement", "公告詳情範例", "公開資訊", "MVP", "示範單一公告的日期、分類、附件與來源連結。"]
+    ["news/demo-announcement", "公告詳情", "公開資訊", "MVP", "呈現單一公告的日期、分類、附件與來源連結。"]
   ],
   events: [
     ["events", "賽事資訊", "公開資訊", "MVP", "以賽程清單呈現賽事日期、地點、報名期限與規程來源。"],
-    ["events/calendar", "賽事行事曆", "公開資訊", "MVP", "未來可改為月曆檢視，目前以近期賽程示範。"],
+    ["events/calendar", "賽事行事曆", "公開資訊", "MVP", "彙整近期賽程，並保留月曆檢視的擴充空間。"],
     ["events/list", "賽事列表", "公開資訊", "MVP", "依年度、組別與賽事狀態查詢。"],
     ["events/results", "賽事成績", "公開資訊", "MVP", "集中放置賽果、名次與成績附件。"],
-    ["events/demo-event", "賽事詳情範例", "公開資訊", "MVP", "示範單一賽事的完整資訊頁。"]
+    ["events/demo-event", "賽事詳情", "公開資訊", "MVP", "呈現單一賽事的完整資訊。"]
   ],
   rankings: [
     ["rankings", "排名成績", "公開資訊", "MVP", "以表格方式呈現國際成果與正式積分排名預留欄位。"],
@@ -47,8 +47,8 @@ const routeGroups = {
     ["rankings/region", "縣市排名", "第二階段", "Later", "預留縣市或區域推廣成果呈現。"]
   ],
   players: [
-    ["players", "選手資料庫", "公開資訊", "MVP", "以選手資料庫樣式呈現，Demo 不放未授權個資。"],
-    ["players/demo-player", "選手個人頁範例", "公開資訊", "MVP", "示範個人頁版型，正式資料需總會授權。"]
+    ["players", "選手資料庫", "公開資訊", "MVP", "呈現經總會授權公開的選手資料與參賽成果。"],
+    ["players/demo-player", "選手個人頁", "公開資訊", "MVP", "呈現經總會授權公開的選手個人資料。"]
   ],
   downloads: [
     ["downloads", "文件連結", "公開資訊", "MVP", "以外部連結提供規程、報名資訊與公告文件來源。"],
@@ -73,13 +73,13 @@ const routeGroups = {
     ["media/press", "媒體報導", "第二階段", "Later", "彙整媒體報導與國際參賽新聞。"]
   ],
   member: [
-    ["member/login", "會員登入 / 註冊", "會員", "MVP", "示範會員登入入口。"],
+    ["member/login", "會員登入 / 註冊", "會員", "MVP", "會員登入與註冊入口。"],
     ["member/profile", "會員資料", "會員", "MVP", "會員可維護基本資料、選手資料與報名紀錄。"],
     ["member/fee", "會費繳納", "第二階段", "Later", "預留會費狀態與繳費紀錄。"]
   ],
   admin: [
     ["admin/login", "後台登入", "後台", "Demo", "後台操作介面的獨立登入入口。"],
-    ["admin", "後台管理", "後台", "MVP", "示範管理介面入口。"],
+    ["admin", "後台管理", "後台", "MVP", "網站內容管理介面入口。"],
     ["admin/news", "公告管理", "後台", "MVP", "新增、編輯、發布與下架公告。"],
     ["admin/pages", "頁面管理", "後台", "MVP", "管理關於總會、規章與固定頁。"],
     ["admin/events", "賽事管理", "後台", "MVP", "建立賽事資料、規程、報名與賽果。"],
@@ -97,7 +97,7 @@ const routes = Object.values(routeGroups).flat().map(([path, title, group, statu
   path,
   title,
   group,
-  status,
+  status: status === "MVP" ? "正式服務" : status === "Demo" ? "管理功能" : status === "Later" ? "規劃中" : status,
   summary
 }));
 
@@ -128,7 +128,7 @@ const data = {
     { date: "2026-08-01", category: "代表隊選拔", title: "2026 WDF 亞太盃中華台北代表隊選拔賽開放報名", desc: "兩年一次的國家代表隊選拔機會，賽事將於 2026 年 8 月 15 日、8 月 16 日在臺中市立向上國民中學舉行，報名至 2026 年 8 月 7 日截止。", source: sources.asiaPacificCupBrief, image: "/assets/wdf-asia-pacific-cup-2026-selection.png" },
     { date: "2026-02-11", category: "賽事公告", title: "114學年師生盃全國各級學校飛鏢錦標賽公告", desc: "澎湖縣政府教育處轉知總會辦理師生盃，賽事地點為桃園市中壢國中活動中心。", source: sources.penghu114 },
     { date: "2025-09-22", category: "國際參賽", title: "台灣競技飛鏢代表隊首度參加 WDF 世界盃", desc: "台灣代表隊首度登上 WDF 世界盃舞台，總會派出 8 名選手參賽。", source: sources.cnaWorldCup },
-    { date: "2025-09-26", category: "國際成績", title: "蔡詠恩、楊奕晴於 WDF 世界盃 U18 女雙摘金", desc: "Demo 可作為青少年培育、國際參賽與成績專區的展示亮點。", source: sources.cnaGold }
+    { date: "2025-09-26", category: "國際成績", title: "蔡詠恩、楊奕晴於 WDF 世界盃 U18 女雙摘金", desc: "此成果為青少年培育、國際參賽與成績專區的重要紀錄。", source: sources.cnaGold }
   ],
   events: [
     { date: "2026-08-15 至 2026-08-16", status: "報名截止 2026-08-07", title: "2026 WDF 亞太盃中華台北代表隊選拔賽", place: "臺中市立向上國民中學", desc: "選拔中華台北代表隊參加 2026 WDF Asia Pacific Cup 亞太盃飛鏢錦標賽，入選選手將有機會代表台灣遠征蒙古烏蘭巴托。", source: sources.asiaPacificCupBrief, image: "/assets/wdf-asia-pacific-cup-2026-selection.png" },
@@ -139,28 +139,28 @@ const data = {
   rankings: [
     ["U18 女子雙打", "蔡詠恩、楊奕晴", "WDF 世界盃金牌", "2025-09-26", sources.cnaGold],
     ["代表隊", "中華台北代表隊", "首度參加 WDF 世界盃", "2025-09-22 至 2025-09-28", sources.cnaWorldCup],
-    ["正式積分排名", "待總會提供", "成人組、青少年組、縣市排名預留", "Demo 註記", sources.notes]
+    ["正式積分排名", "待總會提供", "成人組、青少年組、縣市排名預留", "資料待更新", sources.notes]
   ],
   players: [
-    { name: "正式選手資料待總會授權", group: "Demo 預留", region: "不揭露未授權個資", status: "建議正式版由後台維護公開欄位", source: sources.frd },
+    { name: "正式選手資料待總會授權", group: "資料待更新", region: "不揭露未授權個資", status: "取得授權後由管理平台維護公開欄位", source: sources.frd },
     { name: "國際賽事成果可建立選手頁", group: "U18 / 代表隊", region: "依總會核定資料", status: "可連結賽事成績", source: sources.cnaGold }
   ],
   downloads: [
     { type: "競賽規程", title: "113學年度國中暨高中飛鏢隊際聯賽規程", owner: "臺中市政府教育局公告附件", updated: "2025-04-24", source: sources.taichung113League },
     { type: "報名資訊", title: "114學年師生盃報名與規程來源", owner: "總會 FB 與各縣市教育單位公告", updated: "2026-02", source: sources.hualien114 },
-    { type: "Demo 文件", title: "實際資料使用說明", owner: "專案文件", updated: "Demo", source: sources.notes }
+    { type: "資料說明", title: "公開資料使用說明", owner: "網站維護文件", updated: "2026-10-31", source: sources.notes }
   ],
   videos: [
     { category: "國際賽事", date: "2026-10-07", title: "WDF Asia-Pacific Cup 2026, Mongolia - Official Welcome Video", desc: "From October 7th to October 10th, 2026, top-tier national teams from the entire Asia-Pacific region will battle for international glory. As the reigning trophy holders, Team Mongolia enjoys ultimate home-court advantage. They are locked, loaded, and fully prepared to defend their championship title against the region's absolute best!🏆\n\nWill the home crowd carry Team Mongolia to back-to-back victories, or will another Asia-Pacific powerhouse take the trophy home?", image: "/media/photos/2026_APC.png", source: "https://www.youtube.com/watch?v=wWRWQvpGyv4" },
     { category: "代表隊", date: "2026-08", title: "2026 WDF 亞太盃代表隊選拔賽", desc: "代表隊選拔、賽事花絮與相關影音可集中於此，正式影片將由總會確認後上架。", image: "/assets/wdf-asia-pacific-cup-2026-selection.png", source: sources.facebook },
     { category: "國際賽事", date: "2025-09", title: "WDF 世界盃中華台北代表隊紀錄", desc: "彙整國際參賽紀錄、代表隊訪談與賽事精華，建立具公信力的影音資料入口。", image: "/assets/ctdf-world-cup-2025.jpg", source: sources.facebook },
-    { category: "總會影音", date: "Demo", title: "CTDF 活動與賽事影音", desc: "未來可串接 YouTube 或 Facebook 影片，集中呈現活動紀錄、賽事轉播與推廣內容。", image: "/assets/ctdf-facebook-cover.png", source: sources.facebook }
+    { category: "總會影音", date: "持續更新", title: "CTDF 活動與賽事影音", desc: "集中呈現活動紀錄、賽事轉播與推廣內容，影片經總會確認後公開。", image: "/assets/ctdf-facebook-cover.png", source: sources.facebook }
   ],
   about: [
-    ["網站識別", "中華民國競技飛鏢總會 / Chinese Taipei Dart Federation，Demo 使用使用者提供之 CTDF Logo。", sources.facebook],
+    ["網站識別", "中華民國競技飛鏢總會 / Chinese Taipei Dart Federation，使用總會提供之 CTDF Logo。", sources.facebook],
     ["聯絡資訊", "臺北市南港區松河街384號5樓；+886 2 2732 1422；ctdf0306@gmail.com。", sources.facebook],
     ["國際接軌", "以 WDF 世界盃參賽與 U18 女雙成果作為網站公信力與推廣成果展示。", sources.cnaWorldCup],
-    ["全民運推動", "以 115年全民運官方網站為準，Demo 僅作推動觀察，不誤稱飛鏢已列正式項目。", sources.citizensSports]
+    ["全民運推動", "以 115年全民運官方網站為準，本區記錄推動觀察，不誤稱飛鏢已列正式項目。", sources.citizensSports]
   ]
 };
 
@@ -195,7 +195,7 @@ function footerHtml() {
       <span>地址：臺北市南港區松河街384號5樓</span>
       <span>電話：+886 2 2732 1422</span>
       <span>Email：<a href="mailto:ctdf0306@gmail.com">ctdf0306@gmail.com</a></span>
-      <span class="footer-note">Demo 用途 / 正式上線前需由總會確認公開資料</span>
+      <span class="footer-note">網站公開資料以總會最新公告為準</span>
     </div>
   </footer>`;
 }
@@ -342,11 +342,11 @@ function renderAbout(items = data.about) {
 }
 
 function renderDefault(root) {
-  if (root === "fairplay") return renderDownloads([{ type: "政策資料", title: "公平競賽與反禁藥資料入口", owner: "MVP 文件規劃", updated: "Demo", source: sources.frd }]);
-  if (root === "member") return renderPlayers([{ name: "會員系統規劃", group: "Supabase Auth", region: "登入與權限控管", status: "Demo 先保留入口與流程示意。", source: sources.srd }]);
-  if (root === "admin") return renderDownloads([{ type: "後台模組", title: "公告、賽事、文件與權限管理", owner: "PRD / SRD", updated: "Demo", source: sources.prd }]);
+  if (root === "fairplay") return renderDownloads([{ type: "政策資料", title: "公平競賽與反禁藥資料入口", owner: "政策文件", updated: "持續更新", source: sources.frd }]);
+  if (root === "member") return renderPlayers([{ name: "會員系統規劃", group: "Supabase Auth", region: "登入與權限控管", status: "會員服務將依總會公告逐步開放。", source: sources.srd }]);
+  if (root === "admin") return renderDownloads([{ type: "後台模組", title: "公告、賽事、文件與權限管理", owner: "PRD / SRD", updated: "持續維護", source: sources.prd }]);
   if (root === "media") return renderNews([{ date: "2025-09-22", category: "媒體報導", title: "媒體報導可串接新聞來源", desc: "媒體專區可彙整中央社等公開新聞，並以外部連結保留原始來源。", source: sources.cnaWorldCup }]);
-  return renderDownloads([{ type: "Demo", title: "待總會提供正式資料", owner: "專案文件", updated: "Demo", source: sources.notes }]);
+  return renderDownloads([{ type: "資料狀態", title: "待總會提供正式資料", owner: "網站維護文件", updated: "待更新", source: sources.notes }]);
 }
 
 function renderContent(root, path) {
@@ -474,7 +474,7 @@ function adminSidebar(path) {
   return `<aside class="admin-sidebar" aria-label="後台功能">
     <div class="admin-sidebar-title">內容管理</div>
     <nav>${adminNav.map(([label, href, key]) => `<a href="${href}"${path === key ? ' class="active" aria-current="page"' : ""}>${label}</a>`).join("")}</nav>
-    <div class="admin-user"><span>秘書處管理員</span><small>Demo 權限</small></div>
+    <div class="admin-user"><span>秘書處管理員</span><small>授權帳號</small></div>
   </aside>`;
 }
 
@@ -526,7 +526,7 @@ function adminModuleContent(path, config) {
 }
 
 function adminDashboardContent() {
-  return `<div class="admin-page-head"><div><p class="admin-kicker">2026年9月27日</p><h1>後台總覽</h1><p>查看待辦內容與近期發布狀態。此頁為操作 Demo，不會變更正式網站。</p></div><a class="admin-button" href="/admin/news/">＋ 新增公告</a></div>
+  return `<div class="admin-page-head"><div><p class="admin-kicker">內容管理</p><h1>後台總覽</h1><p>查看待辦內容、草稿與近期發布狀態。核准匯出的內容仍須依發布流程上線。</p></div><a class="admin-button" href="/admin/news/">＋ 新增公告</a></div>
     <div class="admin-metrics"><article><span>待審核</span><b>3</b><small>公告、賽事與文件連結</small></article><article><span>草稿</span><b>5</b><small>尚未送審內容</small></article><article><span>已排程</span><b>1</b><small>未來七日發布</small></article><article><span>本月發布</span><b>8</b><small>公開內容更新</small></article></div>
     <div class="admin-dashboard-grid"><section class="admin-panel"><div class="admin-panel-head"><h2>待辦事項</h2><span>依優先順序</span></div><div class="task-list"><a href="/admin/news/"><span class="task-dot red"></span><span><b>師生盃公告等待審核</b><small>公告管理 · 昨天 16:40</small></span><strong>審核</strong></a><a href="/admin/events/"><span class="task-dot green"></span><span><b>確認賽事報名截止日期</b><small>賽事管理 · 昨天 14:08</small></span><strong>處理</strong></a><a href="/admin/downloads/"><span class="task-dot gold"></span><span><b>規程連結等待發布</b><small>文件連結管理 · 8月12日</small></span><strong>檢視</strong></a></div></section><section class="admin-panel"><div class="admin-panel-head"><h2>快速新增</h2><span>選擇內容類型</span></div><div class="admin-quick-grid"><a href="/admin/news/">公告</a><a href="/admin/events/">賽事</a><a href="/admin/media/">影音</a><a href="/admin/downloads/">文件連結</a></div></section></div>`;
 }
@@ -541,13 +541,13 @@ function adminLogsContent() {
 }
 
 function adminLoginHtml(route) {
-  return `<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${htmlEscape(route.title)} | CTDF Admin Demo</title><meta name="robots" content="noindex, nofollow"><link rel="stylesheet" href="/assets/demo.css"></head><body class="admin-login-page" data-admin-path="admin/login" data-admin-login><main class="login-shell"><section class="login-brand"><img src="/assets/ctdf-logo.png" alt="CTDF"><p>中華民國競技飛鏢總會</p><h1>內容管理後台</h1><span>第一版採瀏覽器本機草稿與 ZIP 上架包，不會直接修改正式網站。</span></section><section class="login-panel"><div><p class="admin-kicker">ADMIN DEMO</p><h2>登入後台</h2><p>請使用授權的後台帳號進入內容製作介面。</p></div><form data-login-form><label class="admin-field"><span>帳號</span><input name="account" autocomplete="username" required value="secretary"></label><label class="admin-field"><span>密碼</span><input name="password" type="password" autocomplete="current-password" required placeholder="請輸入密碼"></label><p class="login-error" data-login-error hidden>帳號或密碼不正確。</p><button class="admin-button" type="submit">登入</button></form><div class="demo-credential"><b>Demo 登入資料</b><span>帳號：secretary</span><span>密碼：CTDF-DEMO</span></div><small class="login-security-note">此登入只用於介面驗證。正式部署需在網站入口層啟用帳號驗證。</small></section></main><script src="/assets/admin-demo.js"></script></body></html>`;
+  return `<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${htmlEscape(route.title)} | CTDF Admin</title><meta name="robots" content="noindex, nofollow"><link rel="stylesheet" href="/assets/demo.css"></head><body class="admin-login-page" data-admin-path="admin/login" data-admin-login><main class="login-shell"><section class="login-brand"><img src="/assets/ctdf-logo.png" alt="CTDF"><p>中華民國競技飛鏢總會</p><h1>內容管理平台</h1><span>管理平台採瀏覽器本機草稿與 ZIP 上架包，核准內容須依正式發布流程上線。</span></section><section class="login-panel"><div><p class="admin-kicker">ADMIN PORTAL</p><h2>登入管理平台</h2><p>請使用授權的管理帳號進入內容製作介面。</p></div><form data-login-form><label class="admin-field"><span>帳號</span><input name="account" autocomplete="username" required placeholder="請輸入帳號"></label><label class="admin-field"><span>密碼</span><input name="password" type="password" autocomplete="current-password" required placeholder="請輸入密碼"></label><p class="login-error" data-login-error hidden>帳號或密碼不正確。</p><button class="admin-button" type="submit">登入</button></form><section class="login-documents" aria-labelledby="login-documents-title"><h3 id="login-documents-title">管理者操作手冊</h3><a href="/output/pdf/CTDF_HiNet_Vercel_DNS_操作手冊_v1.0.pdf" target="_blank" rel="noopener noreferrer">HiNet DNS 與 Vercel 網域設定操作手冊</a><a href="/output/pdf/CTDF_第一版無資料庫後台流程_v1.0.pdf" target="_blank" rel="noopener noreferrer">第一版無資料庫後台流程</a><a href="/output/pdf/CTDF_網站內容上下架操作手冊_v1.2.pdf" target="_blank" rel="noopener noreferrer">網站內容上下架操作手冊</a></section><small class="login-security-note">管理平台僅供授權人員使用。請勿共用帳號或將密碼寫入公開文件。</small></section></main><script src="/assets/admin-demo.js"></script></body></html>`;
 }
 
 function adminHtml(route) {
   if (route.path === "admin/login") return adminLoginHtml(route);
   const content = route.path === "admin" ? adminDashboardContent() : route.path === "admin/settings/site" ? adminSettingsContent() : route.path === "admin/logs" ? adminLogsContent() : adminModules[route.path] ? adminModuleContent(route.path, adminModules[route.path]) : adminDashboardContent();
-  return `<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${htmlEscape(route.title)} | CTDF Admin Demo</title><meta name="robots" content="noindex, nofollow"><link rel="stylesheet" href="/assets/demo.css"></head><body class="admin-page" data-admin-path="${route.path}"><header class="admin-topbar"><a class="admin-brand" href="/admin/"><img src="/assets/ctdf-logo.png" alt="CTDF"><span><b>CTDF 後台管理</b><small>瀏覽器草稿模式</small></span></a><div><span class="demo-badge">DEMO</span><a class="view-site" href="/">查看前台</a><button class="logout-button" type="button" data-logout>登出</button></div></header><div class="admin-shell">${adminSidebar(route.path)}<main class="admin-main">${content}</main></div><div class="admin-toast" role="status" aria-live="polite" data-toast></div><script src="/assets/admin-demo.js"></script></body></html>`;
+  return `<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${htmlEscape(route.title)} | CTDF Admin</title><meta name="robots" content="noindex, nofollow"><link rel="stylesheet" href="/assets/demo.css"></head><body class="admin-page" data-admin-path="${route.path}"><header class="admin-topbar"><a class="admin-brand" href="/admin/"><img src="/assets/ctdf-logo.png" alt="CTDF"><span><b>CTDF 後台管理</b><small>瀏覽器草稿模式</small></span></a><div><span class="admin-badge">管理平台</span><a class="view-site" href="/">查看前台</a><button class="logout-button" type="button" data-logout>登出</button></div></header><div class="admin-shell">${adminSidebar(route.path)}<main class="admin-main">${content}</main></div><div class="admin-toast" role="status" aria-live="polite" data-toast></div><script src="/assets/admin-demo.js"></script></body></html>`;
 }
 
 function pageHtml(route) {
@@ -559,14 +559,13 @@ function pageHtml(route) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${htmlEscape(route.title)} | CTDF Demo</title>
-  <meta name="robots" content="noindex, nofollow">
+  <title>${htmlEscape(route.title)} | 中華民國競技飛鏢總會</title>
   <link rel="stylesheet" href="/assets/demo.css">
 </head>
 <body class="${bodyClass}">
   <header class="site-header">
     <nav class="nav" aria-label="主要導覽">
-      <a class="brand" href="/"><img class="brand-logo" src="/assets/ctdf-logo.png" alt="CTDF Logo"><span><b>中華民國競技飛鏢總會</b><small>Demo Website</small></span></a>
+      <a class="brand" href="/"><img class="brand-logo" src="/assets/ctdf-logo.png" alt="CTDF Logo"><span><b>中華民國競技飛鏢總會</b><small>Official Website</small></span></a>
       <div class="nav-links">${navHtml()}</div>
     </nav>
   </header>
@@ -584,8 +583,8 @@ function pageHtml(route) {
     <section class="section real-data">
       <div class="section-inner">
         <div class="section-head">
-          <h2>${htmlEscape(route.title)} Demo</h2>
-          <p>此區依資料性質採用不同排版。正式上線前，內容仍需由總會確認。</p>
+          <h2>${htmlEscape(route.title)}</h2>
+          <p>本區依資料性質呈現，公開內容以總會最新公告及核定資料為準。</p>
         </div>
         ${renderContent(root, route.path)}
       </div>
@@ -651,14 +650,13 @@ function homeHtml() {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>中華民國競技飛鏢總會 Demo</title>
-  <meta name="robots" content="noindex, nofollow">
+  <title>中華民國競技飛鏢總會</title>
   <link rel="stylesheet" href="/assets/demo.css">
 </head>
 <body>
   <header class="site-header">
     <nav class="nav" aria-label="主要導覽">
-      <a class="brand" href="/"><img class="brand-logo" src="/assets/ctdf-logo.png" alt="CTDF Logo"><span><b>中華民國競技飛鏢總會</b><small>Official Website Demo</small></span></a>
+      <a class="brand" href="/"><img class="brand-logo" src="/assets/ctdf-logo.png" alt="CTDF Logo"><span><b>中華民國競技飛鏢總會</b><small>Official Website</small></span></a>
       <div class="nav-links">${navHtml()}</div>
     </nav>
   </header>
@@ -666,9 +664,9 @@ function homeHtml() {
     <section class="home-hero">
       <div class="home-hero-inner">
         <div>
-          <p class="eyebrow">Official Website Demo</p>
+          <p class="eyebrow">Official Website</p>
           <h1>中華民國競技飛鏢總會</h1>
-          <p>以實際公開資料示範公告、賽事、文件連結與總會資訊，並依內容性質使用不同版型。</p>
+          <p>提供總會公告、賽事資訊、文件連結、國際交流與會務公開資訊。</p>
         </div>
         <div class="target-panel" aria-label="CTDF 視覺識別">
           <img class="hero-logo" src="/assets/ctdf-logo.png" alt="CTDF Logo">
@@ -726,8 +724,10 @@ const cssAdminWorkflowEnhancements = `.status-approved{background:#e8f5ff;color:
 
 const cssAdminMediaEnhancements = `.admin-thumbnail-preview{display:grid;gap:8px}.admin-thumbnail-frame{position:relative;display:grid;place-items:center;width:min(420px,100%);aspect-ratio:16/9;overflow:hidden;border:1px dashed #b9c8da;border-radius:8px;background:#f5f8fc;color:#7a8ba1;text-align:center}.admin-thumbnail-frame img{width:100%;height:100%;object-fit:cover}.admin-thumbnail-frame span{max-width:250px;padding:18px;line-height:1.55}.admin-thumbnail-preview.is-custom .admin-thumbnail-frame{border-style:solid;border-color:#187a58}.admin-thumbnail-preview.is-youtube .admin-thumbnail-frame{border-style:solid;border-color:#2f6fb0}.admin-preview-thumbnail{display:block;width:100%;max-height:360px;margin:0 0 22px;border-radius:8px;object-fit:cover;aspect-ratio:16/9;background:#eef3f8}`;
 
+const cssProductionEnhancements = `.admin-badge{border-radius:999px;background:#eef4fb;color:#153a6b;padding:5px 9px;font-size:11px;font-weight:900}.login-documents{display:grid;gap:8px;margin-top:24px;padding:15px;border:1px solid #dce4ee;border-radius:7px;background:#f8fafc}.login-documents h3{margin:0 0 2px;color:#153a6b;font-size:15px}.login-documents a{color:#2f6fb0;font-size:13px;font-weight:800;text-decoration:underline;text-underline-offset:3px}@media (max-width:560px){.admin-badge{display:none}}`;
+
 mkdirSync("assets", { recursive: true });
-writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements + cssCompactListEnhancements + cssFeaturedThumbEnhancements + cssCompactHeroEnhancements + cssHomeTitleEnhancements + cssFixedFooterEnhancements + cssDropdownNavEnhancements + cssMobileNavCorrection + cssQuickLinksEnhancements + cssVisiblePortalEnhancements + cssVideoEnhancements + cssAdminEnhancements + cssAdminResponsiveFix + cssAdminWorkflowEnhancements + cssAdminMediaEnhancements, "utf8");
+writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements + cssCompactListEnhancements + cssFeaturedThumbEnhancements + cssCompactHeroEnhancements + cssHomeTitleEnhancements + cssFixedFooterEnhancements + cssDropdownNavEnhancements + cssMobileNavCorrection + cssQuickLinksEnhancements + cssVisiblePortalEnhancements + cssVideoEnhancements + cssAdminEnhancements + cssAdminResponsiveFix + cssAdminWorkflowEnhancements + cssAdminMediaEnhancements + cssProductionEnhancements, "utf8");
 writeFileSync("index.html", homeHtml(), "utf8");
 
 for (const route of routes) {
@@ -737,6 +737,6 @@ for (const route of routes) {
 }
 
 const sitemap = visibleRoutes.map((route) => `/${route.path}/ ${route.title}`).join("\n");
-writeFileSync("DEMO_SITEMAP.txt", `CTDF Demo route list\n\n/\n${sitemap}\n`, "utf8");
+writeFileSync("SITEMAP.txt", `CTDF website route list\n\n/\n${sitemap}\n`, "utf8");
 
-console.log(`Generated ${routes.length} demo pages plus homepage.`);
+console.log(`Generated ${routes.length} website pages plus homepage.`);
