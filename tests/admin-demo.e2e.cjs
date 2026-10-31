@@ -27,6 +27,9 @@ const JSZip = require(path.join(runtimeModules, "jszip"));
       await route.fulfill({ status: 404, body: "Not found" });
     }
   });
+  await context.route("https://i.ytimg.com/**", async (route) => {
+    await route.fulfill({ status: 200, contentType: "image/png", body: fs.readFileSync(path.resolve("media/photos/2026_APC.png")) });
+  });
   const page = await context.newPage();
   page.on("console", (message) => console.log("browser-console", message.type(), message.text()));
   page.on("pageerror", (error) => console.error("browser-error", error));
@@ -115,6 +118,42 @@ const JSZip = require(path.join(runtimeModules, "jszip"));
   await page.getByRole("heading", { name: "文件連結", exact: true }).waitFor();
   assert.equal(await page.getByRole("link", { name: "開啟文件連結" }).count(), 3);
   await page.screenshot({ path: path.join(outputDirectory, "ctdf-document-links-page.png"), fullPage: true });
+
+  await page.goto("http://localhost:4173/admin/media/");
+  await page.getByRole("button", { name: "＋ 新增影音" }).click();
+  await page.getByLabel("影音標題").fill("YouTube 自動縮圖流程測試");
+  await page.getByLabel("影音分類").selectOption({ label: "國際賽事" });
+  await page.getByLabel("影音網址").fill("https://www.youtube.com/watch?v=wWRWQvpGyv4");
+  assert.equal(await page.locator('input[name="thumbnail_url"]').inputValue(), "https://i.ytimg.com/vi/wWRWQvpGyv4/hqdefault.jpg");
+  await page.locator("[data-thumbnail-image]").waitFor({ state: "visible" });
+  assert.match(await page.locator("[data-thumbnail-status]").textContent(), /已自動取得 YouTube 縮圖/);
+  await page.getByRole("button", { name: "預覽" }).click();
+  await page.locator("[data-preview-thumbnail]").waitFor({ state: "visible" });
+  assert.equal(await page.locator("[data-preview-thumbnail]").getAttribute("src"), "https://i.ytimg.com/vi/wWRWQvpGyv4/hqdefault.jpg");
+  await page.locator("[data-preview-dialog]").getByRole("button", { name: "關閉" }).click();
+  await page.screenshot({ path: path.join(outputDirectory, "ctdf-admin-youtube-auto-thumbnail.png"), fullPage: true });
+  await page.getByLabel("自訂縮圖").setInputFiles(path.resolve("assets/ctdf-logo.png"));
+  assert.match(await page.locator("[data-thumbnail-status]").textContent(), /使用自訂縮圖.*優先/);
+  assert.match(await page.locator("[data-thumbnail-image]").getAttribute("src"), /^blob:/);
+  await page.screenshot({ path: path.join(outputDirectory, "ctdf-admin-youtube-thumbnail.png"), fullPage: true });
+  await page.getByRole("button", { name: "儲存草稿" }).click();
+  const mediaRow = page.getByRole("row", { name: /YouTube 自動縮圖流程測試/ });
+  await mediaRow.waitFor();
+  await mediaRow.getByRole("button", { name: "編輯" }).click();
+  assert.equal(await page.locator('input[name="thumbnail_url"]').inputValue(), "https://i.ytimg.com/vi/wWRWQvpGyv4/hqdefault.jpg");
+  assert.match(await page.locator("[data-thumbnail-status]").textContent(), /使用自訂縮圖.*優先/);
+  const savedMedia = await page.evaluate(() => new Promise((resolve, reject) => {
+    const request = indexedDB.open("ctdf-admin-content", 1);
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => {
+      const query = request.result.transaction("drafts", "readonly").objectStore("drafts").getAll();
+      query.onerror = () => reject(query.error);
+      query.onsuccess = () => resolve(query.result.find((record) => record.title === "YouTube 自動縮圖流程測試"));
+    };
+  }));
+  assert.equal(savedMedia.fields.thumbnail_url, "https://i.ytimg.com/vi/wWRWQvpGyv4/hqdefault.jpg");
+  assert(savedMedia.files.some((file) => file.field === "cover" && file.name === "ctdf-logo.png"));
+  await page.locator("[data-editor-dialog]").getByRole("button", { name: "關閉" }).click();
   await page.goto("http://localhost:4173/admin/downloads/");
 
   await page.setViewportSize({ width: 390, height: 844 });
@@ -133,6 +172,8 @@ const JSZip = require(path.join(runtimeModules, "jszip"));
     indexedDbPersistence: "pass",
     preview: "pass",
     documentLinks: "pass",
+    youtubeThumbnail: "pass",
+    youtubeThumbnailPackageData: "pass",
     zipExport: names,
     zipImport: "pass",
     mobileOverflow: "pass",
@@ -142,6 +183,8 @@ const JSZip = require(path.join(runtimeModules, "jszip"));
       path.join(outputDirectory, "ctdf-admin-login.png"),
       path.join(outputDirectory, "ctdf-admin-document-links.png"),
       path.join(outputDirectory, "ctdf-document-links-page.png"),
+      path.join(outputDirectory, "ctdf-admin-youtube-auto-thumbnail.png"),
+      path.join(outputDirectory, "ctdf-admin-youtube-thumbnail.png"),
       path.join(outputDirectory, "ctdf-admin-mobile.png")
     ]
   }, null, 2));

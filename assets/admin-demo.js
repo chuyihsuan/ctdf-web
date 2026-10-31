@@ -120,6 +120,72 @@
   const count = document.querySelector("[data-count]");
   let editingRow = null;
   let editingId = null;
+  const thumbnailPreview = document.querySelector("[data-thumbnail-preview]");
+  const thumbnailImage = document.querySelector("[data-thumbnail-image]");
+  const thumbnailPlaceholder = document.querySelector("[data-thumbnail-placeholder]");
+  const thumbnailStatus = document.querySelector("[data-thumbnail-status]");
+  let thumbnailObjectUrl = null;
+  let activeThumbnailSource = "";
+
+  function youtubeVideoId(value) {
+    if (!value?.trim()) return "";
+    try {
+      const url = new URL(value.trim());
+      const hostname = url.hostname.toLowerCase().replace(/^(www\.|m\.|music\.)/, "");
+      let id = "";
+      if (hostname === "youtu.be") id = url.pathname.split("/").filter(Boolean)[0] || "";
+      if (hostname === "youtube.com" || hostname === "youtube-nocookie.com") {
+        if (url.pathname === "/watch") id = url.searchParams.get("v") || "";
+        else id = url.pathname.match(/^\/(?:shorts|embed|live)\/([^/?#]+)/)?.[1] || "";
+      }
+      return /^[A-Za-z0-9_-]{11}$/.test(id) ? id : "";
+    } catch {
+      return "";
+    }
+  }
+
+  function youtubeThumbnailUrl(value) {
+    const id = youtubeVideoId(value);
+    return id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : "";
+  }
+
+  function setThumbnailPreview(source, mode, message) {
+    if (!thumbnailPreview) return;
+    if (thumbnailObjectUrl && thumbnailObjectUrl !== source) URL.revokeObjectURL(thumbnailObjectUrl);
+    thumbnailObjectUrl = mode === "custom" ? source : null;
+    activeThumbnailSource = source;
+    thumbnailPreview.classList.toggle("is-custom", mode === "custom");
+    thumbnailPreview.classList.toggle("is-youtube", mode === "youtube");
+    thumbnailImage.hidden = !source;
+    thumbnailPlaceholder.hidden = Boolean(source);
+    thumbnailImage.removeAttribute("src");
+    if (source) thumbnailImage.src = source;
+    thumbnailStatus.textContent = message;
+  }
+
+  function updateThumbnailPreview(record = null) {
+    if (!thumbnailPreview) return;
+    const coverField = form.elements.cover;
+    const selectedFile = coverField?.files?.[0];
+    const savedFile = record?.files?.find((file) => file.field === "cover")?.blob;
+    const customFile = selectedFile || savedFile;
+    const generatedUrl = youtubeThumbnailUrl(form.elements.media_url?.value);
+    if (form.elements.thumbnail_url) form.elements.thumbnail_url.value = generatedUrl;
+
+    if (customFile) {
+      setThumbnailPreview(URL.createObjectURL(customFile), "custom", `使用自訂縮圖：${customFile.name || "已儲存圖片"}（優先）`);
+      return;
+    }
+    if (generatedUrl) {
+      setThumbnailPreview(generatedUrl, "youtube", "已自動取得 YouTube 縮圖；需要時可用自訂縮圖覆蓋。");
+      return;
+    }
+    const mediaHostname = (() => {
+      try { return new URL(form.elements.media_url?.value || "").hostname; } catch { return ""; }
+    })();
+    const isFacebook = /(^|\.)facebook\.com$/i.test(mediaHostname) || /^fb\.watch$/i.test(mediaHostname);
+    setThumbnailPreview("", "", isFacebook ? "Facebook 影片無法自動擷取，請選擇下方的自訂縮圖。" : "貼上 YouTube 網址後會自動顯示縮圖。");
+  }
 
   function rowData(row) {
     const cells = row.cells;
@@ -232,6 +298,7 @@
     document.querySelector("[data-editor-heading]").textContent = row ? "編輯內容" : "新增內容";
     const record = row ? (await getDraft(editingId)) || rowData(row) : null;
     Object.entries(record?.fields || {}).forEach(([name, value]) => setValue(name, value));
+    updateThumbnailPreview(record);
     openDialog(editor);
   }
 
@@ -242,6 +309,8 @@
   });
   document.querySelector("[data-close-editor]")?.addEventListener("click", () => closeDialog(editor));
   document.querySelector("[data-close-preview]")?.addEventListener("click", () => closeDialog(preview));
+  form.elements.media_url?.addEventListener("input", () => updateThumbnailPreview());
+  form.elements.cover?.addEventListener("change", () => updateThumbnailPreview());
 
   function collectForm(status) {
     const formData = new FormData(form);
@@ -316,11 +385,15 @@
 
   document.querySelector("[data-preview]")?.addEventListener("click", () => {
     const { fields } = collectForm();
+    const previewThumbnail = document.querySelector("[data-preview-thumbnail]");
     document.querySelector("[data-preview-category]").textContent = fields.category || "未分類";
     document.querySelector("[data-preview-heading]").textContent = fields.title || "尚未輸入標題";
     document.querySelector("[data-preview-title]").textContent = fields.title || "內容預覽";
     document.querySelector("[data-preview-summary]").textContent = fields.summary || "尚未填寫摘要。";
     document.querySelector("[data-preview-body]").textContent = fields.body || fields.venue || fields.media_url || fields.document_url || "完整內容會依正式頁面版型顯示於此。";
+    previewThumbnail.hidden = path !== "admin/media" || !activeThumbnailSource;
+    previewThumbnail.removeAttribute("src");
+    if (!previewThumbnail.hidden) previewThumbnail.src = activeThumbnailSource;
     openDialog(preview);
   });
 
