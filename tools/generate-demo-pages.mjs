@@ -417,6 +417,7 @@ const adminModules = {
       ["date", "影音日期", "date", ""],
       ["media_url", "影音網址", "url", "YouTube 或 Facebook 網址"],
       ["summary", "影音說明", "textarea", "顯示於影音卡片的簡短說明"],
+      ["thumbnail_url", "YouTube 自動縮圖", "thumbnail", ""],
       ["cover", "自訂縮圖", "file", "image/*"]
     ]
   },
@@ -490,9 +491,13 @@ function adminField([name, label, type, option]) {
     return `<label class="admin-field admin-field-wide"><span>${label}</span><textarea name="${name}" rows="${name === "body" ? 8 : 4}" placeholder="${option}"></textarea></label>`;
   }
   if (type === "file") {
-    return `<label class="admin-field admin-field-wide"><span>${label}</span><input name="${name}" type="file" accept="${option}"><small>Demo 僅顯示選取的檔名，不會實際上傳。</small></label>`;
+    const hint = name === "cover" ? "圖片會保存於瀏覽器草稿，匯出時一併放入 ZIP。" : "附件會保存於瀏覽器草稿，匯出時一併放入 ZIP。";
+    return `<label class="admin-field admin-field-wide"><span>${label}</span><input name="${name}" type="file" accept="${option}"><small>${hint}</small></label>`;
   }
-  return `<label class="admin-field"><span>${label}</span><input name="${name}" type="${type}" placeholder="${option}"${name === "title" || name === "document_url" ? " required" : ""}></label>`;
+  if (type === "thumbnail") {
+    return `<div class="admin-field admin-field-wide"><span>${label}</span><input name="${name}" type="hidden"><div class="admin-thumbnail-preview" data-thumbnail-preview><div class="admin-thumbnail-frame"><img data-thumbnail-image alt="YouTube 影片縮圖" hidden><span data-thumbnail-placeholder>貼上 YouTube 網址後自動顯示縮圖</span></div><small data-thumbnail-status>Facebook 影片請使用下方的自訂縮圖。</small></div></div>`;
+  }
+  return `<label class="admin-field"><span>${label}</span><input name="${name}" type="${type}" placeholder="${option}"${name === "title" || name === "document_url" || name === "media_url" ? " required" : ""}></label>`;
 }
 
 function adminEditor(config) {
@@ -507,7 +512,7 @@ function adminEditor(config) {
   </dialog>
   <dialog class="admin-dialog preview-dialog" data-preview-dialog>
     <div class="admin-dialog-head"><div><small>前台版型預覽</small><h2 data-preview-title>內容預覽</h2></div><button class="icon-button" type="button" data-close-preview aria-label="關閉">×</button></div>
-    <div class="preview-surface"><span class="tag" data-preview-category>分類</span><h1 data-preview-heading>尚未輸入標題</h1><p data-preview-summary>填寫內容後即可在此確認前台呈現方式。</p><div class="preview-body" data-preview-body></div></div>
+    <div class="preview-surface"><img class="admin-preview-thumbnail" data-preview-thumbnail alt="影音縮圖預覽" hidden><span class="tag" data-preview-category>分類</span><h1 data-preview-heading>尚未輸入標題</h1><p data-preview-summary>填寫內容後即可在此確認前台呈現方式。</p><div class="preview-body" data-preview-body></div></div>
   </dialog>`;
 }
 
@@ -719,8 +724,10 @@ const cssAdminResponsiveFix = `html:has(.admin-page){overflow-x:clip}.admin-page
 
 const cssAdminWorkflowEnhancements = `.status-approved{background:#e8f5ff;color:#17618f}.admin-head-actions{display:flex;align-items:center;gap:9px}.import-button{position:relative;cursor:pointer}.import-button input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.logout-button{min-height:34px;padding:0 10px;border:1px solid #c8d5e4;border-radius:6px;background:#fff;color:#526277;font:inherit;font-size:13px;font-weight:800;cursor:pointer}.logout-button:hover{border-color:#9db8d8;color:#153a6b}.admin-login-page{margin:0;min-height:100vh;padding:0;background:#eef4fb;color:#172033}.login-shell{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.7fr);min-height:100vh}.login-brand{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:clamp(40px,8vw,110px);background:linear-gradient(135deg,#f9fcff 0%,#eaf4ff 55%,#fff0f2 100%);border-top:5px solid #d83a45}.login-brand img{width:min(340px,80%);margin-bottom:34px;border-radius:8px;background:#fff}.login-brand p{margin:0 0 8px;color:#2f6fb0;font-weight:900}.login-brand h1{margin:0 0 18px;font-size:clamp(40px,5vw,68px);line-height:1.08}.login-brand span{max-width:620px;color:#526277;font-size:17px;line-height:1.7}.login-panel{display:flex;flex-direction:column;justify-content:center;padding:clamp(28px,6vw,72px);background:#fff;box-shadow:-16px 0 40px rgba(21,58,107,.08)}.login-panel h2{margin:4px 0 8px;font-size:30px}.login-panel>div>p:not(.admin-kicker){margin:0 0 28px;color:#667085;line-height:1.6}.login-panel form{display:grid;gap:17px}.login-panel form .admin-button{width:100%;margin-top:4px}.login-error{margin:0;color:#b4232d;font-size:13px;font-weight:800}.demo-credential{display:grid;gap:5px;margin-top:24px;padding:15px;border:1px solid #dce4ee;border-radius:7px;background:#f8fafc;color:#526277;font-size:13px}.demo-credential b{color:#153a6b}.login-security-note{margin-top:18px;color:#8a98aa;line-height:1.55}.package-note{margin:0;color:#667085;font-size:12px}@media (max-width:900px){.admin-head-actions{width:100%}.admin-head-actions .admin-button{flex:1}.login-shell{grid-template-columns:1fr}.login-brand{min-height:330px;padding:42px 24px}.login-brand img{width:min(230px,70%);margin-bottom:24px}.login-brand h1{font-size:38px}.login-panel{padding:38px 24px}}@media (max-width:560px){.admin-topbar>div{gap:7px}.demo-badge{display:none}.view-site{font-size:12px}.logout-button{font-size:12px}.admin-head-actions{align-items:stretch;flex-direction:column}.admin-head-actions .admin-button{width:100%}}`;
 
+const cssAdminMediaEnhancements = `.admin-thumbnail-preview{display:grid;gap:8px}.admin-thumbnail-frame{position:relative;display:grid;place-items:center;width:min(420px,100%);aspect-ratio:16/9;overflow:hidden;border:1px dashed #b9c8da;border-radius:8px;background:#f5f8fc;color:#7a8ba1;text-align:center}.admin-thumbnail-frame img{width:100%;height:100%;object-fit:cover}.admin-thumbnail-frame span{max-width:250px;padding:18px;line-height:1.55}.admin-thumbnail-preview.is-custom .admin-thumbnail-frame{border-style:solid;border-color:#187a58}.admin-thumbnail-preview.is-youtube .admin-thumbnail-frame{border-style:solid;border-color:#2f6fb0}.admin-preview-thumbnail{display:block;width:100%;max-height:360px;margin:0 0 22px;border-radius:8px;object-fit:cover;aspect-ratio:16/9;background:#eef3f8}`;
+
 mkdirSync("assets", { recursive: true });
-writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements + cssCompactListEnhancements + cssFeaturedThumbEnhancements + cssCompactHeroEnhancements + cssHomeTitleEnhancements + cssFixedFooterEnhancements + cssDropdownNavEnhancements + cssMobileNavCorrection + cssQuickLinksEnhancements + cssVisiblePortalEnhancements + cssVideoEnhancements + cssAdminEnhancements + cssAdminResponsiveFix + cssAdminWorkflowEnhancements, "utf8");
+writeFileSync(join("assets", "demo.css"), css + cssEnhancements + cssWdfEnhancements + cssCompactListEnhancements + cssFeaturedThumbEnhancements + cssCompactHeroEnhancements + cssHomeTitleEnhancements + cssFixedFooterEnhancements + cssDropdownNavEnhancements + cssMobileNavCorrection + cssQuickLinksEnhancements + cssVisiblePortalEnhancements + cssVideoEnhancements + cssAdminEnhancements + cssAdminResponsiveFix + cssAdminWorkflowEnhancements + cssAdminMediaEnhancements, "utf8");
 writeFileSync("index.html", homeHtml(), "utf8");
 
 for (const route of routes) {
