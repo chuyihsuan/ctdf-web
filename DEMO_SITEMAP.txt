@@ -4,9 +4,9 @@ CTDF Demo route list
 /news/ 最新公告
 /events/ 賽事資訊
 /events/results/ 賽事成績
-/downloads/ 文件下載
+/downloads/ 文件連結
 /downloads/annual/ 年度計畫 / 報告
-/downloads/reports/ 會務報告下載
+/downloads/reports/ 會務報告連結
 /about/ 關於總會
 /about/organization/ 組織架構
 /about/rules/ 章程與規章
@@ -26,7 +26,7 @@ CTDF Demo route list
 /admin/news/ 公告管理
 /admin/pages/ 頁面管理
 /admin/events/ 賽事管理
-/admin/downloads/ 文件管理
+/admin/downloads/ 文件連結管理
 /admin/media/ 影音管理
 /admin/settings/site/ 網站基本設定
 /admin/logs/ 操作紀錄
