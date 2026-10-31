@@ -23,7 +23,7 @@ const nav = [
   ["公告", "/news/"],
   ["賽事", "/events/"],
   ["影音專區", "/media/videos/"],
-  ["下載", "/downloads/"],
+  ["文件連結", "/downloads/"],
   ["關於", "/about/"]
 ];
 
@@ -51,11 +51,11 @@ const routeGroups = {
     ["players/demo-player", "選手個人頁範例", "公開資訊", "MVP", "示範個人頁版型，正式資料需總會授權。"]
   ],
   downloads: [
-    ["downloads", "文件下載", "公開資訊", "MVP", "以文件清單呈現規程、報名表與公告附件。"],
-    ["downloads/forms", "表單下載", "公開資訊", "MVP", "整理會員、賽事與行政表單。"],
-    ["downloads/rules", "規章下載", "公開資訊", "MVP", "集中放置賽制規程與相關辦法。"],
-    ["downloads/annual", "年度計畫 / 報告", "第二階段", "Later", "預留年度計畫、成果報告與公開資訊。"],
-    ["downloads/reports", "會務報告下載", "第二階段", "Later", "預留會務、推廣與賽事統計報告。"]
+    ["downloads", "文件連結", "公開資訊", "MVP", "以外部連結提供規程、報名資訊與公告文件來源。"],
+    ["downloads/forms", "表單連結", "公開資訊", "MVP", "整理會員、賽事與行政表單的外部連結。"],
+    ["downloads/rules", "規章連結", "公開資訊", "MVP", "集中提供賽制規程與相關辦法的外部連結。"],
+    ["downloads/annual", "年度計畫 / 報告", "第二階段", "Later", "預留年度計畫、成果報告與公開資訊連結。"],
+    ["downloads/reports", "會務報告連結", "第二階段", "Later", "預留會務、推廣與賽事統計報告連結。"]
   ],
   about: [
     ["about", "關於總會", "公開資訊", "MVP", "以資訊區塊呈現總會定位、國際接軌、聯絡資訊與推動方向。"],
@@ -86,7 +86,7 @@ const routeGroups = {
     ["admin/rankings", "排名管理", "後台", "MVP", "匯入排名資料並發布更新。"],
     ["admin/players", "選手管理", "後台", "MVP", "維護選手資料與公開欄位。"],
     ["admin/members", "會員管理", "後台", "MVP", "管理會員狀態、權限與審核。"],
-    ["admin/downloads", "文件管理", "後台", "MVP", "上傳文件、管理版本與分類。"],
+    ["admin/downloads", "文件連結管理", "後台", "MVP", "管理外部文件連結、版本與分類。"],
     ["admin/media", "影音管理", "後台", "Demo", "管理影音網址、縮圖、說明與發布狀態。"],
     ["admin/settings/site", "網站基本設定", "後台", "MVP", "管理網站名稱、Logo、SEO 與聯絡資訊。"],
     ["admin/logs", "操作紀錄", "後台", "Demo", "查看內容建立、修改、送審與發布紀錄。"]
@@ -310,7 +310,7 @@ function renderDownloads(items = data.downloads) {
     <article class="download-row">
       <span class="file-badge">${htmlEscape(item.type)}</span>
       <div><h3>${htmlEscape(item.title)}</h3><p>${htmlEscape(item.owner)} / 更新：${htmlEscape(item.updated)}</p></div>
-      ${sourceLink(item.source)}
+      <a href="${htmlEscape(item.source)}" target="_blank" rel="noopener noreferrer">開啟文件連結</a>
     </article>`).join("")}
   </div>`;
 }
@@ -420,9 +420,9 @@ const adminModules = {
     ]
   },
   "admin/downloads": {
-    label: "文件管理",
-    singular: "文件",
-    description: "上傳文件、管理版本，並控制前台公開與封存狀態。",
+    label: "文件連結管理",
+    singular: "文件連結",
+    description: "管理外部文件網址、版本與分類，不在網站內儲存檔案。",
     rows: [
       { title: "113學年度國中暨高中飛鏢隊際聯賽規程", category: "競賽規程", date: "2025-04-24", status: "published", updated: "8月18日" },
       { title: "114學年師生盃報名與規程", category: "報名資訊", date: "2026-02-01", status: "review", updated: "8月12日" },
@@ -434,7 +434,7 @@ const adminModules = {
       ["version", "文件版本", "text", "例如：v1.0"],
       ["date", "更新日期", "date", ""],
       ["summary", "文件說明", "textarea", "說明文件用途與適用對象"],
-      ["attachment", "上傳文件", "file", ".pdf,.doc,.docx,.xls,.xlsx"]
+      ["document_url", "文件連結", "url", "https://"]
     ]
   },
   "admin/pages": {
@@ -462,7 +462,7 @@ const adminNav = [
   ["公告", "/admin/news/", "admin/news"],
   ["賽事", "/admin/events/", "admin/events"],
   ["影音", "/admin/media/", "admin/media"],
-  ["文件", "/admin/downloads/", "admin/downloads"],
+  ["文件連結", "/admin/downloads/", "admin/downloads"],
   ["頁面", "/admin/pages/", "admin/pages"],
   ["網站設定", "/admin/settings/site/", "admin/settings/site"],
   ["操作紀錄", "/admin/logs/", "admin/logs"]
@@ -491,7 +491,7 @@ function adminField([name, label, type, option]) {
   if (type === "file") {
     return `<label class="admin-field admin-field-wide"><span>${label}</span><input name="${name}" type="file" accept="${option}"><small>Demo 僅顯示選取的檔名，不會實際上傳。</small></label>`;
   }
-  return `<label class="admin-field"><span>${label}</span><input name="${name}" type="${type}" placeholder="${option}"${name === "title" ? " required" : ""}></label>`;
+  return `<label class="admin-field"><span>${label}</span><input name="${name}" type="${type}" placeholder="${option}"${name === "title" || name === "document_url" ? " required" : ""}></label>`;
 }
 
 function adminEditor(config) {
@@ -521,8 +521,8 @@ function adminModuleContent(path, config) {
 
 function adminDashboardContent() {
   return `<div class="admin-page-head"><div><p class="admin-kicker">2026年9月27日</p><h1>後台總覽</h1><p>查看待辦內容與近期發布狀態。此頁為操作 Demo，不會變更正式網站。</p></div><a class="admin-button" href="/admin/news/">＋ 新增公告</a></div>
-    <div class="admin-metrics"><article><span>待審核</span><b>3</b><small>公告、賽事與文件</small></article><article><span>草稿</span><b>5</b><small>尚未送審內容</small></article><article><span>已排程</span><b>1</b><small>未來七日發布</small></article><article><span>本月發布</span><b>8</b><small>公開內容更新</small></article></div>
-    <div class="admin-dashboard-grid"><section class="admin-panel"><div class="admin-panel-head"><h2>待辦事項</h2><span>依優先順序</span></div><div class="task-list"><a href="/admin/news/"><span class="task-dot red"></span><span><b>師生盃公告等待審核</b><small>公告管理 · 昨天 16:40</small></span><strong>審核</strong></a><a href="/admin/events/"><span class="task-dot green"></span><span><b>確認賽事報名截止日期</b><small>賽事管理 · 昨天 14:08</small></span><strong>處理</strong></a><a href="/admin/downloads/"><span class="task-dot gold"></span><span><b>規程文件等待發布</b><small>文件管理 · 8月12日</small></span><strong>檢視</strong></a></div></section><section class="admin-panel"><div class="admin-panel-head"><h2>快速新增</h2><span>選擇內容類型</span></div><div class="admin-quick-grid"><a href="/admin/news/">公告</a><a href="/admin/events/">賽事</a><a href="/admin/media/">影音</a><a href="/admin/downloads/">文件</a></div></section></div>`;
+    <div class="admin-metrics"><article><span>待審核</span><b>3</b><small>公告、賽事與文件連結</small></article><article><span>草稿</span><b>5</b><small>尚未送審內容</small></article><article><span>已排程</span><b>1</b><small>未來七日發布</small></article><article><span>本月發布</span><b>8</b><small>公開內容更新</small></article></div>
+    <div class="admin-dashboard-grid"><section class="admin-panel"><div class="admin-panel-head"><h2>待辦事項</h2><span>依優先順序</span></div><div class="task-list"><a href="/admin/news/"><span class="task-dot red"></span><span><b>師生盃公告等待審核</b><small>公告管理 · 昨天 16:40</small></span><strong>審核</strong></a><a href="/admin/events/"><span class="task-dot green"></span><span><b>確認賽事報名截止日期</b><small>賽事管理 · 昨天 14:08</small></span><strong>處理</strong></a><a href="/admin/downloads/"><span class="task-dot gold"></span><span><b>規程連結等待發布</b><small>文件連結管理 · 8月12日</small></span><strong>檢視</strong></a></div></section><section class="admin-panel"><div class="admin-panel-head"><h2>快速新增</h2><span>選擇內容類型</span></div><div class="admin-quick-grid"><a href="/admin/news/">公告</a><a href="/admin/events/">賽事</a><a href="/admin/media/">影音</a><a href="/admin/downloads/">文件連結</a></div></section></div>`;
 }
 
 function adminSettingsContent() {
@@ -606,7 +606,7 @@ function portalHtml() {
   const portals = [
     ["WDF & 國際賽事", "代表隊參賽、國際新聞、WDF 世界盃成果", "/news/"],
     ["CTDF 賽事系統", "賽事公告、報名時程、競賽規程與賽果", "/events/"],
-    ["文件與規章", "報名表、規章、下載文件與公告附件", "/downloads/"]
+    ["文件與規章", "報名表、規章與公告文件的外部連結", "/downloads/"]
   ];
   return `<section class="portal-band">
     <div class="section-inner">
@@ -662,7 +662,7 @@ function homeHtml() {
         <div>
           <p class="eyebrow">Official Website Demo</p>
           <h1>中華民國競技飛鏢總會</h1>
-          <p>以實際公開資料示範公告、賽事、文件下載與總會資訊，並依內容性質使用不同版型。</p>
+          <p>以實際公開資料示範公告、賽事、文件連結與總會資訊，並依內容性質使用不同版型。</p>
         </div>
         <div class="target-panel" aria-label="CTDF 視覺識別">
           <img class="hero-logo" src="/assets/ctdf-logo.png" alt="CTDF Logo">
@@ -678,7 +678,7 @@ function homeHtml() {
     ${portalHtml()}
     ${homeSection("最新公告", "/news/", renderNews())}
     ${homeSection("賽事資訊", "/events/", renderEvents())}
-    ${homeSection("文件下載", "/downloads/", renderDownloads())}
+    ${homeSection("文件連結", "/downloads/", renderDownloads())}
     ${homeSection("關於總會", "/about/", renderAbout())}
   </main>
   ${footerHtml()}

@@ -94,6 +94,29 @@ const JSZip = require(path.join(runtimeModules, "jszip"));
   assert.equal(await page.getByLabel("內容狀態").inputValue(), "draft");
   await page.locator("[data-editor-dialog]").getByRole("button", { name: "關閉" }).click();
 
+  await page.goto("http://localhost:4173/admin/downloads/");
+  await page.getByRole("button", { name: "＋ 新增文件連結" }).click();
+  assert.equal(await page.locator("[data-editor-dialog] input[type=file]").count(), 0);
+  await page.getByLabel("文件名稱").fill("文件連結流程測試");
+  await page.getByLabel("文件分類").selectOption({ label: "競賽規程" });
+  await page.getByLabel("文件連結").fill("example.com/document");
+  await page.getByRole("button", { name: "儲存草稿" }).click();
+  await page.locator("[data-editor-dialog]").waitFor({ state: "visible" });
+  await page.getByLabel("文件連結").fill("https://example.com/document");
+  await page.getByRole("button", { name: "預覽" }).click();
+  assert.match(await page.locator("[data-preview-dialog]").innerText(), /https:\/\/example\.com\/document/);
+  await page.locator("[data-preview-dialog]").getByRole("button", { name: "關閉" }).click();
+  await page.getByRole("button", { name: "儲存草稿" }).click();
+  await page.getByRole("row", { name: /文件連結流程測試/ }).waitFor();
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.screenshot({ path: path.join(outputDirectory, "ctdf-admin-document-links.png"), fullPage: true });
+
+  await page.goto("http://localhost:4173/downloads/");
+  await page.getByRole("heading", { name: "文件連結", exact: true }).waitFor();
+  assert.equal(await page.getByRole("link", { name: "開啟文件連結" }).count(), 3);
+  await page.screenshot({ path: path.join(outputDirectory, "ctdf-document-links-page.png"), fullPage: true });
+  await page.goto("http://localhost:4173/admin/downloads/");
+
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({ path: path.join(outputDirectory, "ctdf-admin-mobile.png"), fullPage: true });
   const mobileMetrics = await page.evaluate(() => ({
@@ -109,12 +132,18 @@ const JSZip = require(path.join(runtimeModules, "jszip"));
     login: "pass",
     indexedDbPersistence: "pass",
     preview: "pass",
+    documentLinks: "pass",
     zipExport: names,
     zipImport: "pass",
     mobileOverflow: "pass",
     mobileMetrics,
     zipPath,
-    screenshots: [path.join(outputDirectory, "ctdf-admin-login.png"), path.join(outputDirectory, "ctdf-admin-mobile.png")]
+    screenshots: [
+      path.join(outputDirectory, "ctdf-admin-login.png"),
+      path.join(outputDirectory, "ctdf-admin-document-links.png"),
+      path.join(outputDirectory, "ctdf-document-links-page.png"),
+      path.join(outputDirectory, "ctdf-admin-mobile.png")
+    ]
   }, null, 2));
   await browser.close();
 })().catch((error) => {

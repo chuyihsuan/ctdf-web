@@ -244,6 +244,7 @@ SUPABASE_SERVICE_ROLE_KEY=
 - `建置計畫書/競技飛鏢總會_網站建置計畫書_v11_AB代管方案比較版.docx`
 - `工作項目追蹤表/CTDF_網站建置_Action_Item追蹤表_202610中旬版.xlsx`
 - `網站內容素材庫/`
+- `docs/CONTENT_PUBLISHING_MANUAL.md`：網站內容角色分工、上架、修改、下架與緊急處理操作手冊。
 
 ## 授權與保密
 

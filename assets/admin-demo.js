@@ -262,9 +262,15 @@
       showToast("請先填寫標題。 ");
       return false;
     }
-    if (fields.media_url && !/^https?:\/\//i.test(fields.media_url)) {
-      form.elements.media_url?.focus();
-      showToast("影音網址必須以 http:// 或 https:// 開頭。 ");
+    if (path === "admin/downloads" && !fields.document_url?.trim()) {
+      form.elements.document_url?.focus();
+      showToast("請先填寫文件連結。 ");
+      return false;
+    }
+    const urlField = fields.media_url ? "media_url" : fields.document_url ? "document_url" : null;
+    if (urlField && !/^https?:\/\//i.test(fields[urlField])) {
+      form.elements[urlField]?.focus();
+      showToast(`${urlField === "media_url" ? "影音" : "文件"}網址必須以 http:// 或 https:// 開頭。 `);
       return false;
     }
     return true;
@@ -314,7 +320,7 @@
     document.querySelector("[data-preview-heading]").textContent = fields.title || "尚未輸入標題";
     document.querySelector("[data-preview-title]").textContent = fields.title || "內容預覽";
     document.querySelector("[data-preview-summary]").textContent = fields.summary || "尚未填寫摘要。";
-    document.querySelector("[data-preview-body]").textContent = fields.body || fields.venue || fields.media_url || "完整內容會依正式頁面版型顯示於此。";
+    document.querySelector("[data-preview-body]").textContent = fields.body || fields.venue || fields.media_url || fields.document_url || "完整內容會依正式頁面版型顯示於此。";
     openDialog(preview);
   });
 
