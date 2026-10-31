@@ -245,6 +245,7 @@ SUPABASE_SERVICE_ROLE_KEY=
 - `工作項目追蹤表/CTDF_網站建置_Action_Item追蹤表_202610中旬版.xlsx`
 - `網站內容素材庫/`
 - `docs/CONTENT_PUBLISHING_MANUAL.md`：網站內容角色分工、上架、修改、下架與緊急處理操作手冊。
+- `docs/HINET_VERCEL_DNS_MANUAL.md`：HiNet DNS 代管啟用、Vercel 正式網域連接、驗證與錯誤排除操作手冊。
 
 ## 授權與保密
 
